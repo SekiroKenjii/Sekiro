@@ -1,0 +1,95 @@
+﻿@model SekiroKenjii.Models.ViewModel.SupplierViewModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-primary">Details Supplier</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="main-card mb-3 card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-9">
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="Suppliers.Name" class="col-form-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="Suppliers.Name" readonly class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="Suppliers.Address" class="col-form-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="Suppliers.Address" readonly class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="Suppliers.City" class="col-form-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="Suppliers.City" readonly class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="Suppliers.Country" class="col-form-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="Suppliers.Country" readonly class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="Suppliers.Region" class="col-form-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="Suppliers.Region" readonly class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="Suppliers.Phone" class="col-form-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="Suppliers.Phone" readonly class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="Suppliers.HomePage" class="col-form-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="Suppliers.HomePage" readonly class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <img src="@Model.Suppliers.BrandImage" width="380" style="border-radius:5px; border:1px solid #bbb9b9;" />
+                </div>
+            </div>
+            <br />
+            <div class="col-9">
+                <div class="offset-2 form-group row">
+                    <div class="col-6">
+                        <a asp-action="Edit" asp-route-id="@Model.Suppliers.Id" class="btn btn-primary form-control">Edit</a>
+                    </div>
+                    <div class="col-6">
+                        <a asp-action="Index" class="btn btn-success form-control">Back To List</a>
+                    </div>
+                </div>
+            </div>           
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,156 @@
+﻿@model SekiroKenjii.Models.ViewModel.IndexViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section Search{
+    <div class="header-search float-left">
+        <button class="search-toggle" data-toggle="dropdown"><i class="pe-7s-search"></i></button>
+        <div class="dropdown-menu header-search-form">
+            <form method="get">
+                @Html.Editor("SearchString", new { htmlAttributes = new { @class = "form-control" } })
+                <button type="submit" value="Search"><i class="fa fa-long-arrow-right"></i></button>
+            </form>
+        </div>
+    </div>
+}
+
+@section Slider{
+    <div class="home-slider-section section">
+        <div class="slider" id="home-slider">
+            <img src="~/images/banners/SecondBanner.png" />
+            <img src="~/images/banners/Best choose for gamer.png" />
+            @if (Model.Coupons.ToList().Count > 0)
+            {
+                @for (int i = 0; i < Model.Coupons.Count(); i++)
+                {
+                    if (i == 0)
+                    {
+                        var base64 = Convert.ToBase64String(Model.Coupons.ToList()[i].Picture);
+                        var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                        <img src="@imgsrc" />
+                    }
+                    else
+                    {
+                        var base64 = Convert.ToBase64String(Model.Coupons.ToList()[i].Picture);
+                        var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                        <img src="@imgsrc" />
+                    }
+                }
+            }
+        </div>
+    </div>
+}
+
+@section Filter{
+    <div class="row">
+        <div class="isotope-product-filter col-xs-8">
+            <button class="active" data-filter="*">all</button>
+            @foreach (var item in Model.Tags.Where(t => t.Name != "-None-"))
+            {
+                <button data-filter=".@item.Name.Replace(" ",string.Empty)">@item.Name</button>
+            }
+        </div>
+        <div class="col-xs-4">
+            <button class="product-filter-toggle">filter</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="product-filter-wrapper">
+                <div class="product-filter col-md-6 col-xs-12 mb-30">
+                    <h4>Product Supplier</h4>
+                    <ul class="sort-by">
+                        @foreach (var sup in Model.Suppliers)
+                        {
+                            <li><a href="#">@sup.Name</a></li>
+                        }
+                    </ul>
+                </div>
+                <div class="product-filter col-md-6 col-xs-12 mb-30">
+                    <h4>Product Category</h4>
+                    <ul class="sort-by">
+                        @foreach (var cate in Model.Categories)
+                        {
+                            <li><a href="#">@cate.Name</a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="isotope-grid row">
+    @foreach (var product in Model.Products)
+    {
+        <div class="isotope-item @product.Tag.Name.Replace(" ",string.Empty) col-lg-3 col-md-4 col-sm-6 col-xs-12 mb-50">
+            <div class="product-item text-center">
+                <div class="product-img">
+                    <a class="image" asp-action="Details" asp-route-id="@product.Id"><img src="@product.Image" alt="" /></a>
+                    <div class="action-btn fix">
+                        <a href="#" data-toggle="modal" data-target="#@product.SortName.Replace(" ",string.Empty)" title="Quick View"><i class="pe-7s-look"></i>Quick view</a>
+                        <a href="#" title="Add to Cart"><i class="pe-7s-cart"></i>add to cart</a>
+                    </div>
+                </div>
+                <div class="product-info text-left">
+                    <h5 class="title"><a asp-action="Details" asp-route-id="@product.Id" style="width:240px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis" title="@product.SortName">@product.SortName</a></h5>
+                    <div class="price-ratting fix">
+                        <span class="price float-left">$@product.Price</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section QuickView{
+    @foreach (var pro in Model.Products)
+    {
+        <div id="@pro.SortName.Replace(" ",string.Empty)" class="modal fade">
+            <div class="container">
+                <div class="modal-content row">
+                    <div class="modal-body">
+                        <button class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                        <div class="col-md-5 col-sm-6 col-xs-12 mb-40">
+                            <div class="tab-content mb-10">
+                                <div class="pro-large-img tab-pane active">
+                                    <img src="@pro.Image" alt="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-7 col-sm-6 col-xs-12 mb-40">
+                            <div class="product-details section">
+                                <h1 class="title">@pro.Name</h1>
+                                <div class="price-ratting section">
+                                    <span class="price float-left"><span class="new">$@pro.Price</span></span>
+                                </div>
+                                <div class="short-desc section">
+                                    <h5 class="pd-sub-title">Overview</h5>
+                                    <p>@Html.Raw(pro.Description)</p>
+                                </div>
+                                <div class="quantity-cart section">
+                                    <div class="product-quantity">
+                                        <input type="text" value="0">
+                                    </div>
+                                    <button class="add-to-cart">add to cart</button>
+                                </div>
+                                <ul class="usefull-link section">
+                                    <li><a href="#"><i class="pe-7s-mail"></i> Email to a Friend</a></li>
+                                    <li><a href="#"><i class="pe-7s-print"></i> print</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@section BrandImg{
+    @foreach (var img in Model.Suppliers)
+    {
+        <div><a href="#" data-toggle="tab"><img src="@img.BrandImage" alt="" /></a></div>
+    }
+}

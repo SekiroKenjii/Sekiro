@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Product>
+
+@if (Model.Count() > 0)
+{
+    <div class="col-md-12 post @Model.FirstOrDefault().Tag.Name.Replace(" ",string.Empty) menu">
+        <div class="col-md-12 mb-4">
+            <div class="card" style="background-color:#e9ecef">
+                <h1 class="text-success text-lg-center"> @Model.FirstOrDefault().Tag.Name</h1>
+            </div>
+        </div>
+
+        <div class="col-md-12 mb-4">
+            <div class="row">
+                @foreach (var product in Model)
+                {
+                    <div class="col-sm-3 portfolio-item">
+                        <div class="card h-100">
+                            <a asp-action="Details" asp-route-id="@product.Id"><img class="card-img-top" src="@product.Image" alt=""></a>
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    <a asp-action="Details" asp-route-id="@product.Id">@product.SortName  <img src="~/images/InStock.jpg" width="100" style="border-radius:5px;border:1px" /></a>
+                                </h4>
+                                <br />
+                                <br />
+                                <div style="position:absolute; bottom:5px; left:10px">
+                                    <h3 class="text-danger">$@product.Price</h3>
+                                </div>
+                                <div style="position:absolute; width:150px; bottom:10px; right:10px">
+                                    <a asp-action="Details" class="btn btn-success form-control" asp-route-id="@product.Id">Details</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+

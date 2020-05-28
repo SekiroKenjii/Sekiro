@@ -1,0 +1,72 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+@section Top{
+    <div class="page-banner-section section">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="page-banner-content">
+                        <h1>Register New Account</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+    @*<div asp-validation-summary="All" class="text-danger"></div>*@
+    <div class="row">
+        <div class="col-xs-12 mb-20">
+            <label asp-for="Input.FullName">Full Name</label>
+            <input asp-for="Input.FullName" type="text" />
+            <span asp-validation-for="Input.FullName" class="text-danger"></span>
+        </div>
+        <div class="col-sm-6 col-xs-12 mb-20">
+            <label asp-for="Input.Email">Email <span class="required">*</span></label>
+            <input asp-for="Input.Email" type="text" />
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+        <div class="col-sm-6 col-xs-12 mb-20">
+            <label asp-for="Input.PhoneNumber">Phone Number</label>
+            <input asp-for="Input.PhoneNumber" type="text" />
+            <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+        </div>
+        <div class="col-xs-12 mb-20">
+            <label asp-for="Input.Country">Country <span class="required">*</span></label>
+            <input asp-for="Input.Country" type="text" />
+            <span asp-validation-for="Input.Country" class="text-danger"></span>
+        </div>
+        <div class="col-sm-6 col-xs-12 mb-20">
+            <label asp-for="Input.Address">Address <span class="required">*</span></label>
+            <input asp-for="Input.Address" type="text" />
+            <span asp-validation-for="Input.Address" class="text-danger"></span>
+        </div>
+        <div class="col-sm-6 col-xs-12 mb-20">
+            <label asp-for="Input.City">City <span class="required">*</span></label>
+            <input asp-for="Input.City" type="text" />
+            <span asp-validation-for="Input.City" class="text-danger"></span>
+        </div>
+        <div class="col-xs-12 mb-20">
+            <label asp-for="Input.Password">Password <span class="required">*</span></label>
+            <input asp-for="Input.Password" type="password" />
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+        <div class="col-xs-12 mb-20">
+            <label asp-for="Input.ConfirmPassword">Confirm Password <span class="required">*</span></label>
+            <input asp-for="Input.ConfirmPassword" type="password" />
+            <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+        </div>
+        <div class="col-xs-12">
+            <input value="register" type="submit">
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

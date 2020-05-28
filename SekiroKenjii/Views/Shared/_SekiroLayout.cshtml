@@ -1,0 +1,138 @@
+﻿<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>@ViewData["Title"] - Sekiro</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <!-- Icon Font -->
+    <link rel="stylesheet" href="~/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/pe-icon-7-stroke.css">
+    <!-- Plugins css file -->
+    <link rel="stylesheet" href="~/css/plugins.css">
+    <!-- Theme main style -->
+    <link rel="stylesheet" href="~/style.css">
+    <!-- Responsive css -->
+    <link rel="stylesheet" href="~/css/responsive.css">
+
+    <!-- Modernizr JS -->
+    <script src="~/js/vendor/modernizr-2.8.3.min.js"></script>
+
+</head>
+<body>
+    <div class="wrapper">
+        <header class="header-section section sticker">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- logo -->
+                        <div class="header-logo float-left">
+                            <a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/logo.png" alt="main logo"></a>
+                        </div>
+                        <!-- header-search & total-cart -->
+                        <div class="float-right">
+                            <div class="header-option-btns float-right">
+                                <!-- header-search -->
+                                @RenderSection("Search", required: false)
+                                <!-- header Account -->
+                                <div class="header-account float-left">
+                                    <ul>
+                                        <li>
+                                            <a href="#" data-toggle="dropdown"><i class="pe-7s-config"></i></a>
+                                            <ul class="dropdown-menu">
+                                                <partial name="_LoginSekiroPartial" />
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- Header Cart -->
+                                <div class="header-cart float-left">
+                                    <!-- Cart Toggle -->
+                                    <a class="cart-toggle" href="#" data-toggle="dropdown">
+                                        <i class="pe-7s-cart"></i>
+                                        <span>2</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <nav class="main-menu menu-right float-right">
+                                <ul>
+                                    <li class="active">
+                                        <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Shop</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Management</a>
+                                        <ul class="sub-menu">
+                                            <li><a asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a></li>
+                                            <li><a asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a></li>
+                                            <li><a asp-area="Admin" asp-controller="Supplier" asp-action="Index">Supplier</a></li>
+                                            <li><a asp-area="Admin" asp-controller="Coupon" asp-action="Index">Coupon</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">Contact</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="mobile-menu"></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        @RenderSection("Slider", required: false)
+
+        <div class="product-section section pt-120 pb-120">
+            <div class="container">
+                @RenderSection("Filter", required: false)
+                @RenderBody()
+            </div>
+        </div>
+
+        @RenderSection("QuickView", required: false)
+
+        <div class="page-section section pt-10 pb-10">
+            <div class="container">
+                <div class="row mb-40">
+                    <div class="col-xs-12 mb-40">
+                        <div class="pro-thumb-img-slider">
+                            @RenderSection("BrandImg", required: false)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom-section section">
+            <div class="container">
+                <div class="row">
+                    <div class="copyright text-left col-sm-6 col-xs-12">
+                        <p>Powered by <a href="#">Võ Trung Thường</a></p>
+                    </div>
+                    <div class="footer-menu text-right col-sm-6 col-xs-12">
+                        <a href="#">Help & Support</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery latest version -->
+    <script src="~/js/vendor/jquery-3.1.1.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="~/js/bootstrap.min.js"></script>
+    <!-- Plugins js -->
+    <script src="~/js/plugins.js"></script>
+    <!-- Ajax Mail js -->
+    <script src="~/js/ajax-mail.js"></script>
+    <!-- Main js -->
+    <script src="~/js/main.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

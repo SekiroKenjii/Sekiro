@@ -1,0 +1,132 @@
+﻿@model SekiroKenjii.Models.ViewModel.ProductViewModel
+@using SekiroKenjii.Extensions
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-primary">Edit Product</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<form method="post" enctype="multipart/form-data" class="container-fluid">
+    <div class="main-card mb-3 card">
+        <div class="card-body">
+            <input type="hidden" asp-for="Products.Id" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-8">
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="Products.Name" class="col-form-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="Products.Name" readonly class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="Products.SortName" class="col-form-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="Products.SortName" readonly class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="Products.CategoryId" class="col-form-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <select asp-for="@Model.Products.CategoryId" asp-items="Model.Categories.ToSelectListItem(Model.Products.CategoryId)" disabled class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="Products.SupplierId" class="col-form-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <select asp-for="@Model.Products.SupplierId" asp-items="Model.Suppliers.ToSelectListItem(Model.Products.SupplierId)" disabled class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="Products.TagId" class="col-form-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <select asp-for="@Model.Products.TagId" asp-items="Model.Tags.ToSelectListTagItem(Model.Products.TagId)" disabled class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="Products.Price" class="col-form-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="Products.Price" readonly class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="Products.UnitsOnOder" class="col-form-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="Products.UnitsOnOder" readonly class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="Products.UnitsInStock" class="col-form-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="Products.UnitsInStock" readonly class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="Products.Discontinued" class="col-form-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="Products.Discontinued" disabled class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="Products.Description" class="col-form-label"></label>
+                        </div>
+                        <div class="col-10">
+                            @Html.TextAreaFor(p => p.Products.Description, new { @disabled = "disabled" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <img src="@Model.Products.Image" width="500" style="border-radius:5px;border:1px" />
+                </div>
+            </div>
+
+            <div class="col-8">
+                <div class="offset-2 form-group row">
+                    <div class="col-6">
+                        <a asp-action="Edit" asp-route-id="@Model.Products.Id" class="btn btn-primary form-control">Edit</a>                    
+                    </div>
+                    <div class="col-6">
+                        <a asp-action="Index" class="btn btn-success form-control">Back To List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    <script>
+        tinymce.init({            
+            selector: 'textarea',
+            plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+            toolbar_mode: 'floating',
+        });
+    </script>
+}
+@{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}

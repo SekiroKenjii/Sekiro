@@ -1,0 +1,97 @@
+﻿@model SekiroKenjii.Models.Coupon
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-primary">Edit Coupon</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<form method="post" enctype="multipart/form-data" class="container-fluid">
+    <div class="main-card mb-3 card">
+        <div class="card-body">
+            <input type="hidden" asp-for="Id" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-8">
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="Name" class="col-form-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="Name" class="form-control" />
+                        </div>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="Picture" class="col-form-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input type="file" id="projectImage" name="files" multiple class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="CouponType" class="col-form-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <select asp-for="CouponType" asp-items="Html.GetEnumSelectList<Coupon.ECouponType>()" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="Discount" class="col-form-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="Discount" class="form-control" />
+                        </div>
+                        <span asp-validation-for="Discount" class="text-danger"></span>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="MinimumAmount" class="col-form-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="MinimumAmount" class="form-control" />
+                        </div>
+                        <span asp-validation-for="MinimumAmount" class="text-danger"></span>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            <label asp-for="IsActive" class="col-form-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input type="checkbox" asp-for="IsActive" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    @{
+                        var base64 = Convert.ToBase64String(Model.Picture);
+                        var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                    }
+                    <img src="@imgsrc" width="500" style="border-radius:5px;border:1px" />
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="offset-2 form-group row">
+                    <div class="col-6">
+                        <input type="submit" class="btn btn-info form-control" value="Update" />
+                    </div>
+                    <div class="col-6">
+                        <a asp-action="Index" class="btn btn-success form-control">Back To List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
