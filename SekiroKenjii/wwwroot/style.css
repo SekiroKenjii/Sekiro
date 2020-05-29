@@ -721,7 +721,7 @@ input:focus, textarea:focus {
   background-repeat: no-repeat;
   background-size: cover;
   margin-top: 110px;
-  padding: 100px 0;
+  padding: 60px 0;
 }
 .page-banner-content {
   display: inline-block;
@@ -747,6 +747,78 @@ input:focus, textarea:focus {
   margin-bottom: 7px;
   text-transform: uppercase;
 }
+/*-- Page Banner Lock --*/
+.page-banner-lock-section {
+    background-image: url("images/caution.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: 110px;
+    padding: 60px 0;
+}
+
+.page-banner-lock-content {
+    display: inline-block;
+    padding: 50px 50px;
+    position: relative;
+    z-index: 1;
+}
+
+    .page-banner-lock-content::before {
+        content: "";
+        height: 155px;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 330px;
+        z-index: -1;
+    }
+
+    .page-banner-lock-content h1 {
+        color: #fff;
+        font-family: "Montserrat",sans-serif;
+        font-size: 39px;
+        font-weight: 700;
+        line-height: 4;
+        margin-bottom: 7px;
+        text-transform: uppercase;
+    }
+/*-- Page Banner Denied --*/
+.page-banner-denied-section {
+    background-image: url("images/caution.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: 110px;
+    padding: 60px 0;
+}
+
+.page-banner-denied-content {
+    display: inline-block;
+    padding: 50px 50px;
+    position: relative;
+    z-index: 1;
+}
+
+    .page-banner-denied-content::before {
+        content: "";
+        height: 155px;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 330px;
+        z-index: -1;
+    }
+
+    .page-banner-denied-content h1 {
+        color: #fff;
+        font-family: "Montserrat",sans-serif;
+        font-size: 39px;
+        font-weight: 700;
+        line-height: 4;
+        margin-bottom: 7px;
+        text-transform: uppercase;
+    }
 /*-- Page Breadcrumb --*/
 .page-banner-content .breadcrumb {
   background-color: transparent;

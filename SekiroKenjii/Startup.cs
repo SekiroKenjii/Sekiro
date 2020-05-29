@@ -11,6 +11,9 @@ using Microsoft.EntityFrameworkCore;
 using SekiroKenjii.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using SekiroKenjii.Services;
+using Microsoft.Extensions.Options;
 
 namespace SekiroKenjii
 {
@@ -30,10 +33,19 @@ namespace SekiroKenjii
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+            services.AddIdentity<IdentityUser, IdentityRole>(options => 
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+                options.Lockout.AllowedForNewUsers = true;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(30);
+                options.Lockout.MaxFailedAccessAttempts = 3;
+            })
                 .AddDefaultTokenProviders()
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddSingleton<IEmailSender, EmailSender>();
+
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
         }

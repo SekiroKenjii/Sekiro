@@ -12,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Text;
 using System.IO;
 using SekiroKenjii.Utility;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SekiroKenjii.Areas.Admin.Controllers
 {
+    [Authorize(Roles = SD.ManagerUser)]
     [Area("Admin")]
     public class SupplierController : Controller
     {
