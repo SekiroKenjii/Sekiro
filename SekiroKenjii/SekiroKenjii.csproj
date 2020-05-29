@@ -46,12 +46,6 @@
     <Compile Remove="Data\Migrations\20200529152103_FullName.Designer.cs" />
     <Compile Remove="Data\Migrations\20200529152251_FullName.cs" />
     <Compile Remove="Data\Migrations\20200529152251_FullName.Designer.cs" />
-    <Compile Remove="Migrations\20200529173728_AddCategoryToDatabase.cs" />
-    <Compile Remove="Migrations\20200529173728_AddCategoryToDatabase.Designer.cs" />
-    <Compile Remove="Migrations\20200529173923_AddAllToDatabase.cs" />
-    <Compile Remove="Migrations\20200529173923_AddAllToDatabase.Designer.cs" />
-    <Compile Remove="Migrations\20200529175513_AddAllToDatabase.cs" />
-    <Compile Remove="Migrations\20200529175513_AddAllToDatabase.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -62,10 +56,6 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.4" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.4" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
 </Project>
