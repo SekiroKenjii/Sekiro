@@ -1,4 +1,6 @@
-﻿<!doctype html>
+﻿@using SekiroKenjii.Utility
+
+<!doctype html>
 <html class="no-js" lang="en">
 
 <head>
@@ -22,6 +24,15 @@
 
     <!-- Modernizr JS -->
     <script src="~/js/vendor/modernizr-2.8.3.min.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-167981919-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-167981919-1');
+    </script>
 
 </head>
 <body>
@@ -70,15 +81,20 @@
                                     <li>
                                         <a href="#">Shop</a>
                                     </li>
-                                    <li>
-                                        <a href="#">Management</a>
-                                        <ul class="sub-menu">
-                                            <li><a asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a></li>
-                                            <li><a asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a></li>
-                                            <li><a asp-area="Admin" asp-controller="Supplier" asp-action="Index">Supplier</a></li>
-                                            <li><a asp-area="Admin" asp-controller="Coupon" asp-action="Index">Coupon</a></li>
-                                        </ul>
-                                    </li>
+                                    @if (User.IsInRole(SD.ManagerUser))
+                                    {
+                                        <li>
+                                            <a href="#">Management</a>
+                                            <ul class="sub-menu">
+                                                <li><a asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a></li>
+                                                <li><a asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a></li>
+                                                <li><a asp-area="Admin" asp-controller="Supplier" asp-action="Index">Supplier</a></li>
+                                                <li><a asp-area="Admin" asp-controller="Coupon" asp-action="Index">Coupon</a></li>
+                                                <li><a asp-area="Admin" asp-controller="Tag" asp-action="Index">Tag</a></li>
+                                                <li><a asp-area="Admin" asp-controller="User" asp-action="Index">User</a></li>
+                                            </ul>
+                                        </li>
+                                    }
                                     <li><a href="#">Contact</a></li>
                                 </ul>
                             </nav>

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace SekiroKenjii.Areas.Admin.Controllers
 {
@@ -62,30 +63,68 @@ namespace SekiroKenjii.Areas.Admin.Controllers
             await _db.SaveChangesAsync();
 
             //Image being saved
-
             string webRootPath = _hostingEnvironment.WebRootPath;
             var files = HttpContext.Request.Form.Files;
 
             var productsFromDb = await _db.Products.FindAsync(ProductsVM.Products.Id);
 
-            if (files.Count != 0)
+            if (files.Count == 2)
             {
-                //Image has been uploaded
+                //Image has been uploaded (2 Images)
                 var uploads = Path.Combine(webRootPath, SD.ProductImageFolder);
+                var uploadsHQ = Path.Combine(webRootPath, SD.ProductHQImageFolder); 
                 var extension = Path.GetExtension(files[0].FileName);
 
                 using (var filestream = new FileStream(Path.Combine(uploads, ProductsVM.Products.Id + extension), FileMode.Create))
                 {
                     files[0].CopyTo(filestream);
                 }
+                using (var filestreamHQ = new FileStream(Path.Combine(uploadsHQ, ProductsVM.Products.Id + extension), FileMode.Create))
+                {
+                    files[1].CopyTo(filestreamHQ);
+                }
                 productsFromDb.Image = @"\" + SD.ProductImageFolder + @"\" + ProductsVM.Products.Id + extension;
+                productsFromDb.HQImage = @"\" + SD.ProductHQImageFolder + @"\" + ProductsVM.Products.Id + extension;
+            }
+            else if (files.Count() == 1 && files[0].Name == "files1")
+            {
+                //1 Image, slot 1
+                var uploads = Path.Combine(webRootPath, SD.ProductImageFolder);
+                var extension = Path.GetExtension(files[0].FileName);
+                using (var filestream = new FileStream(Path.Combine(uploads, ProductsVM.Products.Id + extension), FileMode.Create))
+                {
+                    files[0].CopyTo(filestream);
+                }
+                productsFromDb.Image = @"\" + SD.ProductImageFolder + @"\" + ProductsVM.Products.Id + extension;
+
+                var uploadsDefault = Path.Combine(webRootPath, SD.ProductHQImageFolder + @"\" + SD.DefaultProductHQImage);
+                System.IO.File.Copy(uploadsDefault, webRootPath + @"\" + SD.ProductHQImageFolder + @"\" + ProductsVM.Products.Id + ".jpg");
+                productsFromDb.HQImage = @"\" + SD.ProductHQImageFolder + @"\" + ProductsVM.Products.Id + ".jpg";
+            }
+            else if (files.Count() == 1 && files[0].Name == "files2")
+            {
+                //1 Image, slot 2
+                var uploadsHQ = Path.Combine(webRootPath, SD.ProductHQImageFolder);
+                var extension = Path.GetExtension(files[0].FileName);
+                using (var filestreamHQ = new FileStream(Path.Combine(uploadsHQ, ProductsVM.Products.Id + extension), FileMode.Create))
+                {
+                    files[0].CopyTo(filestreamHQ);
+                }
+                productsFromDb.HQImage = @"\" + SD.ProductHQImageFolder + @"\" + ProductsVM.Products.Id + extension;
+
+                var uploadsDefault = Path.Combine(webRootPath, SD.ProductImageFolder + @"\" + SD.DefaultProductImage);
+                System.IO.File.Copy(uploadsDefault, webRootPath + @"\" + SD.ProductImageFolder + @"\" + ProductsVM.Products.Id + ".jpg");
+                productsFromDb.Image = @"\" + SD.ProductImageFolder + @"\" + ProductsVM.Products.Id + ".jpg";
             }
             else
             {
                 //when user doesnt upload image
                 var uploads = Path.Combine(webRootPath, SD.ProductImageFolder + @"\" + SD.DefaultProductImage);
+                var uploadsHQ = Path.Combine(webRootPath, SD.ProductHQImageFolder + @"\" + SD.DefaultProductHQImage);
                 System.IO.File.Copy(uploads, webRootPath + @"\" + SD.ProductImageFolder + @"\" + ProductsVM.Products.Id + ".jpg");
+                System.IO.File.Copy(uploadsHQ, webRootPath + @"\" + SD.ProductHQImageFolder + @"\" + ProductsVM.Products.Id + ".jpg");
                 productsFromDb.Image = @"\" + SD.ProductImageFolder + @"\" + ProductsVM.Products.Id + ".jpg";
+                productsFromDb.HQImage = @"\" + SD.ProductHQImageFolder + @"\" + ProductsVM.Products.Id + ".jpg"; 
             }
             await _db.SaveChangesAsync();
 
@@ -127,9 +166,40 @@ namespace SekiroKenjii.Areas.Admin.Controllers
 
             var productsFromDb = await _db.Products.FindAsync(ProductsVM.Products.Id);
 
-            if (files.Count > 0)
+            if (files.Count == 2)
             {
-                //Image has been uploaded
+                //Image has been uploaded (2 files)
+                var uploads = Path.Combine(webRootPath, SD.ProductImageFolder);
+                var uploadsHQ = Path.Combine(webRootPath, SD.ProductHQImageFolder);
+                var extension_new = Path.GetExtension(files[0].FileName);
+
+                var imagePath = Path.Combine(webRootPath, productsFromDb.Image.TrimStart('\\'));
+                var hqImagePath = Path.Combine(webRootPath, productsFromDb.HQImage.TrimStart('\\'));
+
+                if (System.IO.File.Exists(imagePath))
+                {
+                    System.IO.File.Delete(imagePath);
+                }
+                if (System.IO.File.Exists(hqImagePath))
+                {
+                    System.IO.File.Delete(hqImagePath);
+                }
+
+                //upload the new file                 
+                using (var filestream = new FileStream(Path.Combine(uploads, ProductsVM.Products.Id + extension_new), FileMode.Create))
+                {
+                    files[0].CopyTo(filestream);
+                }
+                using (var hqfilestream = new FileStream(Path.Combine(uploadsHQ, ProductsVM.Products.Id + extension_new), FileMode.Create))
+                {
+                    files[1].CopyTo(hqfilestream);
+                }
+                productsFromDb.Image = @"\" + SD.ProductImageFolder + @"\" + ProductsVM.Products.Id + extension_new;
+                productsFromDb.HQImage = @"\" + SD.ProductHQImageFolder + @"\" + ProductsVM.Products.Id + extension_new;
+            }
+            else if (files.Count == 1 && files[0].Name == "files1")
+            {
+                //1 files, slot 1
                 var uploads = Path.Combine(webRootPath, SD.ProductImageFolder);
                 var extension_new = Path.GetExtension(files[0].FileName);
 
@@ -139,13 +209,29 @@ namespace SekiroKenjii.Areas.Admin.Controllers
                 {
                     System.IO.File.Delete(imagePath);
                 }
-                //we will upload the new file
-                 
                 using (var filestream = new FileStream(Path.Combine(uploads, ProductsVM.Products.Id + extension_new), FileMode.Create))
                 {
                     files[0].CopyTo(filestream);
                 }
                 productsFromDb.Image = @"\" + SD.ProductImageFolder + @"\" + ProductsVM.Products.Id + extension_new;
+            }
+            else if (files.Count == 1 && files[0].Name == "files2")
+            {
+                //1 files, slot 2
+                var uploadsHQ = Path.Combine(webRootPath, SD.ProductHQImageFolder);
+                var extension_new = Path.GetExtension(files[0].FileName);
+
+                var hqImagePath = Path.Combine(webRootPath, productsFromDb.HQImage.TrimStart('\\'));
+
+                if (System.IO.File.Exists(hqImagePath))
+                {
+                    System.IO.File.Delete(hqImagePath);
+                }
+                using (var hqfilestream = new FileStream(Path.Combine(uploadsHQ, ProductsVM.Products.Id + extension_new), FileMode.Create))
+                {
+                    files[0].CopyTo(hqfilestream);
+                }
+                productsFromDb.HQImage = @"\" + SD.ProductHQImageFolder + @"\" + ProductsVM.Products.Id + extension_new;
             }
 
             productsFromDb.Name = ProductsVM.Products.Name;
@@ -208,12 +294,19 @@ namespace SekiroKenjii.Areas.Admin.Controllers
             else
             {
                 var upload = Path.Combine(webRootPath, SD.ProductImageFolder);
+                var uploadHQ = Path.Combine(webRootPath, SD.ProductHQImageFolder);
                 var extension = Path.GetExtension(products.Image);
 
                 if (System.IO.File.Exists(Path.Combine(upload, products.Id + extension)))
                 {
                     System.IO.File.Delete(Path.Combine(upload, products.Id + extension));
-                }
+
+                    if (System.IO.File.Exists(Path.Combine(uploadHQ, products.Id + extension)))
+                    {
+                        System.IO.File.Delete(Path.Combine(uploadHQ, products.Id + extension));
+                    }
+                }          
+
                 _db.Products.Remove(products);
                 await _db.SaveChangesAsync();
 

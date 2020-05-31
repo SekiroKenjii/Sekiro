@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using SekiroKenjii.Services;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Mvc.ViewComponents;
 
 namespace SekiroKenjii
 {
@@ -44,6 +45,7 @@ namespace SekiroKenjii
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            //services.AddScoped<IDBInitializer, DbInitializer>();
             services.AddSingleton<IEmailSender, EmailSender>();
 
             services.AddControllersWithViews();
@@ -51,7 +53,7 @@ namespace SekiroKenjii
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)// IDBInitializer dBInitializer
         {
             if (env.IsDevelopment())
             {
@@ -64,6 +66,8 @@ namespace SekiroKenjii
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            //dBInitializer.Initialize();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

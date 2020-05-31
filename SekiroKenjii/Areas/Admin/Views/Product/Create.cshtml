@@ -39,7 +39,15 @@
                     <label asp-for="Products.Image" class="col-form-label"></label>
                 </div>
                 <div class="col-10">
-                    <input type="file" id="projectImage" name="files" multiple class="form-control" />
+                    <input type="file" id="projectImage" name="files1" asp-for="Products.Image" multiple class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-2">
+                    <label asp-for="Products.HQImage" class="col-form-label"></label>
+                </div>
+                <div class="col-10">
+                    <input type="file" id="projectHQImage" name="files2" asp-for="Products.HQImage" multiple class="form-control" />
                 </div>
             </div>
             <div class="form-group row">

@@ -18,8 +18,8 @@
 @section Slider{
     <div class="home-slider-section section">
         <div class="slider" id="home-slider">
-            <img src="~/images/banners/SecondBanner.png" />
-            <img src="~/images/banners/Best choose for gamer.png" />
+            <img src="~/images/banners/SecondBanner.jpg" />
+            <img src="~/images/banners/Best choose for gamer.jpg" />
             @if (Model.Coupons.ToList().Count > 0)
             {
                 @for (int i = 0; i < Model.Coupons.Count(); i++)
@@ -59,7 +59,7 @@
         <div class="col-xs-12">
             <div class="product-filter-wrapper">
                 <div class="product-filter col-md-6 col-xs-12 mb-30">
-                    <h4>Product Supplier</h4>
+                    <h4>Product Brand</h4>
                     <ul class="sort-by">
                         @foreach (var sup in Model.Suppliers)
                         {
@@ -104,6 +104,12 @@
     }
 </div>
 
+<div class="row">
+    <div class="text-center col-xs-12 mt-30">
+        <a href="#" class="btn">load more</a>
+    </div>
+</div>
+
 @section QuickView{
     @foreach (var pro in Model.Products)
     {
@@ -115,7 +121,7 @@
                         <div class="col-md-5 col-sm-6 col-xs-12 mb-40">
                             <div class="tab-content mb-10">
                                 <div class="pro-large-img tab-pane active">
-                                    <img src="@pro.Image" alt="" />
+                                    <img src="@pro.HQImage" alt="" />
                                 </div>
                             </div>
                         </div>
@@ -151,6 +157,6 @@
 @section BrandImg{
     @foreach (var img in Model.Suppliers)
     {
-        <div><a href="#" data-toggle="tab"><img src="@img.BrandImage" alt="" /></a></div>
+        <div><a href="#" data-toggle="tab"><img src="@img.BrandImage" style="max-width:100%;height:auto" alt="" /></a></div>
     }
 }

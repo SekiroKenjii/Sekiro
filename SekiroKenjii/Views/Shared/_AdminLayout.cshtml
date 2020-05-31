@@ -13,6 +13,15 @@
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <script src="https://cdn.tiny.cloud/1/0q2s726ni1nuzgjg4vs7narti9yhmp10ezjragxtuzlpta6r/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-167981919-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-167981919-1');
+    </script>
 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -55,8 +64,8 @@
                             </a>
                         </li>
 
-                        <li class="nav-item has-treeview menu-open">
-                            <a href="#" class="nav-link active">
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link" style="cursor:pointer">
                                 <i class="nav-icon fas fa-box-open"></i>
                                 <p>
                                     Products Manager
@@ -89,12 +98,21 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-area="Admin" asp-controller="User" asp-action="Index" class="nav-link">
+                                    <a asp-area="Admin" asp-controller="Tag" asp-action="Index" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Users</p>
+                                        <p>Tags</p>
                                     </a>
                                 </li>
                             </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a asp-area="Admin" asp-controller="User" asp-action="Index" class="nav-link">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>
+                                    Users Management
+                                    <i class="fas fa-angle-right right"></i>
+                                </p>
+                            </a>
                         </li>
                     </ul>
                 </nav>

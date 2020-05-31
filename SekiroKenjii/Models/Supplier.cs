@@ -13,6 +13,7 @@ namespace SekiroKenjii.Models
         [Required]
         public string Name { get; set; }
         public string BrandImage { get; set; }
+        public string HQBrandImage { get; set; }
         [Required]
         public string Address { get; set; }
         [Required]

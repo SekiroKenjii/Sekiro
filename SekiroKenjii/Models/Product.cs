@@ -18,6 +18,8 @@ namespace SekiroKenjii.Models
 
         public string Image { get; set; }
 
+        public string HQImage { get; set; }
+
         public string SortName { get; set; }
 
         [Display(Name ="Supplier")]

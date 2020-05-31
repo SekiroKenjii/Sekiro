@@ -288,6 +288,9 @@ namespace SekiroKenjii.Migrations
                     b.Property<bool>("Discontinued")
                         .HasColumnType("bit");
 
+                    b.Property<string>("HQImage")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
@@ -365,6 +368,9 @@ namespace SekiroKenjii.Migrations
 
                     b.Property<string>("Country")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HQBrandImage")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HomePage")

@@ -8,7 +8,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>@ViewData["Title"] - Sekiro</title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Bootstrap css -->
     <link rel="stylesheet" href="~/css/bootstrap.min.css">
@@ -19,12 +19,21 @@
     <link rel="stylesheet" href="~/css/plugins.css">
     <!-- Theme main style -->
     <link rel="stylesheet" href="~/style.css">
+
     <!-- Responsive css -->
     <link rel="stylesheet" href="~/css/responsive.css">
-
     <!-- Modernizr JS -->
     <script src="~/js/vendor/modernizr-2.8.3.min.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-167981919-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
+        gtag('config', 'UA-167981919-1');
+    </script>
+    <meta name="google-site-verification" content="YRwRCcEc_T1rwWAeYG0gMgkyR6ccHuipi_iR3fv_ZdA" />
 </head>
 <body>
     <div class="wrapper">
@@ -78,6 +87,7 @@
                                                 <li><a asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a></li>
                                                 <li><a asp-area="Admin" asp-controller="Supplier" asp-action="Index">Supplier</a></li>
                                                 <li><a asp-area="Admin" asp-controller="Coupon" asp-action="Index">Coupon</a></li>
+                                                <li><a asp-area="Admin" asp-controller="Tag" asp-action="Index">Tag</a></li>
                                                 <li><a asp-area="Admin" asp-controller="User" asp-action="Index">User</a></li>
                                             </ul>
                                         </li>
@@ -103,17 +113,18 @@
 
         @RenderSection("QuickView", required: false)
 
-        <div class="page-section section pt-10 pb-10">
-            <div class="container">
-                <div class="row mb-40">
-                    <div class="col-xs-12 mb-40">
-                        <div class="pro-thumb-img-slider">
-                            @RenderSection("BrandImg", required: false)
-                        </div>
+    <div class="page-section section pt-10 pb-10">
+        <h2 class="text-white text-center">Popular Brand</h2>
+        <div class="container">
+            <div class="row mb-40">
+                <div class="col-xs-12 mb-40">
+                    <div class="pro-thumb-img-slider">
+                        @RenderSection("BrandImg", required: false)
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
         <div class="footer-bottom-section section">
             <div class="container">

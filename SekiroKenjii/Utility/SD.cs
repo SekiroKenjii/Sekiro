@@ -12,6 +12,8 @@ namespace SekiroKenjii.Utility
 
         public const string DefaultProductImage = "default_product_image.jpg";
         public const string ProductImageFolder = @"images\ProductImage";
+        public const string DefaultProductHQImage = "default_product_hqimage.jpg";
+        public const string ProductHQImageFolder = @"images\ProductHQImage";
 
         public const string DefaultCategoryImage = "default_category_image.jpg";
         public const string CategoryImageFolder = @"images\CategoryImage";

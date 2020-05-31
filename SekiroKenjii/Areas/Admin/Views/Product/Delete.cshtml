@@ -1,7 +1,7 @@
 ﻿@model SekiroKenjii.Models.ViewModel.ProductViewModel
 @using SekiroKenjii.Extensions
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Delete";
 }
 <div class="content-header">
     <div class="container-f2">
@@ -100,7 +100,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <img src="@Model.Products.Image" width="500" style="border-radius:5px; border:1px" />
+                    <img src="@Model.Products.HQImage" style="max-width: 100%; height: auto; border-radius: 5px; border: 1px" />
                 </div>
             </div>
             <br />
