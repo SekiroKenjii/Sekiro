@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SekiroKenjii.Data;
 
 namespace SekiroKenjii.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200601094637_AddOrderAndOrderDetailsToDatabase")]
+    partial class AddOrderAndOrderDetailsToDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -304,18 +306,6 @@ namespace SekiroKenjii.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ShipAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ShipCity")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ShipCountry")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ShipEmail")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")

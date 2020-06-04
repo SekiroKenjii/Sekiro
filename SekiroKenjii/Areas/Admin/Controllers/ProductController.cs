@@ -74,17 +74,33 @@ namespace SekiroKenjii.Areas.Admin.Controllers
                 var uploads = Path.Combine(webRootPath, SD.ProductImageFolder);
                 var uploadsHQ = Path.Combine(webRootPath, SD.ProductHQImageFolder); 
                 var extension = Path.GetExtension(files[0].FileName);
-
-                using (var filestream = new FileStream(Path.Combine(uploads, ProductsVM.Products.Id + extension), FileMode.Create))
+                if (files[0].Name == "files1")
                 {
-                    files[0].CopyTo(filestream);
+                    using (var filestream = new FileStream(Path.Combine(uploads, ProductsVM.Products.Id + extension), FileMode.Create))
+                    {
+                        files[0].CopyTo(filestream);
+                    }
+                    using (var filestreamHQ = new FileStream(Path.Combine(uploadsHQ, ProductsVM.Products.Id + extension), FileMode.Create))
+                    {
+                        files[1].CopyTo(filestreamHQ);
+                    }
+                    productsFromDb.Image = @"\" + SD.ProductImageFolder + @"\" + ProductsVM.Products.Id + extension;
+                    productsFromDb.HQImage = @"\" + SD.ProductHQImageFolder + @"\" + ProductsVM.Products.Id + extension;
                 }
-                using (var filestreamHQ = new FileStream(Path.Combine(uploadsHQ, ProductsVM.Products.Id + extension), FileMode.Create))
+                else
                 {
-                    files[1].CopyTo(filestreamHQ);
+                    using (var filestream = new FileStream(Path.Combine(uploadsHQ, ProductsVM.Products.Id + extension), FileMode.Create))
+                    {
+                        files[0].CopyTo(filestream);
+                    }
+                    using (var filestreamHQ = new FileStream(Path.Combine(uploads, ProductsVM.Products.Id + extension), FileMode.Create))
+                    {
+                        files[1].CopyTo(filestreamHQ);
+                    }
+                    productsFromDb.Image = @"\" + SD.ProductImageFolder + @"\" + ProductsVM.Products.Id + extension;
+                    productsFromDb.HQImage = @"\" + SD.ProductHQImageFolder + @"\" + ProductsVM.Products.Id + extension;
                 }
-                productsFromDb.Image = @"\" + SD.ProductImageFolder + @"\" + ProductsVM.Products.Id + extension;
-                productsFromDb.HQImage = @"\" + SD.ProductHQImageFolder + @"\" + ProductsVM.Products.Id + extension;
+                
             }
             else if (files.Count() == 1 && files[0].Name == "files1")
             {

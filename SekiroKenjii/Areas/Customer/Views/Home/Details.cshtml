@@ -1,0 +1,78 @@
+﻿@model SekiroKenjii.Models.ShoppingCart
+@{
+    ViewData["Title"] = "Details";
+}
+<br />
+<br />
+<h1 class="text-center" style="font-weight:bold">Product Details</h1>
+<br />
+<hr />
+<br />
+<form method="post">
+    <div class="row mb-40">
+        <div class="col-md-5 col-sm-6 col-xs-12 mb-40">
+            <div class="tab-content mb-10">
+                <div class="pro-large-img tab-pane active">
+                    <img src="@Model.Product.HQImage" alt="" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7 col-sm-6 col-xs-12 mb-40">
+            <div class="product-details section">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <!-- Title -->
+                <h1 class="title">@Model.Product.Name</h1>
+                <!-- Price Ratting -->
+                <div class="price-ratting section">
+                    <!-- Price -->
+                    <span class="price float-left"><span class="new">$ @Model.Product.Price</span></span>
+                </div>
+                <!-- Short Description -->
+                <div class="short-desc section">
+                    <h5 class="pd-sub-title">Overview</h5>
+                    <p>@Html.Raw(Model.Product.Description)</p>
+                </div>
+                <!-- Quantity Cart -->
+                <div class="quantity-cart section">
+                    <div class="product-quantity">
+                        <input asp-for="Count" value="1">
+                        <span asp-validation-for="Count" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="add-to-cart">add to cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <ul class="pro-info-tab-list section">
+                <li class="active"><a href="#more-info" data-toggle="tab">More info</a></li>
+                <li><a href="#data-sheet" data-toggle="tab">Data sheet</a></li>
+            </ul>
+        </div>
+        <div class="tab-content col-xs-12">
+            <div class="pro-info-tab tab-pane active" id="more-info">
+                <p>@Html.Raw(Model.Product.Description)</p>
+            </div>
+            <div class="pro-info-tab tab-pane" id="data-sheet">
+                <table class="table-data-sheet">
+                    <tbody>
+                        <tr class="odd">
+                            <td>Product Brand</td>
+                            <td>@Model.Product.Supplier.Name</td>
+                        </tr>
+                        <tr class="even">
+                            <td>Product Category</td>
+                            <td>@Model.Product.Category.Name</td>
+                        </tr>
+                        <tr class="odd">
+                            <td>Product Status</td>
+                            <td>@Model.Product.Tag.Name</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <input asp-for="ProductId" hidden />
+</form>

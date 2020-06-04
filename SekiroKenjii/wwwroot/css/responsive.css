@@ -296,7 +296,7 @@ a.meanmenu-reveal {
 /* small mobile :320px. */
 @media only screen and (max-width: 479px) {
 .container {
-  width:300px;
+  width:370px;
 }
 blockquote p {
   font-size: 18px;
@@ -307,9 +307,21 @@ blockquote p {
   padding: 6px 30px;
 }
 /*-- Header Option --*/
-.header-option-btns {
-  display: none;
-}
+    .header-option-btns {
+        margin-left: 0;
+        margin-right: 30px;
+    }
+
+    .header-search, .header-account > ul > li, .header-cart {
+        padding: 20px 0;
+    }
+    a.meanmenu-reveal {
+        top: -45px;
+    }
+    /*-- Slider Nav --*/
+    .nivo-directionNav a {
+        display: none;
+    }
 /*-- Hero Slider --*/
 .hero-slider-content h1 {
   font-size: 16px;

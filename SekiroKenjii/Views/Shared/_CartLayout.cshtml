@@ -5,7 +5,6 @@
 
 <!doctype html>
 <html class="no-js" lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -16,8 +15,8 @@
     <!-- Bootstrap css -->
     <link rel="stylesheet" href="~/css/bootstrap.min.css">
     <!-- Icon Font -->
-    <link rel="stylesheet" href="~/css/font-awesome.min.css">
-    @*<script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" data-auto-replace-svg="nest"></script>*@
+    @*<link rel="stylesheet" href="~/css/font-awesome.min.css">*@
+    <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" data-auto-replace-svg="nest"></script>
     <link rel="stylesheet" href="~/css/pe-icon-7-stroke.css">
     <!-- Plugins css file -->
     <link rel="stylesheet" href="~/css/plugins.css">
@@ -25,18 +24,9 @@
     <link rel="stylesheet" href="~/style.css">
     <!-- Responsive css -->
     <link rel="stylesheet" href="~/css/responsive.css">
-    <!-- Modernizr JS -->
-    <script src="~/js/vendor/modernizr-2.8.3.min.js"></script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-167981919-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
 
-        gtag('config', 'UA-167981919-1');
-    </script>
-    <meta name="google-site-verification" content="YRwRCcEc_T1rwWAeYG0gMgkyR6ccHuipi_iR3fv_ZdA" />
+    <!-- Modernizr JS -->
+    <script src="js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 <body>
     <div class="wrapper">
@@ -51,8 +41,6 @@
                         <!-- header-search & total-cart -->
                         <div class="float-right">
                             <div class="header-option-btns float-right">
-                                <!-- header-search -->
-                                @RenderSection("Search", required: false)
                                 <!-- header Account -->
                                 <div class="header-account float-left">
                                     <ul>
@@ -80,7 +68,7 @@
                                     }
                                     else
                                     {
-                                        <a class="cart-toggle" asp-area="Customer" asp-controller="Cart" asp-action="Index">
+                                        <a class="cart-toggle" href="#" data-toggle="dropdown">
                                             <i class="pe-7s-cart"></i>
                                             <span>0</span>
                                         </a>
@@ -120,18 +108,13 @@
             </div>
         </header>
 
-        @RenderSection("Slider", required: false)
-
-        <div class="product-section section pt-120 pb-120">
+        <div class="page-section section pt-120 pb-80">
             <div class="container">
-                @RenderSection("Filter", required: false)
-                @RenderBody()
+                <div class="row">
+                    @RenderBody()
+                </div>
             </div>
         </div>
-
-        @RenderSection("QuickView", required: false)
-
-        @RenderSection("BrandImg", required: false)
 
         <div class="footer-bottom-section section">
             <div class="container">
@@ -146,9 +129,9 @@
             </div>
         </div>
     </div>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-    <!-- jQuery latest version -->
-    <script src="~/js/vendor/jquery-3.1.1.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <!-- Bootstrap js -->
     <script src="~/js/bootstrap.min.js"></script>
     <!-- Plugins js -->

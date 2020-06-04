@@ -12,5 +12,6 @@ namespace SekiroKenjii.Models.ViewModel
         public IEnumerable<Supplier> Suppliers { get; set; }
         public IEnumerable<Tag> Tags { get; set; }
         public IEnumerable<Coupon> Coupons { get; set; }
+        public PagingInfo PagingInfo { get; set; }
     }
 }

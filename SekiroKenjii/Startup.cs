@@ -15,6 +15,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using SekiroKenjii.Services;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
+using SekiroKenjii.Utility;
+using System.Configuration;
+using Stripe;
 
 namespace SekiroKenjii
 {
@@ -45,11 +48,19 @@ namespace SekiroKenjii
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
             //services.AddScoped<IDBInitializer, DbInitializer>();
             services.AddSingleton<IEmailSender, EmailSender>();
 
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
+
+            services.AddSession(options =>
+            {
+                options.Cookie.IsEssential = true;
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,6 +84,8 @@ namespace SekiroKenjii
 
             app.UseRouting();
 
+            StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["SecretKey"];
+            app.UseSession();
             app.UseAuthentication();
             app.UseAuthorization();
 

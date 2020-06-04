@@ -1,0 +1,84 @@
+﻿@model SekiroKenjii.Models.ViewModel.OrderDetailsCart
+@{
+    ViewData["Title"] = "Cart";
+    Layout = "~/Views/Shared/_CartLayout.cshtml";
+}
+
+<br />
+<h1 class="text-center" style="font-weight:bold">Your Cart</h1>
+<br />
+<hr />
+<br />
+<form method="post">
+    @if (Model.lstCarts.Count > 0)
+    {
+        <input id="UserId" asp-for="@Model.lstCarts[0].ApplicationUserId" hidden />
+        <div class="col-xs-12">
+            <div class="cart-table table-responsive mb-40">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="pro-thumbnail">Image</th>
+                            <th class="pro-title">Product</th>
+                            <th class="pro-price">Price</th>
+                            <th class="pro-quantity">Quantity</th>
+                            <th class="pro-remove">Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.lstCarts)
+                        {
+                            <tr>
+                                <td class="pro-thumbnail"><a href="#"><img src="@item.Product.Image" alt="" /></a></td>
+                                <td class="pro-title"><a href="#">@item.Product.SortName</a></td>
+                                <td class="pro-quantity"><strong>$@item.Product.Price<span class="text-muted"> ×</span> @item.Count</strong></td>
+                                <td class="pro-price">
+                                    <button type="submit" asp-action="Plus" asp-route-cartId="@item.Id" class="btn" style="padding: 10px 20px"><i class="fas fa-plus"></i></button>&emsp;
+                                    <button type="submit" asp-action="Minus" asp-route-cartId="@item.Id" class="btn" style="padding: 10px 20px"><i class="fas fa-minus"></i></button>
+                                </td>
+                                <td class="pro-remove"><button type="submit" class="btn" asp-action="Remove" asp-route-cartId="@item.Id"><i class="fas fa-trash"></i></button></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <div class="col-md-8 col-sm-7 col-xs-12">
+            <div class="cart-buttons mb-30">
+                <a href="#">Continue Shopping</a>
+            </div>
+            <div class="cart-coupon mb-40">
+                <br />
+                <h4>Coupon</h4>
+                <p>Enter your coupon code if you have one.</p>
+                <input asp-for="@Model.Orders.CouponCode" placeholder="Coupon code..." />
+                <input type="submit" asp-action="AddCoupon" id="btnCoupon" value="Apply Coupon" />
+                <input type="submit" asp-action="RemoveCoupon" style="display:none;" id="btnRemoveCoupon" value="Apply Coupon" />
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-5 col-xs-12">
+            <div class="cart-total mb-40">
+                <h3>Cart Totals</h3>
+                <table>
+                    <tbody>
+                        <tr class="order-total">
+                            <th>Total</th>
+                            <td>
+                                <strong><span id="txtOrderTotal" class="amount">$@Model.Orders.OrderTotal</span></strong>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="proceed-to-checkout section mt-30">
+                    <a asp-action="Summary" asp-area="Customer" asp-controller="Cart">Proceed to Checkout</a>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p>Nothing here!</p>
+    }
+</form>
+

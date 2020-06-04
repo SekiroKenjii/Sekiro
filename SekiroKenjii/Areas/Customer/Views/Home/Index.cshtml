@@ -20,24 +20,6 @@
         <div class="slider" id="home-slider">
             <img src="~/images/banners/SecondBanner.jpg" />
             <img src="~/images/banners/Best choose for gamer.jpg" />
-            @if (Model.Coupons.ToList().Count > 0)
-            {
-                @for (int i = 0; i < Model.Coupons.Count(); i++)
-                {
-                    if (i == 0)
-                    {
-                        var base64 = Convert.ToBase64String(Model.Coupons.ToList()[i].Picture);
-                        var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
-                        <img src="@imgsrc" />
-                    }
-                    else
-                    {
-                        var base64 = Convert.ToBase64String(Model.Coupons.ToList()[i].Picture);
-                        var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
-                        <img src="@imgsrc" />
-                    }
-                }
-            }
         </div>
     </div>
 }
@@ -90,7 +72,7 @@
                     <a class="image" asp-action="Details" asp-route-id="@product.Id"><img src="@product.Image" alt="" /></a>
                     <div class="action-btn fix">
                         <a href="#" data-toggle="modal" data-target="#@product.SortName.Replace(" ",string.Empty)" title="Quick View"><i class="pe-7s-look"></i>Quick view</a>
-                        <a href="#" title="Add to Cart"><i class="pe-7s-cart"></i>add to cart</a>
+                        <a asp-action="Details" asp-route-id="@product.Id" title="Add to Cart"><i class="pe-7s-box2"></i>view details</a>
                     </div>
                 </div>
                 <div class="product-info text-left">
@@ -106,7 +88,7 @@
 
 <div class="row">
     <div class="text-center col-xs-12 mt-30">
-        <a href="#" class="btn">load more</a>
+        <a href="#" id="loadMore" class="btn">load more</a>
     </div>
 </div>
 
@@ -136,15 +118,8 @@
                                     <p>@Html.Raw(pro.Description)</p>
                                 </div>
                                 <div class="quantity-cart section">
-                                    <div class="product-quantity">
-                                        <input type="text" value="0">
-                                    </div>
-                                    <button class="add-to-cart">add to cart</button>
+                                    <a asp-action="Details" asp-route-id="@pro.Id" class="add-to-cart">View More Details</a>
                                 </div>
-                                <ul class="usefull-link section">
-                                    <li><a href="#"><i class="pe-7s-mail"></i> Email to a Friend</a></li>
-                                    <li><a href="#"><i class="pe-7s-print"></i> print</a></li>
-                                </ul>
                             </div>
                         </div>
                     </div>
@@ -155,8 +130,34 @@
 }
 
 @section BrandImg{
-    @foreach (var img in Model.Suppliers)
-    {
-        <div><a href="#" data-toggle="tab"><img src="@img.BrandImage" style="max-width:100%;height:auto" alt="" /></a></div>
-    }
+    <div class="page-section section pt-10 pb-10">
+        <h2 class="text-white text-center">Popular Brand</h2>
+        <div class="container">
+            <div class="row mb-40">
+                <div class="col-xs-12 mb-40">
+                    <div class="pro-thumb-img-slider">
+                        @foreach (var img in Model.Suppliers)
+                        {
+                            <div><a href="#" data-toggle="tab"><img src="@img.BrandImage" style="max-width:100%;height:auto" alt="" /></a></div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts{ 
+<script>
+    $(function () {
+        $("isotope-item").slice(0, 8).show();
+        $("#loadMore").on('click', function (e) {
+            e.preventDefault();
+            $("isotope-item:hidden").slice(0, 8).slideDown();
+            if ($("isotope-item:hidden").length == 0) {
+                $("#load").fadeOut('slow');
+            }
+        });
+    });
+</script>
 }

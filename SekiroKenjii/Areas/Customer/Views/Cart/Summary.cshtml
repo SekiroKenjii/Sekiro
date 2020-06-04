@@ -1,0 +1,182 @@
+﻿@model SekiroKenjii.Models.ViewModel.OrderDetailsCart
+@using Microsoft.Extensions.Options
+
+@inject IOptions<SekiroKenjii.Utility.StripeSettings> Stripe
+
+@{
+    ViewData["Title"] = "Check Out";
+    Layout = "~/Views/Shared/_CartLayout.cshtml";
+}
+<br />
+<h1 class="text-center" style="font-weight:bold">Check Out</h1>
+<br />
+<hr />
+<br />
+<form method="post">
+    @if (Model.lstCarts.Count > 0)
+    {
+        <div class="checkout-form">
+            <div class="col-lg-6 col-md-6 mb-40">
+                <h3>Billing Details</h3>
+                <div class="row">
+                    <div class="col-xs-12 mb-30">
+                        <label>Full Name <span class="required">*</span></label>
+                        <input asp-for="@Model.Orders.OrderName" id="txtName" type="text" />
+                    </div>
+                    <div class="col-xs-6 mb-30">
+                        <label>Email <span class="required">*</span></label>
+                        <input asp-for="@Model.Orders.ShipEmail" id="txtEmail" type="text" />
+                    </div>
+                    <div class="col-xs-6 mb-30">
+                        <label>Phone Number <span class="required">*</span></label>
+                        <input asp-for="@Model.Orders.PhoneNumber" id="txtPhone" type="text" />
+                    </div>
+                    <div class="col-xs-12 mb-30">
+                        <label>Country <span class="required">*</span></label>
+                        <input asp-for="@Model.Orders.ShipCountry" id="txtCountry" type="text" />
+                    </div>
+                    <div class="col-xs-6 mb-30">
+                        <label>Ship Address <span class="required">*</span></label>
+                        <input asp-for="@Model.Orders.ShipAddress" id="txtAddress" type="text" />
+                    </div>
+                    <div class="col-xs-6 mb-30">
+                        <label>City <span class="required">*</span></label>
+                        <input asp-for="@Model.Orders.ShipCity" id="txtCity" type="text" />
+                    </div>
+                    <div class="col-xs-12 mb-30">
+                        <label>Order Date</label>
+                        <input asp-for="@Model.Orders.OrderDate" id="txtDate" disabled type="text" />
+                    </div>
+                    <div class="col-xs-12 mb-30">
+                        <label>Comment</label>
+                        <textarea asp-for="@Model.Orders.Comment" style="height:120px"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-xs-12 mb-40">
+                <div class="order-wrapper">
+                    <h3>Your order</h3>
+                    <div class="order-table table-responsive mb-30">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="product-name">Product</th>
+                                    <th class="product-total">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ var total = 0.0; }
+                                @foreach (var item in Model.lstCarts)
+                                {
+                                    <tr>
+                                        <td class="product-name">
+                                            @item.Product.SortName <strong class="product-qty">× @item.Count</strong>
+                                        </td>
+                                        <td class="product-total">
+                                            <span class="amount">$@(item.Product.Price * item.Count)</span>
+                                            @{ total += (item.Product.Price * item.Count); }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                @if (Model.Orders.CouponCode != null)
+                                {
+                                    <tr>
+                                        <th>
+                                            Promo Code
+                                            <br />
+                                            <small style="color:deepskyblue">&nbsp;@Model.Orders.CouponCode</small>
+                                        </th>
+                                        <td>-$@(total-Model.Orders.OrderTotal)</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Order Total</th>
+                                        <td><strong>$@Model.Orders.OrderTotal</strong>
+                                    </tr>
+                                }
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div class="payment-method">
+                        <div class="order-button">
+                            @{
+                                var OrderTotalForStripe = Model.Orders.OrderTotal * 100;
+                            }
+                            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                    data-key="@Stripe.Value.PublishableKey"
+                                    data-amount="@OrderTotalForStripe"
+                                    data-name="Sekiro Website"
+                                    data-label="Place Order"
+                                    data-description="Team Up - Game On."
+                                    data-locale="auto"
+                                    data-allow-remember-me="false"
+                                    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                                    >
+                            </script>
+                            <script>
+                                document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
+                            </script>
+
+                            <input type="submit" id="btnPlaceOrder" onclick="return validateInput()" value="Place order" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p>Nothing There</p>
+    }
+</form>
+@section Scripts{ 
+<script>
+    function validateInput() {
+        var name = document.getElementById("txtName").value;
+        var email = document.getElementById("txtEmail").value;
+        var phone = document.getElementById("txtPhone").value;
+        var country = document.getElementById("txtCountry").value;
+        var address = document.getElementById("txtAddress").value;
+        var city = document.getElementById("txtCity").value;
+
+        if (name.toString() == '') {
+            alert("Please enter your Full Name");
+            return false;
+        }
+        else {
+            if (phone.toString() == '') {
+                alert("Please enter your Phone Number");
+                return false;
+            }
+            else {
+                if (email.toString() == '') {
+                    alert("Please enter your Email");
+                    return false;
+                }
+                else {
+                    if (country.toString() == '') {
+                        alert("Please insert your Country");
+                        return false;
+                    }
+                    else {
+                        if (address.toString() == '') {
+                            alert("Please insert your Address");
+                            return false;
+                        }
+                        else {
+                            if (city.toString() == '') {
+                                alert("Please insert your City");
+                                return false;
+                            }
+                            else {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+</script>
+}
