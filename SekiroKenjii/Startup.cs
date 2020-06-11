@@ -42,7 +42,7 @@ namespace SekiroKenjii
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Lockout.AllowedForNewUsers = true;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(30);
-                options.Lockout.MaxFailedAccessAttempts = 3;
+                options.Lockout.MaxFailedAccessAttempts = 5;
             })
                 .AddDefaultTokenProviders()
                 .AddDefaultUI()

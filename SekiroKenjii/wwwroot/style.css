@@ -720,6 +720,14 @@ input:focus, textarea:focus {
     margin-top: 110px;
     padding: 60px 0;
 }
+.page-shop-section {
+    background-image: url("images/shop.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: 110px;
+    padding: 60px 0;
+}
 .page-banner-section {
   background-image: url("images/login.jpg");
   background-position: center center;

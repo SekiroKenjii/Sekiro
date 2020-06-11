@@ -26,7 +26,7 @@ namespace SekiroKenjii.Controllers
         {
             _db = db;
         }
-        public async Task<IActionResult> Index(int productPage = 1,string SearchString = null)
+        public async Task<IActionResult> Index()
         {
             IndexViewModel IndexVM = new IndexViewModel()
             {
@@ -39,49 +39,12 @@ namespace SekiroKenjii.Controllers
 
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
             if (claim != null)
             {
                 var cnt = _db.ShoppingCarts.Where(u => u.ApplicationUserId == claim.Value).ToList().Count();
                 HttpContext.Session.SetInt32(SD.ssShoppingCartCount, cnt);
             }
-
-            StringBuilder param = new StringBuilder();
-            //param.Append("/Customer/Home?productPage=:");
-            param.Append("&Search");
-            if(SearchString != null)
-            {
-                param.Append(SearchString);
-            }
-            IndexVM.Products = await _db.Products.Include(p => p.Category).Include(p => p.Supplier).ToListAsync();
-            if (SearchString != null)
-            {
-                foreach (var item in IndexVM.Products)
-                {
-                    if (item.SortName.ToLower().Contains(SearchString.ToLower()))
-                    {
-                        IndexVM.Products = IndexVM.Products.Where(p => p.Name.ToLower().Contains(SearchString.ToLower())).ToList();
-                    }
-                    if (item.Category.Name.ToLower().Contains(SearchString.ToLower()))
-                    {
-                        IndexVM.Products = IndexVM.Products.Where(p => p.Category.Name.ToLower().Contains(SearchString.ToLower())).ToList();
-                    }
-                    if (item.Supplier.Name.ToLower().Contains(SearchString.ToLower()))
-                    {
-                        IndexVM.Products = IndexVM.Products.Where(p => p.Supplier.Name.ToLower().Contains(SearchString.ToLower())).ToList();
-                    }
-                }
-            }
-
-            //var count = IndexVM.Products.ToList().Count;
-            //IndexVM.Products = IndexVM.Products.Skip((productPage - 1) * PageSize).Take(PageSize).ToList();
-
-            //IndexVM.PagingInfo = new PagingInfo()
-            //{
-            //    CurrentPage = productPage,
-            //    ItemsPerPage = PageSize,
-            //    TotalItems = count,
-            //    urlParam = param.ToString()
-            //};
 
             return View(IndexVM);
         }
@@ -140,12 +103,56 @@ namespace SekiroKenjii.Controllers
 
                 return View(cartObj);
             }
-        } 
+        }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public async Task<IActionResult> Shop(string SearchString = null)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            IndexViewModel IndexVM = new IndexViewModel()
+            {
+                Products = await _db.Products.Include(p => p.Category).Include(p => p.Supplier).ToListAsync(),
+                Categories = await _db.Categories.ToListAsync(),
+                Suppliers = await _db.Suppliers.ToListAsync(),
+                Tags = await _db.Tags.ToListAsync(),
+                Coupons = await _db.Coupons.Where(c => c.IsActive == true).ToListAsync()
+            };
+
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+            if (claim != null)
+            {
+                var cnt = _db.ShoppingCarts.Where(u => u.ApplicationUserId == claim.Value).ToList().Count();
+                HttpContext.Session.SetInt32(SD.ssShoppingCartCount, cnt);
+            }
+
+            StringBuilder param = new StringBuilder();
+            if (SearchString != null)
+            {
+                param.Append(SearchString);
+            }
+
+            IndexVM.Products = await _db.Products.Include(p => p.Category).Include(p => p.Supplier).ToListAsync();
+
+            if (SearchString != null)
+            {
+                foreach (var item in IndexVM.Products)
+                {
+                    if (item.SortName.ToLower().Contains(SearchString.ToLower()))
+                    {
+                        IndexVM.Products = IndexVM.Products.Where(p => p.Name.ToLower().Contains(SearchString.ToLower())).ToList();
+                    }
+                    if (item.Category.Name.ToLower().Contains(SearchString.ToLower()))
+                    {
+                        IndexVM.Products = IndexVM.Products.Where(p => p.Category.Name.ToLower().Contains(SearchString.ToLower())).ToList();
+                    }
+                    if (item.Supplier.Name.ToLower().Contains(SearchString.ToLower()))
+                    {
+                        IndexVM.Products = IndexVM.Products.Where(p => p.Supplier.Name.ToLower().Contains(SearchString.ToLower())).ToList();
+                    }
+                }
+            }
+
+            return View(IndexVM);
         }
     }
 }

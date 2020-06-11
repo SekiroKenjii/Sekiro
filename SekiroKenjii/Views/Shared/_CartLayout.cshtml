@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="~/css/responsive.css">
 
     <!-- Modernizr JS -->
-    <script src="js/vendor/modernizr-2.8.3.min.js"></script>
+    <script src="~/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 <body>
     <div class="wrapper">
@@ -82,7 +82,7 @@
                                         <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                                     </li>
                                     <li>
-                                        <a href="#">Shop</a>
+                                        <a asp-area="" asp-controller="Home" asp-action="Shop">Shop</a>
                                     </li>
                                     @if (User.IsInRole(SD.ManagerUser))
                                     {
@@ -98,7 +98,6 @@
                                             </ul>
                                         </li>
                                     }
-                                    <li><a href="#">Contact</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -108,7 +107,7 @@
             </div>
         </header>
 
-        <div class="page-section section pt-120 pb-80">
+        <div class="page-section section pt-120 pb-120">
             <div class="container">
                 <div class="row">
                     @RenderBody()
@@ -129,8 +128,8 @@
             </div>
         </div>
     </div>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <!-- Bootstrap js -->
     <script src="~/js/bootstrap.min.js"></script>

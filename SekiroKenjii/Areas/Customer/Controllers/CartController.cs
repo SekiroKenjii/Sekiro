@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ using Stripe;
 
 namespace SekiroKenjii.Areas.Customer.Controllers
 {
+    
     [Area("Customer")]
     public class CartController : Controller
     {
@@ -27,6 +29,7 @@ namespace SekiroKenjii.Areas.Customer.Controllers
             _db = db;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             detailsCart = new OrderDetailsCart()
@@ -49,11 +52,6 @@ namespace SekiroKenjii.Areas.Customer.Controllers
             {
                 list.Product = await _db.Products.FirstOrDefaultAsync(p => p.Id == list.ProductId);
                 detailsCart.Orders.OrderTotal = detailsCart.Orders.OrderTotal + (list.Product.Price * list.Count);
-                list.Product.Description = SD.ConvertToRawHtml(list.Product.Description);
-                if (list.Product.Description.Length > 100)
-                {
-                    list.Product.Description = list.Product.Description.Substring(0, 99) + "...";
-                }
             }
             if (detailsCart.Orders.OrderTotal.ToString().Length > 8)
             {
@@ -134,6 +132,7 @@ namespace SekiroKenjii.Areas.Customer.Controllers
             detailsCart.Orders.Status = SD.PaymentStatusPending;
 
             List<OrderDetails> lstOrderDetails = new List<OrderDetails>();
+
             _db.Orders.Add(detailsCart.Orders);
             await _db.SaveChangesAsync();
 

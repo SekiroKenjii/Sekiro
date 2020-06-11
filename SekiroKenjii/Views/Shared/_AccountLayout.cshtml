@@ -69,7 +69,7 @@
                                         <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                                     </li>
                                     <li>
-                                        <a href="#">Shop</a>
+                                        <a asp-area="" asp-controller="Home" asp-action="Shop">Shop</a>
                                     </li>
                                     @if (User.IsInRole(SD.ManagerUser))
                                     {
@@ -85,7 +85,6 @@
                                             </ul>
                                         </li>
                                     }
-                                    <li><a href="#">Contact</a></li>
                                 </ul>
                             </nav>
                         </div>

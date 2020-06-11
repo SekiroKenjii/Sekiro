@@ -1,9 +1,11 @@
 ﻿@model SekiroKenjii.Models.ViewModel.IndexViewModel
+
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Shop";
+    Layout = "~/Views/Shared/_ShopLayout.cshtml";
 }
 
-@*@section Search{
+@section Search{
     <div class="header-search float-left">
         <button class="search-toggle" data-toggle="dropdown"><i class="pe-7s-search"></i></button>
         <div class="dropdown-menu header-search-form">
@@ -13,35 +15,24 @@
             </form>
         </div>
     </div>
-}*@
+}
 
-@section Slider{
-    <div class="home-slider-section section">
-        <div class="slider" id="home-slider">
-            <img src="~/images/banners/SecondBanner.jpg" />
-            <img src="~/images/banners/Best choose for gamer.jpg" />
+@section Filter{
+    <div class="row">
+        <div class="isotope-product-filter col-xs-8">
+            <button class="active" data-filter="*">all</button>
+            @foreach (var item in Model.Tags.Where(t => t.Name != "-None-"))
+            {
+                <button data-filter=".@item.Name.Replace(" ",string.Empty)">@item.Name</button>
+            }
         </div>
     </div>
 }
 
-@*@section Filter{
-        <div class="row">
-            <div class="isotope-product-filter col-xs-8">
-                <button class="active" data-filter="*">all</button>
-                @foreach (var item in Model.Tags.Where(t => t.Name != "-None-"))
-                {
-                    <button data-filter=".@item.Name.Replace(" ",string.Empty)">@item.Name</button>
-                }
-            </div>
-        </div>
-    }*@
-
-<h2 class="text-white text-center">Latest Product</h2>
-<br />
 <div class="isotope-grid row">
-    @foreach (var product in Model.Products.Where(p => p.Tag.Name == "Latest Product"))
+    @foreach (var product in Model.Products)
     {
-        <div class="isotope-item col-lg-3 col-md-4 col-sm-6 col-xs-12 mb-50">
+        <div class="isotope-item @product.Tag.Name.Replace(" ",string.Empty) col-lg-3 col-md-4 col-sm-6 col-xs-12 mb-50">
             <div class="product-item text-center">
                 <div class="product-img">
                     <a class="image" asp-action="Details" asp-route-id="@product.Id"><img src="@product.Image" alt="" /></a>
@@ -59,39 +50,6 @@
             </div>
         </div>
     }
-</div>
-
-<br />
-<h2 class="text-white text-center">Best Seller</h2>
-<br />
-<div class="isotope-grid row">
-    @foreach (var product in Model.Products.Where(p => p.Tag.Name == "Best Seller"))
-    {
-        <div class="isotope-item col-lg-3 col-md-4 col-sm-6 col-xs-12 mb-50">
-            <div class="product-item text-center">
-                <div class="product-img">
-                    <a class="image" asp-action="Details" asp-route-id="@product.Id"><img src="@product.Image" alt="" /></a>
-                    <div class="action-btn fix">
-                        <a href="#" data-toggle="modal" data-target="#@product.SortName.Replace(" ",string.Empty)" title="Quick View"><i class="pe-7s-look"></i>Quick view</a>
-                        <a asp-action="Details" asp-route-id="@product.Id" title="Add to Cart"><i class="pe-7s-box2"></i>view details</a>
-                    </div>
-                </div>
-                <div class="product-info text-left">
-                    <h5 class="title"><a asp-action="Details" asp-route-id="@product.Id" style="width:240px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis" title="@product.SortName">@product.SortName</a></h5>
-                    <div class="price-ratting fix">
-                        <span class="price float-left">$@product.Price</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-</div>
-
-<br />
-<div class="row">
-    <div class="text-center col-xs-12 mt-30">
-        <a asp-action="Shop" class="btn">see more</a>
-    </div>
 </div>
 
 @section QuickView{
@@ -148,4 +106,3 @@
         </div>
     </div>
 }
-

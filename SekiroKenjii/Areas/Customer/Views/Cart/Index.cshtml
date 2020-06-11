@@ -46,7 +46,7 @@
         </div>
         <div class="col-md-8 col-sm-7 col-xs-12">
             <div class="cart-buttons mb-30">
-                <a href="#">Continue Shopping</a>
+                <a asp-area="" asp-controller="Home" asp-action="Shop">Continue Shopping</a>
             </div>
             <div class="cart-coupon mb-40">
                 <br />
@@ -78,7 +78,16 @@
     }
     else
     {
-        <p>Nothing here!</p>
+        <div class="col-md-8 col-md-offset-2">
+            <div class="blog-item mb-75">
+                <div class="content fix">
+                    <blockquote>
+                        <p>"Nothing There”</p>
+                        <p>"You have no items in your shopping cart. Back to the store to continue shopping."</p>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
     }
 </form>
 
