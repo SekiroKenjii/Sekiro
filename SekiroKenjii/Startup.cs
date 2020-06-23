@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc.ViewComponents;
 using SekiroKenjii.Utility;
 using System.Configuration;
 using Stripe;
+using SekiroKenjii.Models;
 
 namespace SekiroKenjii
 {
@@ -37,7 +38,7 @@ namespace SekiroKenjii
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<IdentityUser, IdentityRole>(options => 
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => 
             {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Lockout.AllowedForNewUsers = true;

@@ -1,4 +1,4 @@
-@charset "UTF-8";
+﻿@charset "UTF-8";
 /*!
  *   AdminLTE v3.0.2-pre
  *   Author: Colorlib
@@ -5964,7 +5964,7 @@ a.close.disabled, a.disabled.mailbox-attachment-close {
 
 @media (min-width: 576px) {
   .modal-dialog {
-    max-width: 500px;
+    max-width: 70%;
     margin: 1.75rem auto;
   }
   .modal-dialog-scrollable {

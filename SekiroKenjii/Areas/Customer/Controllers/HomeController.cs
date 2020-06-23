@@ -53,6 +53,7 @@ namespace SekiroKenjii.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var productFromDB = await _db.Products.Include(p => p.Category).Include(p => p.Supplier).Include(p => p.Tag).Where(p => p.Id == id).FirstOrDefaultAsync();
+
             ShoppingCart cartObj = new ShoppingCart()
             {
                 Product = productFromDB,
@@ -131,7 +132,7 @@ namespace SekiroKenjii.Controllers
                 param.Append(SearchString);
             }
 
-            IndexVM.Products = await _db.Products.Include(p => p.Category).Include(p => p.Supplier).ToListAsync();
+            IndexVM.Products = await _db.Products.Include(p => p.Category).Include(p => p.Supplier).OrderBy(p=>p.Category.Name).ThenBy(p=>p.Supplier.Name).ToListAsync();
 
             if (SearchString != null)
             {

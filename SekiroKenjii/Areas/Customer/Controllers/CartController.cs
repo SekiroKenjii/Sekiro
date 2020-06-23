@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SekiroKenjii.Data;
 using SekiroKenjii.Models;
 using SekiroKenjii.Models.ViewModel;
@@ -200,8 +201,8 @@ namespace SekiroKenjii.Areas.Customer.Controllers
             }
 
             await _db.SaveChangesAsync();
-            return RedirectToAction("Index", "Home");
-            //return RedirectToAction("Confirm", "Order", new { id=detailsCart.Orders.Id });
+            //return RedirectToAction("Index", "Home");
+            return RedirectToAction("Confirm", "Order", new { id = detailsCart.Orders.Id });
         }
 
         public IActionResult AddCoupon()

@@ -1,0 +1,40 @@
+﻿@model SekiroKenjii.Models.ViewModel.OrderDetailsViewModel
+@{
+    ViewData["Title"] = "Confirm";
+    Layout = "~/Views/Shared/_CartLayout.cshtml";
+}
+
+<br />
+<br />
+<div class="checkout-form">
+    <div class="col-lg-12 mb-20">
+        <div class="row">
+            <div class="col-xs-9 mb-10">
+                <h2 class="text" style="font-weight:bold">Order Confirmed</h2>
+            </div>
+            <div class="col-xs-3 mb-10">
+                <a asp-controller="Home" asp-action="Shop" class="btn btn-group-justified">New Order</a>
+            </div>
+        </div>
+
+    </div>
+
+    @if (Model.Orders != null)
+    {
+        <div class="col-lg-12 mb-30">
+            <div style="color:maroon" class="p-3">
+                Your order has been confirmed! You will receive our call soon.
+                <br />
+                Please check the order summary below and feel free to contact us if you have any questions.
+            </div>
+        </div>
+        <partial name="_IndividualOrderDetails" model="Model" />
+
+    }
+    else
+    {
+        <div class="text-danger">
+            Error... Please try again later.
+        </div>
+    }
+</div>

@@ -79,24 +79,32 @@
                             <nav class="main-menu menu-right float-right">
                                 <ul>
                                     <li class="active">
-                                        <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                        <a asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
                                     </li>
                                     <li>
-                                        <a asp-area="" asp-controller="Home" asp-action="Shop">Shop</a>
+                                        <a asp-area="Customer" asp-controller="Home" asp-action="Shop">Shop</a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="Customer" asp-controller="Order" asp-action="OrderHistory">Order History</a>
                                     </li>
                                     @if (User.IsInRole(SD.ManagerUser))
                                     {
                                         <li>
-                                            <a href="#">Management</a>
+                                            <a href="#">Content Management</a>
                                             <ul class="sub-menu">
                                                 <li><a asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a></li>
                                                 <li><a asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a></li>
                                                 <li><a asp-area="Admin" asp-controller="Supplier" asp-action="Index">Supplier</a></li>
                                                 <li><a asp-area="Admin" asp-controller="Coupon" asp-action="Index">Coupon</a></li>
                                                 <li><a asp-area="Admin" asp-controller="Tag" asp-action="Index">Tag</a></li>
-                                                <li><a asp-area="Admin" asp-controller="User" asp-action="Index">User</a></li>
                                             </ul>
                                         </li>
+                                        <li><a asp-area="Admin" asp-controller="User" asp-action="Index">User Management</a></li>
+                                        <li><a asp-area="Admin" asp-controller="Order" asp-action="Index">Order Management</a></li>
+                                    }
+                                    @if (User.IsInRole(SD.CustomerOfficer) || User.IsInRole(SD.PackingUser) || User.IsInRole(SD.Shipper))
+                                    {
+                                        <li><a asp-area="Admin" asp-controller="Order" asp-action="Index">Order Management</a></li>
                                     }
                                 </ul>
                             </nav>

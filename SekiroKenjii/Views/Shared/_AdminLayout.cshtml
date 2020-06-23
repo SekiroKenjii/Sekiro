@@ -1,4 +1,6 @@
-﻿<!doctype html>
+﻿@using SekiroKenjii.Utility
+
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -38,17 +40,36 @@
         </nav>
 
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <a href="#" class="brand-link">
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="brand-link">
                 <img src="~/Admin/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8" />
-                <span class="brand-text font-weight-light">Administrator</span>
+                @if (User.IsInRole(SD.ManagerUser))
+                {
+                    <span class="brand-text font-weight-light">Administrator</span>
+                }
+                @if (User.IsInRole(SD.CustomerOfficer))
+                {
+                    <span class="brand-text font-weight-light">Customer Officer</span>
+                }
+                @if (User.IsInRole(SD.PackingUser))
+                {
+                    <span class="brand-text font-weight-light">Packing User</span>
+                }
+                @if (User.IsInRole(SD.Shipper))
+                {
+                    <span class="brand-text font-weight-light">Shipper</span>
+                }
+                @if (User.IsInRole(SD.CustomerUser))
+                {
+                    <span class="brand-text font-weight-light">Customer</span>
+                }
             </a>
             <div class="sidebar">
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="~/Admin/dist/img/user.png" class="img-circle elevation-2" alt="User Image" />
+                        <img src="~/Admin/dist/img/unnamed.jpg" class="img-circle elevation-2" alt="User Image" />
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Võ Trung Thường</a>
+                        <partial name="_UserNamePartial" />
                     </div>
                 </div>
 
@@ -56,64 +77,78 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
                             <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">
-                                <i class="nav-icon fas fa-home"></i>
+                                <i class="nav-icon fas fa-shopping-bag"></i>
                                 <p>
                                     Back To Shop
                                     <i class="fas fa-angle-right right"></i>
                                 </p>
                             </a>
                         </li>
-
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link" style="cursor:pointer">
-                                <i class="nav-icon fas fa-box-open"></i>
-                                <p>
-                                    Products Manager
-                                    <i class="fas fa-angle-down right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Products</p>
+                        @if (User.IsInRole(SD.ManagerUser) || User.IsInRole(SD.CustomerOfficer) || User.IsInRole(SD.PackingUser) || User.IsInRole(SD.Shipper))
+                        {
+                            @if (User.IsInRole(SD.ManagerUser))
+                            {
+                                <li class="nav-item has-treeview">
+                                    <a href="#" class="nav-link" style="cursor:pointer">
+                                        <i class="nav-icon fas fa-box-open"></i>
+                                        <p>
+                                            Products Manager
+                                            <i class="fas fa-angle-down right"></i>
+                                        </p>
                                     </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Products</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Categories</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-area="Admin" asp-controller="Supplier" asp-action="Index" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Suppliers</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-area="Admin" asp-controller="Coupon" asp-action="Index" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Coupons</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-area="Admin" asp-controller="Tag" asp-action="Index" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Tags</p>
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </li>
                                 <li class="nav-item">
-                                    <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Categories</p>
+                                    <a asp-area="Admin" asp-controller="User" asp-action="Index" class="nav-link">
+                                        <i class="nav-icon fas fa-user"></i>
+                                        <p>
+                                            Users Management
+                                            <i class="fas fa-angle-right right"></i>
+                                        </p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a asp-area="Admin" asp-controller="Supplier" asp-action="Index" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Suppliers</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-area="Admin" asp-controller="Coupon" asp-action="Index" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Coupons</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a asp-area="Admin" asp-controller="Tag" asp-action="Index" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Tags</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a asp-area="Admin" asp-controller="User" asp-action="Index" class="nav-link">
-                                <i class="nav-icon fas fa-user"></i>
-                                <p>
-                                    Users Management
-                                    <i class="fas fa-angle-right right"></i>
-                                </p>
-                            </a>
-                        </li>
+                            }
+                            <li class="nav-item">
+                                <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="nav-link">
+                                    <i class="nav-icon fas fa-money-bill-alt"></i>
+                                    <p>
+                                        Order
+                                        <i class="fas fa-angle-right right"></i>
+                                    </p>
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </nav>
             </div>

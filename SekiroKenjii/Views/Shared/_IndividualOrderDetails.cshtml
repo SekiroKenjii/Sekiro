@@ -1,0 +1,108 @@
+﻿@model SekiroKenjii.Models.ViewModel.OrderDetailsViewModel
+<form method="post">
+    <div class="row">
+        <div class="col-lg-7 col-md-6 mb-40">
+            <h3>Billing Details</h3>
+            <div class="row">
+                <input type="hidden" asp-for="Orders.Id" />
+                <div class="col-xs-12 mb-30">
+                    <label>Full Name <span class="required">*</span></label>
+                    <input asp-for="@Model.Orders.OrderName" disabled id="txtName" type="text" />
+                </div>
+                <div class="col-xs-6 mb-30">
+                    <label>Email <span class="required">*</span></label>
+                    <input asp-for="@Model.Orders.ShipEmail" disabled id="txtEmail" type="text" />
+                </div>
+                <div class="col-xs-6 mb-30">
+                    <label>Phone Number <span class="required">*</span></label>
+                    <input asp-for="@Model.Orders.PhoneNumber" disabled id="txtPhone" type="text" />
+                </div>
+                <div class="col-xs-12 mb-30">
+                    <label>Country <span class="required">*</span></label>
+                    <input asp-for="@Model.Orders.ShipCountry" disabled id="txtCountry" type="text" />
+                </div>
+                <div class="col-xs-6 mb-30">
+                    <label>Ship Address <span class="required">*</span></label>
+                    <input asp-for="@Model.Orders.ShipAddress" disabled id="txtAddress" type="text" />
+                </div>
+                <div class="col-xs-6 mb-30">
+                    <label>City <span class="required">*</span></label>
+                    <input asp-for="@Model.Orders.ShipCity" disabled id="txtCity" type="text" />
+                </div>
+                <div class="col-xs-12 mb-30">
+                    <label>Order Date</label>
+                    <input asp-for="@Model.Orders.OrderDate" id="txtDate" disabled type="text" />
+                </div>
+                <div class="col-xs-12 mb-30">
+                    <label>Comment</label>
+                    <textarea asp-for="@Model.Orders.Comment" disabled style="height:120px"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5 col-md-6 col-xs-12 mb-40">
+            <div class="order-wrapper">
+                <div class="row">
+                    <div class="col-md-10 mb-20">
+                        <h4 class="text-muted">Order ID: </h4>
+                    </div>
+                    <div class="col-md-2 mb-20">
+                        <h4 class="text-muted text-right"><span class="badge badge-secondary badge-pill">@Model.Orders.Id</span></h4>
+                    </div>
+                </div>
+                <div class="order-table table-responsive mb-20">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="product-name">Product</th>
+                                <th class="product-total">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ var total = 0.0; }
+                            @foreach (var item in Model.OrderDetails)
+                            {
+                                <tr>
+                                    <td class="product-details">
+                                        @item.Name <strong class="product-qty">× @item.Count</strong>
+                                    </td>
+                                    <td class="product-total">
+                                        <span class="amount">$@(item.Price * item.Count)</span>
+                                        @{ total += (item.Price * item.Count); }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            @if (Model.Orders.CouponCode != null)
+                            {
+                                <tr style="color:deepskyblue">
+                                    <th>
+                                        Promo Code:
+                                        <br />
+                                        <small style="color:deepskyblue">&nbsp;@Model.Orders.CouponCode</small>
+                                    </th>
+                                    <td style="color:deepskyblue">-$@(total-Model.Orders.OrderTotal)</td>
+                                </tr>
+                                <tr>
+                                    <th>Order Total</th>
+                                    <td><strong>$@Model.Orders.OrderTotal</strong>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr>
+                                    <th>Order Total</th>
+                                    <td><strong>$@Model.Orders.OrderTotal</strong>
+                                </tr>
+                            }
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <br />
+            <input type="submit" disabled class="btn btn-success form-control" value="@Model.Orders.Status" />
+        </div>
+    </div>
+</form>
+
+

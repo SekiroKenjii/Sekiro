@@ -95,6 +95,9 @@
                                     <li>
                                         <a asp-area="" asp-controller="Home" asp-action="Shop">Shop</a>
                                     </li>
+                                    <li>
+                                        <a asp-area="Customer" asp-controller="Order" asp-action="OrderHistory">Order History</a>
+                                    </li>
                                     @if (User.IsInRole(SD.ManagerUser))
                                     {
                                         <li>
@@ -106,6 +109,7 @@
                                                 <li><a asp-area="Admin" asp-controller="Coupon" asp-action="Index">Coupon</a></li>
                                                 <li><a asp-area="Admin" asp-controller="Tag" asp-action="Index">Tag</a></li>
                                                 <li><a asp-area="Admin" asp-controller="User" asp-action="Index">User</a></li>
+                                                <li><a asp-area="Admin" asp-controller="Order" asp-action="Index">Order</a></li>
                                             </ul>
                                         </li>
                                     }
