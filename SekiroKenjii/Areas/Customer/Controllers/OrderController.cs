@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using SekiroKenjii.Data;
 using SekiroKenjii.Models;
 using SekiroKenjii.Models.ViewModel;
+using SekiroKenjii.Utility;
 
 namespace SekiroKenjii.Areas.Customer.Controllers
 {
@@ -53,15 +54,24 @@ namespace SekiroKenjii.Areas.Customer.Controllers
             List<Order> OrderList = await _db.Orders.Include(o => o.ApplicationUser).Where(a => a.UserId == claim.Value).ToListAsync();
             foreach (Order item in OrderList)
             {
-                OrderDetailsViewModel individual = new OrderDetailsViewModel
+                OrderDetailsViewModel oDVM = new OrderDetailsViewModel
                 {
                     Orders = item,
                     OrderDetails = await _db.OrderDetails.Where(o => o.OrderId == item.Id).ToListAsync()
                 };
-                orderList.Add(individual);
+                orderList.Add(oDVM);
             }
 
             return View(orderList);
+        }
+
+        public async Task<IActionResult> CancelOnWeb(int OrderId)
+        {
+            Order order = await _db.Orders.FindAsync(OrderId);
+            order.Status = SD.StatusCancelOnWeb;
+            await _db.SaveChangesAsync();
+
+            return View();
         }
     }
 }

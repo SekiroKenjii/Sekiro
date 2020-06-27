@@ -81,7 +81,7 @@
                                         <br />
                                         <small style="color:deepskyblue">&nbsp;@Model.Orders.CouponCode</small>
                                     </th>
-                                    <td style="color:deepskyblue">-$@(total-Model.Orders.OrderTotal)</td>
+                                    <td style="color:deepskyblue">-$@Math.Round(total-Model.Orders.OrderTotal, 2)</td>
                                 </tr>
                                 <tr>
                                     <th>Order Total</th>

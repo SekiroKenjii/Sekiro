@@ -102,7 +102,7 @@
                                     @if (User.IsInRole(SD.ManagerUser))
                                     {
                                         <li>
-                                            <a href="#">Content Management</a>
+                                            <a asp-area="Admin" asp-controller="Home" asp-action="Index">Content Management</a>
                                             <ul class="sub-menu">
                                                 <li><a asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a></li>
                                                 <li><a asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a></li>

@@ -74,7 +74,7 @@
                                         </td>
                                         <td class="product-total">
                                             <span class="amount">$@(item.Product.Price * item.Count)</span>
-                                            @{ total += (item.Product.Price * item.Count); }
+                                            @{ total += Math.Round(item.Product.Price * item.Count, 2); }
                                         </td>
                                     </tr>
                                 }
@@ -88,7 +88,7 @@
                                             <br />
                                             <small style="color:deepskyblue">&nbsp;@Model.Orders.CouponCode</small>
                                         </th>
-                                        <td>-$@(total-Model.Orders.OrderTotal)</td>
+                                        <td>-$@Math.Round(total-Model.Orders.OrderTotal, 2)</td>
                                     </tr>
                                     <tr>
                                         <th>Order Total</th>

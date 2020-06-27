@@ -1,8 +1,134 @@
-﻿
+﻿@using System.Web
+@using System.Security.Claims
+@using SekiroKenjii.Utility
+@model SekiroKenjii.Models.ViewModel.OrderViewModel
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Index</h1>
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Dashboard</h1>
+            </div>
+            <div class="col-sm-6">
+            </div>
+        </div>
+    </div>
+</div>
+<section class="content">
+    <div class="container-fluid">
+        <h5 class="mt-4 mb-2">Marketing Situation</h5>
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>@Model.Orders.Where(o => o.Status.Equals(SD.StatusSubmitted)).Count()</h3>
 
+                        <p>New Orders</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                    <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>@Model.Orders.Where(o => o.Status != SD.StatusCancelled && o.Status != SD.StatusCancelOnWeb).Count()</h3>
+
+                        <p>Orders In Process</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>@Model.Orders.Where(o => o.Status == SD.StatusCancelled || o.Status == SD.StatusCancelOnWeb).Count()</h3>
+
+                        <p>Orders Failed</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>@Model.Users.Count <span class="text-sm text-danger">(@Model.Users.Where(a => a.LockoutEnd > DateTime.Now).Count() Account Locked)</span></h3>
+
+                        <p>User Registrations</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <a asp-area="Admin" asp-controller="User" asp-action="Index" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                <!-- AREA CHART -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Area Chart</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart">
+                            @{
+                                int[] data = { 65, 59, 80, 81, 56, 55, 40 };
+                            }
+                            <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <h5 class="mt-4 mb-2">Company Personnel</h5>
+        <div class="row">
+            @foreach (var user in Model.Users.Where(a => a.LockoutEnd <= DateTime.Now || a.LockoutEnd == null))
+            {
+                <div class="col-md-3">
+                    <div class="card card-widget widget-user">
+                        <div class="widget-user-header bg-info">
+                            <h3 class="widget-user-username">@user.FullName</h3>
+                            <h5 class="widget-user-desc">@user.Email</h5>
+                        </div>
+                        <div class="widget-user-image">
+                            <img class="img-circle elevation-2" src="~/Admin/dist/img/unnamed.jpg" alt="User Avatar">
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="description-block">
+                                        <h5 class="description-header">@user.PhoneNumber</h5>
+                                        <span class="description-text">@user.RoleName</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

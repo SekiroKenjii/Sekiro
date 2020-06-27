@@ -10,10 +10,31 @@
     <title>Administrator</title>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="~/Admin/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="~/Admin/dist/css/adminlte.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <script>
+        window.onload = function () {
+
+        var chart = new CanvasJS.Chart("chartContainer", {
+	        animationEnabled: true,
+	        theme: "light2", // "light1", "dark1", "dark2"
+	        exportEnabled: true,
+	        title: {
+		        text: "Order Datails (Dollar)"
+	        },
+            data: [{
+                type: "column",
+                dataPoints:  @Html.Raw(ViewBag.DataPoints)
+	        }]
+        });
+        chart.render();
+
+        }
+    </script>
     <script src="https://cdn.tiny.cloud/1/0q2s726ni1nuzgjg4vs7narti9yhmp10ezjragxtuzlpta6r/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-167981919-1"></script>
@@ -169,10 +190,15 @@
 
     <!-- jQuery -->
     <script src="~/Admin/plugins/jquery/jquery.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="~/Admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- ChartJS -->
+    <script src="~/Admin/plugins/chart.js/Chart.min.js"></script>
     <!-- AdminLTE App -->
     <script src="~/Admin/dist/js/adminlte.min.js"></script>
+    <script src="~/Admin/dist/js/demo.js"></script>
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>

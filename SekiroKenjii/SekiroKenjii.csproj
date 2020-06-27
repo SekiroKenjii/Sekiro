@@ -46,6 +46,8 @@
     <Compile Remove="Data\Migrations\20200529152103_FullName.Designer.cs" />
     <Compile Remove="Data\Migrations\20200529152251_FullName.cs" />
     <Compile Remove="Data\Migrations\20200529152251_FullName.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200626081012_RoleID.cs" />
+    <Compile Remove="Data\Migrations\20200626081012_RoleID.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -54,10 +54,7 @@ namespace SekiroKenjii.Areas.Customer.Controllers
                 list.Product = await _db.Products.FirstOrDefaultAsync(p => p.Id == list.ProductId);
                 detailsCart.Orders.OrderTotal = detailsCart.Orders.OrderTotal + (list.Product.Price * list.Count);
             }
-            if (detailsCart.Orders.OrderTotal.ToString().Length > 8)
-            {
-                detailsCart.Orders.OrderTotal = Math.Round(detailsCart.Orders.OrderTotal);
-            }
+
             detailsCart.Orders.OrderTotalOriginal = detailsCart.Orders.OrderTotal;
 
             if (HttpContext.Session.GetString(SD.ssCouponCode) != null)
@@ -94,10 +91,7 @@ namespace SekiroKenjii.Areas.Customer.Controllers
                 detailsCart.Orders.OrderTotal = detailsCart.Orders.OrderTotal + (list.Product.Price * list.Count);
                 
             }
-            if (detailsCart.Orders.OrderTotal.ToString().Length > 8)
-            {
-                detailsCart.Orders.OrderTotal = Math.Round(detailsCart.Orders.OrderTotal);
-            }
+            detailsCart.Orders.OrderTotal = Math.Round(detailsCart.Orders.OrderTotal, 2);
             detailsCart.Orders.OrderTotalOriginal = detailsCart.Orders.OrderTotal;
             detailsCart.Orders.OrderName = applicationUser.FullName;
             detailsCart.Orders.PhoneNumber = applicationUser.PhoneNumber;

@@ -29,11 +29,14 @@ namespace SekiroKenjii.Utility
         public const string ssCouponCode = "ssCouponCode";
 
         public const string StatusSubmitted = "Submitted";
+        public const string StatusApproved = "Approved";
+        public const string StatusShipping = "Shipping";
         public const string StatusReadyPack = "Ready to Pack";
         public const string StatusInPackingProcess = "Being Packing";
         public const string StatusReadyShip = "Ready to Ship";
         public const string StatusCompleted = "Completed";
         public const string StatusCancelled = "Cancelled";
+        public const string StatusCancelOnWeb = "Cancel On Web";
 
         public const string PaymentStatusPending = "Pending";
         public const string PaymentStatusApproved = "Approved";

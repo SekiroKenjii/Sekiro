@@ -29,7 +29,7 @@ namespace SekiroKenjii.Areas.Identity.Pages.Account
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
+            SignInManager<ApplicationUser> signInManager,           
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
             RoleManager<IdentityRole> roleManager)
@@ -134,28 +134,33 @@ namespace SekiroKenjii.Areas.Identity.Pages.Account
 
                     if (role == SD.CustomerOfficer)
                     {
+                        user.RoleName = role;
                         await _userManager.AddToRoleAsync(user, SD.CustomerOfficer);
                     }
                     else
                     {
                         if (role == SD.PackingUser)
                         {
+                            user.RoleName = role;
                             await _userManager.AddToRoleAsync(user, SD.PackingUser);
                         }
                         else
                         {
                             if (role == SD.Shipper)
                             {
+                                user.RoleName = role;
                                 await _userManager.AddToRoleAsync(user, SD.Shipper);
                             }
                             else
                             {
                                 if (role == SD.ManagerUser)
                                 {
+                                    user.RoleName = role;
                                     await _userManager.AddToRoleAsync(user, SD.ManagerUser);
                                 }
                                 else
                                 {
+                                    user.RoleName = SD.CustomerUser;
                                     await _userManager.AddToRoleAsync(user, SD.CustomerUser);
                                     await _signInManager.SignInAsync(user, isPersistent: false);
                                     return LocalRedirect(returnUrl);
@@ -163,7 +168,7 @@ namespace SekiroKenjii.Areas.Identity.Pages.Account
                             }
                         }
                     }
-
+                    
                     _logger.LogInformation("User created a new account with password.");
 
                     //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
