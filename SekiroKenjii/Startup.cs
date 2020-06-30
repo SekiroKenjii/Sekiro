@@ -19,6 +19,10 @@ using SekiroKenjii.Utility;
 using System.Configuration;
 using Stripe;
 using SekiroKenjii.Models;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace SekiroKenjii
 {
@@ -48,6 +52,33 @@ namespace SekiroKenjii
                 .AddDefaultTokenProviders()
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddLocalization(option =>
+            {
+                option.ResourcesPath = "Resources";
+            });
+
+            services.AddMvc()
+                .AddViewLocalization(option =>
+                {
+                    option.ResourcesPath = "Resources";
+                })
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
+            services.Configure<RequestLocalizationOptions>(option =>
+            {
+                var supportedCultures = new List<CultureInfo>
+                {
+                    new CultureInfo("en"),
+                    new CultureInfo("vi")
+                };
+
+                option.DefaultRequestCulture = new RequestCulture("en");
+                option.SupportedCultures = supportedCultures;
+                option.SupportedUICultures = supportedCultures;
+            });
 
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
             //services.AddScoped<IDBInitializer, DbInitializer>();
@@ -82,6 +113,9 @@ namespace SekiroKenjii
             //dBInitializer.Initialize();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(options.Value);
 
             app.UseRouting();
 

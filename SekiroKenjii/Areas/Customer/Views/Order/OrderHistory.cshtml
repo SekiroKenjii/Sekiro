@@ -192,13 +192,24 @@
                                     <br />
                                     <div class="col-xs-12 mb-30">
                                         <label class="text-muted">Order Status</label>
-                                        <input type="submit" disabled class="btn btn-success form-control" value="@order.Orders.Status" />
+                                        @if (order.Orders.Status == SD.StatusCancelled)
+                                        {
+                                            <input type="submit" disabled class="btn btn-danger form-control" value="@order.Orders.Status (Delivery Failed)" />
+                                        }
+                                        else if (order.Orders.Status == SD.StatusCancelOnWeb)
+                                        {
+                                            <input type="submit" disabled class="btn btn-danger form-control" value="@order.Orders.Status (By Yourself)" />
+                                        }
+                                        else
+                                        {
+                                            <input type="submit" disabled class="btn btn-success form-control" value="@order.Orders.Status" />
+                                        }
                                     </div>
                                     <div class="col-xs-12 mb-30">
                                         <label class="text-muted">Payment Status</label>
                                         <input type="submit" disabled class="btn form-control" value="@order.Orders.PaymentStatus" />
                                     </div>
-                                    @if (order.Orders.Status != SD.StatusCancelOnWeb)
+                                    @if (order.Orders.Status != SD.StatusCancelOnWeb && order.Orders.Status != SD.StatusCancelled && order.Orders.Status != SD.StatusCompleted)
                                     {
                                         <div class="col-xs-12 mb-30">
                                             <label class="text-muted">Cancel This Order</label>

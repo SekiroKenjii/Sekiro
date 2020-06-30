@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using SekiroKenjii.Utility;
+using Microsoft.Extensions.Localization;
 
 namespace SekiroKenjii.Controllers
 {
@@ -21,11 +22,13 @@ namespace SekiroKenjii.Controllers
     public class HomeController : Controller
     {
         private readonly ApplicationDbContext _db;
-        //private int PageSize = 12;
-        public HomeController(ApplicationDbContext db)
+        private readonly IStringLocalizer<HomeController> _localizer;
+        public HomeController(ApplicationDbContext db, IStringLocalizer<HomeController> localizer)
         {
             _db = db;
+            _localizer = localizer;
         }
+
         public async Task<IActionResult> Index()
         {
             IndexViewModel IndexVM = new IndexViewModel()
@@ -75,15 +78,20 @@ namespace SekiroKenjii.Controllers
                 var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
                 CartObject.ApplicationUserId = claim.Value;
 
+                var UnitStock = await _db.Products.Where(p => p.Id == CartObject.ProductId).FirstOrDefaultAsync();
+
                 ShoppingCart cartFromDb = await _db.ShoppingCarts.Where(c => c.ApplicationUserId == CartObject.ApplicationUserId && 
                                                                         c.ProductId == CartObject.ProductId).FirstOrDefaultAsync();
 
                 if (cartFromDb == null)
                 {
                     await _db.ShoppingCarts.AddAsync(CartObject);
+                    UnitStock.UnitsInStock = UnitStock.UnitsInStock - CartObject.Count;
+                    UnitStock.UnitsOnOder = CartObject.Count;
                 }
                 else
                 {
+
                     cartFromDb.Count = cartFromDb.Count + CartObject.Count;
                 }
                 await _db.SaveChangesAsync();

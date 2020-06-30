@@ -65,7 +65,7 @@
                         <tr class="order-total">
                             <th>Total</th>
                             <td>
-                                <strong><span id="txtOrderTotal" class="amount">$@Model.Orders.OrderTotal</span></strong>
+                                <strong><span id="txtOrderTotal" class="amount">$@Math.Round(Model.Orders.OrderTotal, 2)</span></strong>
                             </td>
                         </tr>
                     </tbody>
