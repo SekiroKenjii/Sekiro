@@ -25,10 +25,15 @@ namespace SekiroKenjii.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
+            return View(await _db.ApplicationUsers.Where(a => a.RoleName == SD.CustomerUser).ToListAsync());
+        }
+
+        public async Task<IActionResult> Employee()
+        {
             var claimsIdentity = (ClaimsIdentity)this.User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
-            return View(await _db.ApplicationUsers.Where(u=>u.Id != claim.Value).ToListAsync());
+            return View(await _db.ApplicationUsers.Where(a => a.Id != claim.Value && a.RoleName != SD.CustomerUser).ToListAsync());
         }
 
         public async Task<IActionResult> Lock(string id)

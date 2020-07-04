@@ -8,7 +8,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-primary">Edit Product</h1>
+                <h1 class="m-0 text-info">Chỉnh Sửa Sản Phẩm</h1>
             </div>
         </div>
     </div>
@@ -21,112 +21,88 @@
             <div class="row">
                 <div class="col-8">
                     <div class="form-group row">
-                        <div class="col-2">
-                            <label asp-for="Products.Name" class="col-form-label"></label>
-                        </div>
-                        <div class="col-10">
+                        <label asp-for="Products.Name" class="col-form-label"></label>
+                        <div class="input-group">
                             <input asp-for="Products.Name" class="form-control" />
                         </div>
                         <span asp-validation-for="Products.Name" class="text-danger"></span>
                     </div>
                     <div class="form-group row">
-                        <div class="col-2">
-                            <label asp-for="Products.SortName" class="col-form-label"></label>
-                        </div>
-                        <div class="col-10">
+                        <label asp-for="Products.SortName" class="col-form-label"></label>
+                        <div class="input-group">
                             <input asp-for="Products.SortName" class="form-control" />
                         </div>
                         <span asp-validation-for="Products.SortName" class="text-danger"></span>
                     </div>
                     <div class="form-group row">
-                        <div class="col-2">
-                            <label asp-for="Products.Image" class="col-form-label"></label>
-                        </div>
-                        <div class="col-10">
+                        <label asp-for="Products.Image" class="col-form-label"></label>
+                        <div class="input-group">
                             <input type="file" id="projectImage" name="files1" asp-for="Products.Image" multiple class="form-control" />
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-2">
-                            <label asp-for="Products.HQImage" class="col-form-label"></label>
-                        </div>
-                        <div class="col-10">
+                        <label asp-for="Products.HQImage" class="col-form-label"></label>
+                        <div class="input-group">
                             <input type="file" id="projectHQImage" name="files2" asp-for="Products.HQImage" multiple class="form-control" />
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-2">
-                            <label asp-for="Products.CategoryId" class="col-form-label"></label>
-                        </div>
-                        <div class="col-8">
+                        <label asp-for="Products.CategoryId" class="col-form-label">Tên Loại</label>
+                        <div class="input-group">
                             <select asp-for="@Model.Products.CategoryId" asp-items="Model.Categories.ToSelectListItem(Model.Products.CategoryId)" class="form-control"></select>
-                        </div>
-                        <div class="col-2">
-                            <a asp-action="Create" asp-controller="Category" class="btn btn-info form-control">New Category</a>
+                            <div class="input-group-append">
+                                <a asp-action="Create" asp-controller="Category" class="btn btn-info form-control">New Category</a>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-2">
-                            <label asp-for="Products.SupplierId" class="col-form-label"></label>
-                        </div>
-                        <div class="col-8">
+                        <label asp-for="Products.SupplierId" class="col-form-label">Tên Nhà Cung Cấp</label>
+                        <div class="input-group">
                             <select asp-for="@Model.Products.SupplierId" asp-items="Model.Suppliers.ToSelectListItem(Model.Products.SupplierId)" class="form-control"></select>
-                        </div>
-                        <div class="col-2">
-                            <a asp-action="Create" asp-controller="Supplier" class="btn btn-info form-control">New Supplier</a>
+                            <div class="input-group-append">
+                                <a asp-action="Create" asp-controller="Supplier" class="btn btn-info form-control">New Supplier</a>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-2">
-                            <label asp-for="Products.TagId" class="col-form-label"></label>
-                        </div>
-                        <div class="col-8">
+                        <label asp-for="Products.TagId" class="col-form-label">Tên Nhãn</label>
+                        <div class="input-group">
                             <select asp-for="@Model.Products.TagId" asp-items="Model.Tags.ToSelectListTagItem(Model.Products.TagId)" class="form-control"></select>
-                        </div>
-                        <div class="col-2">
-                            <a asp-action="Create" asp-controller="Tag" class="btn btn-info form-control">New Tag</a>
+                            <div class="input-group-append">
+                                <a asp-action="Create" asp-controller="Tag" class="btn btn-info form-control">New Tag</a>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-2">
-                            <label asp-for="Products.Price" class="col-form-label"></label>
-                        </div>
-                        <div class="col-10">
+                        <label asp-for="Products.Price" class="col-form-label"></label>
+                        <div class="input-group">
                             <input asp-for="Products.Price" class="form-control" />
                         </div>
                         <span asp-validation-for="Products.Price" class="text-danger"></span>
                     </div>
                     <div class="form-group row">
-                        <div class="col-2">
-                            <label asp-for="Products.UnitsOnOder" class="col-form-label"></label>
-                        </div>
-                        <div class="col-10">
+                        <label asp-for="Products.UnitsOnOder" class="col-form-label"></label>
+                        <div class="input-group">
                             <input asp-for="Products.UnitsOnOder" class="form-control" />
                         </div>
                         <span asp-validation-for="Products.UnitsOnOder" class="text-danger"></span>
                     </div>
                     <div class="form-group row">
-                        <div class="col-2">
-                            <label asp-for="Products.UnitsInStock" class="col-form-label"></label>
-                        </div>
-                        <div class="col-10">
+                        <label asp-for="Products.UnitsInStock" class="col-form-label"></label>
+                        <div class="input-group">
                             <input asp-for="Products.UnitsInStock" class="form-control" />
                         </div>
                         <span asp-validation-for="Products.UnitsInStock" class="text-danger"></span>
                     </div>
                     <div class="form-group row">
-                        <div class="col-2">
-                            <label asp-for="Products.Discontinued" class="col-form-label"></label>
-                        </div>
-                        <div class="col-10">
+                        <label asp-for="Products.Discontinued" class="col-form-label"></label>
+                        <div class="input-group">
                             <input asp-for="Products.Discontinued" class="form-control" />
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-2">
-                            <label asp-for="Products.Description" class="col-form-label"></label>
-                        </div>
-                        <div class="col-10">
+                        <label asp-for="Products.Description" class="col-form-label"></label>
+                        <div class="col-12">
                             @Html.TextAreaFor(p => p.Products.Description)
                         </div>
                         <span asp-validation-for="Products.Description" class="text-danger"></span>
@@ -138,14 +114,14 @@
             </div>
 
             <div class="col-8">
-                <div class="offset-2 form-group row">
+                <div class="row">
                     <div class="col-6">
                         <input type="submit" class="btn btn-info form-control" value="Update" />
                     </div>
                     <div class="col-6">
                         <a asp-action="Index" class="btn btn-success form-control">Back To List</a>
                     </div>
-                </div>               
+                </div>
             </div>
         </div>
     </div>

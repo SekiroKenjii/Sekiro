@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-primary">Create Category</h1>
+                <h1 class="m-0 text-info">Thêm Loại Sản Phẩm Mới</h1>
             </div>
         </div>
     </div>
@@ -17,22 +17,20 @@
         <div class="card-body">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group row">
-                <div class="col-2">
-                    <label asp-for="Name" class="col-form-label"></label>
-                </div>
-                <div class="col-10">
+                <label asp-for="Name" class="col-form-label">Tên Loại</label>
+                <div class="input-group">
                     <input asp-for="Name" class="form-control" />
                 </div>
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group row">
-                <div class="col-10 offset-2">
+                <div class="col-12">
                     <div class="row">
                         <div class="col-6">
-                            <input type="submit" class="btn btn-info form-control" value="Create" />
+                            <input type="submit" class="btn btn-info form-control" value="Tạo" />
                         </div>
                         <div class="col-6">
-                            <a asp-action="Index" class="btn btn-success form-control">Back To List</a>
+                            <a asp-action="Index" class="btn btn-success form-control">Trở Lại Danh Sách</a>
                         </div>
                     </div>
                 </div>

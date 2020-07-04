@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-primary">Delete Coupon</h1>
+                <h1 class="m-0 text-info">Xoá Mã Giảm Giá</h1>
             </div>
         </div>
     </div>
@@ -15,65 +15,45 @@
 <form method="post" class="container-fluid">
     <div class="main-card mb-3 card">
         <div class="card-body">
-            <div class="row">
-                <div class="col-8">
-                    <div class="form-group row">
-                        <div class="col-2">
-                            <label asp-for="Name" class="col-form-label"></label>
-                        </div>
-                        <div class="col-10">
-                            <input asp-for="Name" readonly class="form-control" />
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-2">
-                            <label asp-for="CouponType" class="col-form-label"></label>
-                        </div>
-                        <div class="col-10">
-                            <select asp-for="CouponType" disabled asp-items="Html.GetEnumSelectList<Coupon.ECouponType>()" class="form-control"></select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-2">
-                            <label asp-for="Discount" class="col-form-label"></label>
-                        </div>
-                        <div class="col-10">
-                            <input asp-for="Discount" readonly class="form-control" />
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-2">
-                            <label asp-for="MinimumAmount" class="col-form-label"></label>
-                        </div>
-                        <div class="col-10">
-                            <input asp-for="MinimumAmount" readonly class="form-control" />
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-2">
-                            <label asp-for="IsActive" class="col-form-label"></label>
-                        </div>
-                        <div class="col-10">
-                            <input type="checkbox" asp-for="IsActive" disabled class="form-control" />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-4">
-                    @{
-                        var base64 = Convert.ToBase64String(Model.Picture);
-                        var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
-                    }
-                    <img src="@imgsrc" width="500" style="border-radius:5px;border:1px" />
+            <input type="hidden" asp-for="Id"/>
+            <div class="form-group row">
+                <label asp-for="Name" class="col-form-label"></label>
+                <div class="input-group">
+                    <input asp-for="Name" readonly class="form-control" />
                 </div>
             </div>
-            <div class="col-8">
-                <div class="offset-2 form-group row">
-                    <div class="col-6">
-                        <input type="submit" class="btn btn-danger form-control" value="Delete" />
-                    </div>
-                    <div class="col-6">
-                        <a asp-action="Index" class="btn btn-success form-control">Back To List</a>
-                    </div>
+            <div class="form-group row">
+                <label asp-for="CouponType" class="col-form-label"></label>
+                <div class="input-group">
+                    <select asp-for="CouponType" disabled asp-items="Html.GetEnumSelectList<Coupon.ECouponType>()" class="form-control"></select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="Discount" class="col-form-label"></label>
+                <div class="input-group">
+                    <input asp-for="Discount" readonly class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="MinimumAmount" class="col-form-label"></label>
+                <div class="input-group">
+                    <input asp-for="MinimumAmount" readonly class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="IsActive" class="col-form-label"></label>
+                <div class="input-group">
+                    <input type="checkbox" asp-for="IsActive" disabled class="form-control" />
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group row">
+                <div class="col-6">
+                    <input type="submit" class="btn btn-danger form-control" value="Xoá" />
+                </div>
+                <div class="col-6">
+                    <a asp-action="Index" class="btn btn-success form-control">Quay Lại Danh Sách</a>
                 </div>
             </div>
         </div>

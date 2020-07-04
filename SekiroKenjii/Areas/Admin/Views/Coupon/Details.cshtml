@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-primary">Coupon Details</h1>
+                <h1 class="m-0 text-info">Chi Tiết Mã Giảm Giá</h1>
             </div>
         </div>
     </div>
@@ -20,42 +20,32 @@
             <div class="row">
                 <div class="col-8">
                     <div class="form-group row">
-                        <div class="col-2">
-                            <label asp-for="Name" class="col-form-label"></label>
-                        </div>
-                        <div class="col-10">
+                        <label asp-for="Name" class="col-form-label"></label>
+                        <div class="input-group">
                             <input asp-for="Name" readonly class="form-control" />
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-2">
-                            <label asp-for="CouponType" class="col-form-label"></label>
-                        </div>
-                        <div class="col-10">
+                        <label asp-for="CouponType" class="col-form-label"></label>
+                        <div class="input-group">
                             <select asp-for="CouponType" disabled asp-items="Html.GetEnumSelectList<Coupon.ECouponType>()" class="form-control"></select>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-2">
-                            <label asp-for="Discount" class="col-form-label"></label>
-                        </div>
-                        <div class="col-10">
+                        <label asp-for="Discount" class="col-form-label"></label>
+                        <div class="input-group">
                             <input asp-for="Discount" readonly class="form-control" />
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-2">
-                            <label asp-for="MinimumAmount" class="col-form-label"></label>
-                        </div>
-                        <div class="col-10">
+                        <label asp-for="MinimumAmount" class="col-form-label"></label>
+                        <div class="input-group">
                             <input asp-for="MinimumAmount" readonly class="form-control" />
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-2">
-                            <label asp-for="IsActive" class="col-form-label"></label>
-                        </div>
-                        <div class="col-10">
+                        <label asp-for="IsActive" class="col-form-label"></label>
+                        <div class="input-group">
                             <input type="checkbox" asp-for="IsActive" disabled class="form-control" />
                         </div>
                     </div>
@@ -65,16 +55,17 @@
                         var base64 = Convert.ToBase64String(Model.Picture);
                         var imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
                     }
-                    <img src="@imgsrc" width="500" style="border-radius:5px;border:1px" />
+                    <img src="@imgsrc" width="500" style="max-width: 100%; height: auto; border-radius:5px;border:1px" />
                 </div>
             </div>
+            <br />
             <div class="col-8">
-                <div class="offset-2 form-group row">
+                <div class="form-group row">
                     <div class="col-6">
-                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary form-control">Edit</a>
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary form-control">Chỉnh Sửa</a>
                     </div>
                     <div class="col-6">
-                        <a asp-action="Index" class="btn btn-success form-control">Back To List</a>
+                        <a asp-action="Index" class="btn btn-success form-control">Quay Lại Danh Sách</a>
                     </div>
                 </div>
             </div>

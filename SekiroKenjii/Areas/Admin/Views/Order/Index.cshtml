@@ -4,13 +4,22 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-info">Danh Sách Đơn Hàng</h1>
+            </div>
+            <div class="col-sm-6">
+            </div>
+        </div>
+    </div>
+</div>
 <section>
     <form method="post">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    <h3 class="text-muted">Order List</h3>
                     @if (Model.Count > 0)
                     {
                         <div class="main-card mb-3 card">
@@ -18,33 +27,35 @@
                                 <table class="table table-bordered">
                                     <tr class="table-secondary">
                                         <th>
-                                            ID
+                                            Mã
                                         </th>
                                         <th>
-                                            Order Name
+                                            Tên Đơn Hàng
                                         </th>
                                         @if (User.IsInRole(SD.CustomerOfficer) || User.IsInRole(SD.Shipper) || User.IsInRole(SD.ManagerUser))
                                         {
                                             <th>
-                                                Contact
+                                                Liên Hệ
                                             </th>
                                             <th>
-                                                Order Total
+                                                Tổng Tiền Đơn Hàng (VND)
                                             </th>
                                             @if (User.IsInRole(SD.CustomerOfficer) || User.IsInRole(SD.ManagerUser))
                                             {
                                                 <th>
-                                                    Order Date
+                                                    Ngày Đặt Hàng
                                                 </th>
                                             }
                                             <th>
-                                                Address
+                                                Địa Chỉ
                                             </th>
                                         }
                                         <th>
                                             Comment
                                         </th>
-                                        <th></th>
+                                        <th>
+                                            Trạng Thái
+                                        </th>
                                     </tr>
                                     @foreach (var item in Model)
                                     {
@@ -62,7 +73,7 @@
                                                         </li>
                                                     }
                                                     <li>
-                                                        Discount: <strong>-$@Math.Round(item.Orders.CouponCodeDiscount, 2)</strong>
+                                                        Discount: <strong>@Math.Round(item.Orders.CouponCodeDiscount, 2)</strong>
                                                     </li>
                                                 </ul>
                                             </td>
@@ -100,62 +111,62 @@
                                             <td>
                                                 @if (item.Orders.Status.Equals(SD.StatusSubmitted))
                                                 {
-                                                    <strong class="text-warning">Status: @Html.DisplayFor(m => item.Orders.Status)</strong><br />
+                                                    <strong class="text-warning">Đang chờ xác nhận...</strong>
                                                     <button type="submit" asp-action="OrderApproved" asp-route-OrderId="@item.Orders.Id" class="btn btn-info form-control">
-                                                        <i class="fas fa-check"></i>&ensp;Approve
+                                                        <i class="fas fa-check"></i>&ensp;Xác nhận
                                                     </button>
                                                 }
                                                 @if (item.Orders.Status.Equals(SD.StatusApproved))
                                                 {
-                                                    <strong class="text-info">Status: @Html.DisplayFor(m => item.Orders.Status)</strong><br />
+                                                    <strong class="text-info">Đơn hàng đã xác nhận</strong>
                                                     <button type="submit" asp-action="OrderReadyPack" asp-route-OrderId="@item.Orders.Id" class="btn btn-info form-control">
-                                                        <i class="fas fa-check"></i>&ensp;Pack This Order
+                                                        <i class="fas fa-check"></i>&ensp;Nhận đơn
                                                     </button>
                                                 }
                                                 @if (item.Orders.Status.Equals(SD.StatusReadyPack))
                                                 {
-                                                    <strong class="text-info">Status: @Html.DisplayFor(m => item.Orders.Status)</strong><br />
+                                                    <strong class="text-info">Sẵn sàng đóng gói</strong>
                                                     <button type="submit" asp-action="OrderPack" asp-route-OrderId="@item.Orders.Id" class="btn btn-info form-control">
-                                                        <i class="fas fa-box-open"></i>&ensp;Packing
+                                                        <i class="fas fa-box-open"></i>&ensp;Bắt đầu
                                                     </button>
                                                 }
                                                 @if (item.Orders.Status.Equals(SD.StatusInPackingProcess))
                                                 {
-                                                    <strong class="text-info">Status: @Html.DisplayFor(m => item.Orders.Status)</strong><br />
+                                                    <strong class="text-info">Đang đóng gói</strong>
                                                     <button type="submit" asp-action="FinishPack" asp-route-OrderId="@item.Orders.Id" class="btn btn-info form-control">
-                                                        <i class="fas fa-shipping-fast"></i>&ensp;Ready To Ship
+                                                        <i class="fas fa-shipping-fast"></i>&ensp;Hoàn thành
                                                     </button>
                                                 }
                                                 @if (item.Orders.Status.Equals(SD.StatusReadyShip))
                                                 {
-                                                    <strong class="text-info">Status: @Html.DisplayFor(m => item.Orders.Status)</strong><br />
+                                                    <strong class="text-info">Sẵn sàng để vận chuyển</strong>
                                                     <button type="submit" asp-action="OrderShip" asp-route-OrderId="@item.Orders.Id" class="btn btn-info form-control">
-                                                        <i class="fas fa-shipping-fast"></i>&ensp;Shipping
+                                                        <i class="fas fa-shipping-fast"></i>&ensp;Bắt đầu
                                                     </button>
                                                 }
                                                 @if (item.Orders.Status.Equals(SD.StatusShipping))
                                                 {
-                                                    <strong class="text-info">Status: @Html.DisplayFor(m => item.Orders.Status)</strong><br />
+                                                    <strong class="text-info">Đang vận chuyển</strong>
                                                     <div class="btn-group">
                                                         <button type="submit" asp-action="OrderComplete" asp-route-OrderId="@item.Orders.Id" class="btn btn-success">
-                                                            <i class="fas fa-check"></i>&ensp;Complete
+                                                            <i class="fas fa-check"></i>&ensp;Hoàn thành
                                                         </button>
                                                         <button type="submit" asp-action="OrderFail" asp-route-OrderId="@item.Orders.Id" class="btn btn-danger">
-                                                            <i class="fas fa-times"></i>&ensp;Fail
+                                                            <i class="fas fa-times"></i>&ensp;Thất bại
                                                         </button>
                                                     </div>
                                                 }
                                                 @if (item.Orders.Status.Equals(SD.StatusCompleted))
                                                 {
-                                                    <strong class="text-success">Status: @Html.DisplayFor(m => item.Orders.Status)</strong>
+                                                    <strong class="text-success">Đã hoàn thành</strong>
                                                 }
                                                 @if (item.Orders.Status.Equals(SD.StatusCancelled))
                                                 {
-                                                    <strong class="text-danger">Status: @Html.DisplayFor(m => item.Orders.Status) (Delivery Failed)</strong>
+                                                    <strong class="text-danger">Giao hàng thất bại</strong>
                                                 }
                                                 @if (item.Orders.Status.Equals(SD.StatusCancelOnWeb))
                                                 {
-                                                    <strong class="text-danger">Status: @Html.DisplayFor(m => item.Orders.Status) (By Customer)</strong>
+                                                    <strong class="text-danger">Đã huỷ bởi người đặt hàng</strong>
                                                 }
                                             </td>
                                         </tr>
@@ -166,7 +177,7 @@
                     }
                     else
                     {
-                        <p>No Order Exists...</p>
+                        <p>Chưa có đơn hàng nào tồn tại...</p>
                     }
                 </div>
             </div>

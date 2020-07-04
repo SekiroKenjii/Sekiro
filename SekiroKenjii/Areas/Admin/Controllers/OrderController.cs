@@ -95,6 +95,7 @@ namespace SekiroKenjii.Areas.Admin.Controllers
         {
             Order order = await _db.Orders.FindAsync(OrderId);
             order.Status = SD.StatusApproved;
+
             await _db.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
@@ -138,6 +139,7 @@ namespace SekiroKenjii.Areas.Admin.Controllers
         public async Task<IActionResult> OrderComplete(int OrderId)
         {
             Order order = await _db.Orders.FindAsync(OrderId);
+
             order.Status = SD.StatusCompleted;
             await _db.SaveChangesAsync();
 
@@ -147,7 +149,9 @@ namespace SekiroKenjii.Areas.Admin.Controllers
         public async Task<IActionResult> OrderFail(int OrderId)
         {
             Order order = await _db.Orders.FindAsync(OrderId);
+
             order.Status = SD.StatusCancelled;
+            order.PaymentStatus = SD.PaymentStatusRejected;
             await _db.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Administrator</title>
+    <title>Admin Page</title>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="~/Admin/plugins/fontawesome-free/css/all.min.css">
     <!-- Ionicons -->
@@ -24,7 +24,7 @@
 	        theme: "light2", // "light1", "dark1", "dark2"
 	        exportEnabled: true,
 	        title: {
-		        text: "Order Datails (Dollar)"
+                text: "Doanh Thu (VND)"
 	        },
             data: [{
                 type: "column",
@@ -65,23 +65,19 @@
                 <img src="~/Admin/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8" />
                 @if (User.IsInRole(SD.ManagerUser))
                 {
-                    <span class="brand-text font-weight-light">Administrator</span>
+                    <span class="brand-text font-weight-light">Quản Trị Viên</span>
                 }
                 @if (User.IsInRole(SD.CustomerOfficer))
                 {
-                    <span class="brand-text font-weight-light">Customer Officer</span>
+                    <span class="brand-text small font-weight-light">Nhân Viên Chăm Sóc KH</span>
                 }
                 @if (User.IsInRole(SD.PackingUser))
                 {
-                    <span class="brand-text font-weight-light">Packing User</span>
+                    <span class="brand-text small font-weight-light">Nhân Viên Đóng Gói</span>
                 }
                 @if (User.IsInRole(SD.Shipper))
                 {
-                    <span class="brand-text font-weight-light">Shipper</span>
-                }
-                @if (User.IsInRole(SD.CustomerUser))
-                {
-                    <span class="brand-text font-weight-light">Customer</span>
+                    <span class="brand-text small font-weight-light">Nhân Viên Giao Hàng</span>
                 }
             </a>
             <div class="sidebar">
@@ -100,7 +96,7 @@
                             <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">
                                 <i class="nav-icon fas fa-shopping-bag"></i>
                                 <p>
-                                    Back To Shop
+                                    Quay về cửa hàng
                                     <i class="fas fa-angle-right right"></i>
                                 </p>
                             </a>
@@ -113,7 +109,7 @@
                                     <a href="#" class="nav-link" style="cursor:pointer">
                                         <i class="nav-icon fas fa-box-open"></i>
                                         <p>
-                                            Products Manager
+                                            Quản Lý Sản Phẩm
                                             <i class="fas fa-angle-down right"></i>
                                         </p>
                                     </a>
@@ -121,50 +117,64 @@
                                         <li class="nav-item">
                                             <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="nav-link">
                                                 <i class="far fa-circle nav-icon"></i>
-                                                <p>Products</p>
+                                                <p>Sản Phẩm</p>
                                             </a>
                                         </li>
                                         <li class="nav-item">
                                             <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="nav-link">
                                                 <i class="far fa-circle nav-icon"></i>
-                                                <p>Categories</p>
+                                                <p>Loại Sản Phẩm</p>
                                             </a>
                                         </li>
                                         <li class="nav-item">
                                             <a asp-area="Admin" asp-controller="Supplier" asp-action="Index" class="nav-link">
                                                 <i class="far fa-circle nav-icon"></i>
-                                                <p>Suppliers</p>
+                                                <p>Nhà Cung Cấp</p>
                                             </a>
                                         </li>
                                         <li class="nav-item">
                                             <a asp-area="Admin" asp-controller="Coupon" asp-action="Index" class="nav-link">
                                                 <i class="far fa-circle nav-icon"></i>
-                                                <p>Coupons</p>
+                                                <p>Mã Giảm Giá</p>
                                             </a>
                                         </li>
                                         <li class="nav-item">
                                             <a asp-area="Admin" asp-controller="Tag" asp-action="Index" class="nav-link">
                                                 <i class="far fa-circle nav-icon"></i>
-                                                <p>Tags</p>
+                                                <p>Nhãn Sản Phẩm</p>
                                             </a>
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="nav-item">
-                                    <a asp-area="Admin" asp-controller="User" asp-action="Index" class="nav-link">
+                                <li class="nav-item has-treeview">
+                                    <a href="#" class="nav-link" style="cursor:pointer">
                                         <i class="nav-icon fas fa-user"></i>
                                         <p>
-                                            Users Management
-                                            <i class="fas fa-angle-right right"></i>
+                                            Quản Lý Người Dùng
+                                            <i class="fas fa-angle-down right"></i>
                                         </p>
                                     </a>
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a asp-area="Admin" asp-controller="User" asp-action="Employee" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Nhân Viên</p>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a asp-area="Admin" asp-controller="User" asp-action="Index" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Khách Hàng</p>
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </li>
                             }
                             <li class="nav-item">
                                 <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="nav-link">
                                     <i class="nav-icon fas fa-money-bill-alt"></i>
                                     <p>
-                                        Order
+                                        Quản Lý Đơn Hàng
                                         <i class="fas fa-angle-right right"></i>
                                     </p>
                                 </a>
@@ -193,12 +203,18 @@
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="~/Admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom File Input -->
+    <script src="~/Admin/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
     <!-- ChartJS -->
     <script src="~/Admin/plugins/chart.js/Chart.min.js"></script>
     <!-- AdminLTE App -->
     <script src="~/Admin/dist/js/adminlte.min.js"></script>
     <script src="~/Admin/dist/js/demo.js"></script>
-
+    <script type="text/javascript">
+        $(document).ready(function () {
+            bsCustomFileInput.init();
+        });
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

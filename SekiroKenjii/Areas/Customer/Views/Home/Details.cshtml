@@ -1,4 +1,5 @@
-﻿@model SekiroKenjii.Models.ShoppingCart
+﻿@model SekiroKenjii.Models.ViewModel.ShoppingCartViewModel
+
 @{
     ViewData["Title"] = "Details";
 }
@@ -13,7 +14,7 @@
         <div class="col-md-5 col-sm-6 col-xs-12 mb-40">
             <div class="tab-content mb-10">
                 <div class="pro-large-img tab-pane active">
-                    <img src="@Model.Product.HQImage" alt="" />
+                    <img src="@Model.Products.HQImage" alt="" />
                 </div>
             </div>
         </div>
@@ -21,22 +22,25 @@
             <div class="product-details section">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <!-- Title -->
-                <h1 class="title">@Model.Product.Name</h1>
+                <h1 class="title">@Model.Products.Name</h1>
                 <!-- Price Ratting -->
                 <div class="price-ratting section">
                     <!-- Price -->
-                    <span class="price float-left"><span class="new">$ @Model.Product.Price</span></span>
+                    <span class="price float-left"><span class="new">$ @Model.Products.Price</span></span>
                 </div>
                 <!-- Short Description -->
                 <div class="short-desc section">
                     <h5 class="pd-sub-title">Overview</h5>
-                    <p>@Html.Raw(Model.Product.Description)</p>
+                    <p>@Html.Raw(Model.Products.Description)</p>
                 </div>
                 <!-- Quantity Cart -->
+                <div class="price-ratting section">
+                    <span class="price float-left"><span class="new">Remaining Products: @Model.Products.UnitsInStock</span></span>
+                </div>
                 <div class="quantity-cart section">
                     <div class="product-quantity">
-                        <input asp-for="Count" value="1">
-                        <span asp-validation-for="Count" class="text-danger"></span>
+                        <input asp-for="@Model.ShoppingCart.Count" id="@Model.Products.UnitsInStock" value="1" max="@Model.Products.UnitsInStock">
+                        <span asp-validation-for="@Model.ShoppingCart.Count" class="text-danger"></span>
                     </div>
                     <button type="submit" class="add-to-cart">add to cart</button>
                 </div>
@@ -52,27 +56,27 @@
         </div>
         <div class="tab-content col-xs-12">
             <div class="pro-info-tab tab-pane active" id="more-info">
-                <p>@Html.Raw(Model.Product.Description)</p>
+                <p>@Html.Raw(Model.Products.Description)</p>
             </div>
             <div class="pro-info-tab tab-pane" id="data-sheet">
                 <table class="table-data-sheet">
                     <tbody>
                         <tr class="odd">
                             <td>Product Brand</td>
-                            <td>@Model.Product.Supplier.Name</td>
+                            <td>@Model.Products.Supplier.Name</td>
                         </tr>
                         <tr class="even">
                             <td>Product Category</td>
-                            <td>@Model.Product.Category.Name</td>
+                            <td>@Model.Products.Category.Name</td>
                         </tr>
                         <tr class="odd">
                             <td>Product Status</td>
-                            <td>@Model.Product.Tag.Name</td>
+                            <td>@Model.Products.Tag.Name</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-    <input asp-for="ProductId" hidden />
+    <input asp-for="@Model.ShoppingCart.ProductId" hidden />
 </form>

@@ -2,7 +2,20 @@
 
 @{
     ViewData["Title"] = "Shop";
-    Layout = "~/Views/Shared/_ShopLayout.cshtml";
+}
+
+@section PageContent{
+    <div class="page-shop-section section">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="page-banner-content">
+                        <h1>Cửa hàng</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 
 @section Search{
@@ -37,8 +50,8 @@
                 <div class="product-img">
                     <a class="image" asp-action="Details" asp-route-id="@product.Id"><img src="@product.Image" alt="" /></a>
                     <div class="action-btn fix">
-                        <a href="#" data-toggle="modal" data-target="#@product.SortName.Replace(" ",string.Empty)" title="Quick View"><i class="pe-7s-look"></i>Quick view</a>
-                        <a asp-action="Details" asp-route-id="@product.Id" title="Add to Cart"><i class="pe-7s-box2"></i>view details</a>
+                        <a href="#" data-toggle="modal" data-target="#@product.SortName.Replace(" ",string.Empty)" title="Quick View"><i class="pe-7s-look"></i>Xem nhanh</a>
+                        <a asp-action="Details" asp-route-id="@product.Id" title="Add to Cart"><i class="pe-7s-box2"></i>xem chi tiết</a>
                     </div>
                 </div>
                 <div class="product-info text-left">
@@ -71,14 +84,14 @@
                             <div class="product-details section">
                                 <h1 class="title">@pro.Name</h1>
                                 <div class="price-ratting section">
-                                    <span class="price float-left"><span class="new">$@pro.Price</span></span>
+                                    <span class="price float-left"><span class="new">@pro.Price VND</span></span>
                                 </div>
                                 <div class="short-desc section">
-                                    <h5 class="pd-sub-title">Overview</h5>
+                                    <h5 class="pd-sub-title">Chi tiết</h5>
                                     <p>@Html.Raw(pro.Description)</p>
                                 </div>
                                 <div class="quantity-cart section">
-                                    <a asp-action="Details" asp-route-id="@pro.Id" class="add-to-cart">View More Details</a>
+                                    <a asp-action="Details" asp-route-id="@pro.Id" class="add-to-cart">Xem Thêm Chi Tiết</a>
                                 </div>
                             </div>
                         </div>
@@ -91,7 +104,7 @@
 
 @section BrandImg{
     <div class="page-section section pt-10 pb-10">
-        <h2 class="text-white text-center">Popular Brand</h2>
+        <h2 class="text-white text-center">Thương Hiệu Nổi Tiếng</h2>
         <div class="container">
             <div class="row mb-40">
                 <div class="col-xs-12 mb-40">

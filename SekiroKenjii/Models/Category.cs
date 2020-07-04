@@ -12,6 +12,7 @@ namespace SekiroKenjii.Models
         public int Id { get; set; }
 
         [Required]
+        [Display(Name = "Tên Loại")]
         public string Name { get; set; }
 
         public string Image { get; set; }

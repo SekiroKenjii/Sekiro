@@ -53,36 +53,11 @@ namespace SekiroKenjii
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddLocalization(option =>
-            {
-                option.ResourcesPath = "Resources";
-            });
-
-            services.AddMvc()
-                .AddViewLocalization(option =>
-                {
-                    option.ResourcesPath = "Resources";
-                })
-                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-                .AddDataAnnotationsLocalization()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-
-            services.Configure<RequestLocalizationOptions>(option =>
-            {
-                var supportedCultures = new List<CultureInfo>
-                {
-                    new CultureInfo("en"),
-                    new CultureInfo("vi")
-                };
-
-                option.DefaultRequestCulture = new RequestCulture("en");
-                option.SupportedCultures = supportedCultures;
-                option.SupportedUICultures = supportedCultures;
-            });
-
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
             //services.AddScoped<IDBInitializer, DbInitializer>();
-            services.AddSingleton<IEmailSender, EmailSender>();
+            //services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<EmailOptions>(Configuration);
 
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
@@ -113,9 +88,6 @@ namespace SekiroKenjii
             //dBInitializer.Initialize();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
-            var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
-            app.UseRequestLocalization(options.Value);
 
             app.UseRouting();
 

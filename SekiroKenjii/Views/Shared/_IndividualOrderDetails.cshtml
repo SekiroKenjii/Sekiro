@@ -2,11 +2,11 @@
 <form method="post">
     <div class="row">
         <div class="col-lg-7 col-md-6 mb-40">
-            <h3>Billing Details</h3>
+            <h3>Chi Tiết Đơn Thanh Toán</h3>
             <div class="row">
                 <input type="hidden" asp-for="Orders.Id" />
                 <div class="col-xs-12 mb-30">
-                    <label>Full Name <span class="required">*</span></label>
+                    <label>Họ Tên <span class="required">*</span></label>
                     <input asp-for="@Model.Orders.OrderName" disabled id="txtName" type="text" />
                 </div>
                 <div class="col-xs-6 mb-30">
@@ -14,23 +14,23 @@
                     <input asp-for="@Model.Orders.ShipEmail" disabled id="txtEmail" type="text" />
                 </div>
                 <div class="col-xs-6 mb-30">
-                    <label>Phone Number <span class="required">*</span></label>
+                    <label>Số Điện Thoại <span class="required">*</span></label>
                     <input asp-for="@Model.Orders.PhoneNumber" disabled id="txtPhone" type="text" />
                 </div>
                 <div class="col-xs-12 mb-30">
-                    <label>Country <span class="required">*</span></label>
+                    <label>Quốc Gia <span class="required">*</span></label>
                     <input asp-for="@Model.Orders.ShipCountry" disabled id="txtCountry" type="text" />
                 </div>
                 <div class="col-xs-6 mb-30">
-                    <label>Ship Address <span class="required">*</span></label>
+                    <label>Địa Chỉ <span class="required">*</span></label>
                     <input asp-for="@Model.Orders.ShipAddress" disabled id="txtAddress" type="text" />
                 </div>
                 <div class="col-xs-6 mb-30">
-                    <label>City <span class="required">*</span></label>
+                    <label>Thành Phố<span class="required">*</span></label>
                     <input asp-for="@Model.Orders.ShipCity" disabled id="txtCity" type="text" />
                 </div>
                 <div class="col-xs-12 mb-30">
-                    <label>Order Date</label>
+                    <label>Ngày Đặt Hàng</label>
                     <input asp-for="@Model.Orders.OrderDate" id="txtDate" disabled type="text" />
                 </div>
                 <div class="col-xs-12 mb-30">
@@ -43,7 +43,7 @@
             <div class="order-wrapper">
                 <div class="row">
                     <div class="col-md-10 mb-20">
-                        <h4 class="text-muted">Order ID: </h4>
+                        <h4 class="text-muted">Mã Đơn Hàng: </h4>
                     </div>
                     <div class="col-md-2 mb-20">
                         <h4 class="text-muted text-right"><span class="badge badge-secondary badge-pill">@Model.Orders.Id</span></h4>
@@ -53,8 +53,8 @@
                     <table>
                         <thead>
                             <tr>
-                                <th class="product-name">Product</th>
-                                <th class="product-total">Total</th>
+                                <th class="product-name">Sản Phẩm</th>
+                                <th class="product-total">Tổng</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -66,8 +66,8 @@
                                         @item.Name <strong class="product-qty">× @item.Count</strong>
                                     </td>
                                     <td class="product-total">
-                                        <span class="amount">$@(item.Price * item.Count)</span>
-                                        @{ total += (item.Price * item.Count); }
+                                        <span class="amount">$@Math.Round(item.Price * item.Count, 2)</span>
+                                        @{ total += Math.Round(item.Price * item.Count, 2); }
                                     </td>
                                 </tr>
                             }
@@ -77,21 +77,21 @@
                             {
                                 <tr style="color:deepskyblue">
                                     <th>
-                                        Promo Code:
+                                        Mã Giảm Giá:
                                         <br />
                                         <small style="color:deepskyblue">&nbsp;@Model.Orders.CouponCode</small>
                                     </th>
                                     <td style="color:deepskyblue">-$@Math.Round(total-Model.Orders.OrderTotal, 2)</td>
                                 </tr>
                                 <tr>
-                                    <th>Order Total</th>
+                                    <th>Thành Tiền</th>
                                     <td><strong>$@Model.Orders.OrderTotal</strong>
                                 </tr>
                             }
                             else
                             {
                                 <tr>
-                                    <th>Order Total</th>
+                                    <th>Thành Tiền</th>
                                     <td><strong>$@Model.Orders.OrderTotal</strong>
                                 </tr>
                             }

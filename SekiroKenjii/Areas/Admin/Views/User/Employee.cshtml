@@ -15,9 +15,10 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-primary">Danh Sách Khách Hàng</h1>
+                <h1 class="m-0 text-primary">Danh Sách Nhân Viên</h1>
             </div>
             <div class="col-sm-6 text-right">
+                <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-info"><i class="fas fa-plus"></i> &nbsp; Thêm Nhân Viên Mới</a>
             </div>
         </div>
     </div>
@@ -77,7 +78,7 @@
                 }
                 else
                 {
-                    <p>Chưa có người dùng nào...</p>
+                    <p>Chưa có nhân viên...</p>
                 }
             </div>
         </div>

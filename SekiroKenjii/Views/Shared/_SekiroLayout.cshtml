@@ -91,32 +91,38 @@
                             <nav class="main-menu menu-right float-right">
                                 <ul>
                                     <li class="active">
-                                        <a asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
+                                        <a asp-area="Customer" asp-controller="Home" asp-action="Index">Trang Chủ</a>
                                     </li>
                                     <li>
-                                        <a asp-area="Customer" asp-controller="Home" asp-action="Shop">Shop</a>
+                                        <a asp-area="Customer" asp-controller="Home" asp-action="Shop">Cửa Hàng</a>
                                     </li>
                                     <li>
-                                        <a asp-area="Customer" asp-controller="Order" asp-action="OrderHistory">Order History</a>
+                                        <a asp-area="Customer" asp-controller="Order" asp-action="OrderHistory">Lịch Sử Đặt Hàng</a>
                                     </li>
                                     @if (User.IsInRole(SD.ManagerUser))
                                     {
                                         <li>
-                                            <a asp-area="Admin" asp-controller="Home" asp-action="Index">Content Management</a>
+                                            <a asp-area="Admin" asp-controller="Home" asp-action="Index">Quản Lý Nội Dung</a>
                                             <ul class="sub-menu">
-                                                <li><a asp-area="Admin" asp-controller="Product" asp-action="Index">Product</a></li>
-                                                <li><a asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a></li>
-                                                <li><a asp-area="Admin" asp-controller="Supplier" asp-action="Index">Supplier</a></li>
-                                                <li><a asp-area="Admin" asp-controller="Coupon" asp-action="Index">Coupon</a></li>
-                                                <li><a asp-area="Admin" asp-controller="Tag" asp-action="Index">Tag</a></li>
+                                                <li><a asp-area="Admin" asp-controller="Product" asp-action="Index">Sản Phẩm</a></li>
+                                                <li><a asp-area="Admin" asp-controller="Category" asp-action="Index">Mã Sản Phẩm</a></li>
+                                                <li><a asp-area="Admin" asp-controller="Supplier" asp-action="Index">Nhà Cung Cấp</a></li>
+                                                <li><a asp-area="Admin" asp-controller="Coupon" asp-action="Index">Mã Giảm Giá</a></li>
+                                                <li><a asp-area="Admin" asp-controller="Tag" asp-action="Index">Nhãn Sản Phẩm</a></li>
                                             </ul>
                                         </li>
-                                        <li><a asp-area="Admin" asp-controller="User" asp-action="Index">User Management</a></li>
-                                        <li><a asp-area="Admin" asp-controller="Order" asp-action="Index">Order Management</a></li>
+                                        <li>
+                                            <a href="#">Quản Lý Người Dùng</a>
+                                            <ul class="sub-menu">
+                                                <li><a asp-area="Admin" asp-controller="User" asp-action="Employee">Nhân Viên</a></li>
+                                                <li><a asp-area="Admin" asp-controller="User" asp-action="Index">Khách Hàng</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a asp-area="Admin" asp-controller="Order" asp-action="Index">Quản Lý Đơn Hàng</a></li>
                                     }
                                     @if (User.IsInRole(SD.CustomerOfficer) || User.IsInRole(SD.PackingUser) || User.IsInRole(SD.Shipper))
                                     {
-                                        <li><a asp-area="Admin" asp-controller="Order" asp-action="Index">Order Management</a></li>
+                                        <li><a asp-area="Admin" asp-controller="Order" asp-action="Index">Quản Lý Đơn Hàng</a></li>
                                     }
                                 </ul>
                             </nav>
@@ -128,6 +134,7 @@
         </header>
 
         @RenderSection("Slider", required: false)
+        @RenderSection("PageContent", required: false)
 
         <div class="product-section section pt-120 pb-120">
             <div class="container">

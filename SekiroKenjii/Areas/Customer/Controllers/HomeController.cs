@@ -22,11 +22,12 @@ namespace SekiroKenjii.Controllers
     public class HomeController : Controller
     {
         private readonly ApplicationDbContext _db;
-        private readonly IStringLocalizer<HomeController> _localizer;
-        public HomeController(ApplicationDbContext db, IStringLocalizer<HomeController> localizer)
+        [BindProperty]
+        public ShoppingCartViewModel ShoppingCartVM { get; set; }
+
+        public HomeController(ApplicationDbContext db)
         {
             _db = db;
-            _localizer = localizer;
         }
 
         public async Task<IActionResult> Index()
@@ -63,47 +64,58 @@ namespace SekiroKenjii.Controllers
                 ProductId = productFromDB.Id
             };
 
-            return View(cartObj);
+            ShoppingCartVM = new ShoppingCartViewModel()
+            {
+                ShoppingCart = new Models.ShoppingCart(),
+                Products = new Models.Product()
+            };
+            ShoppingCartVM.ShoppingCart = cartObj;
+            ShoppingCartVM.Products = productFromDB;
+
+            return View(ShoppingCartVM);
         }
 
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public  async Task<IActionResult> Details(ShoppingCart CartObject)
+        public  async Task<IActionResult> Details()
         {
-            CartObject.Id = 0;
+            ShoppingCartVM.ShoppingCart.Id = 0;
             if (ModelState.IsValid)
             {
                 var claimsIdentity = (ClaimsIdentity)this.User.Identity;
                 var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
-                CartObject.ApplicationUserId = claim.Value;
+                ShoppingCartVM.ShoppingCart.ApplicationUserId = claim.Value;
 
-                var UnitStock = await _db.Products.Where(p => p.Id == CartObject.ProductId).FirstOrDefaultAsync();
+                var UnitStock = await _db.Products.Where(p => p.Id == ShoppingCartVM.ShoppingCart.ProductId).FirstOrDefaultAsync();
 
-                ShoppingCart cartFromDb = await _db.ShoppingCarts.Where(c => c.ApplicationUserId == CartObject.ApplicationUserId && 
-                                                                        c.ProductId == CartObject.ProductId).FirstOrDefaultAsync();
+                ShoppingCart cartFromDb = await _db.ShoppingCarts.Where(c => c.ApplicationUserId == ShoppingCartVM.ShoppingCart.ApplicationUserId && 
+                                                                        c.ProductId == ShoppingCartVM.ShoppingCart.ProductId).FirstOrDefaultAsync();
 
+                int checkItem = UnitStock.UnitsInStock - ShoppingCartVM.ShoppingCart.Count;
                 if (cartFromDb == null)
                 {
-                    await _db.ShoppingCarts.AddAsync(CartObject);
-                    UnitStock.UnitsInStock = UnitStock.UnitsInStock - CartObject.Count;
-                    UnitStock.UnitsOnOder = CartObject.Count;
+                    await _db.ShoppingCarts.AddAsync(ShoppingCartVM.ShoppingCart);
+                    UnitStock.UnitsInStock = checkItem;
+                    UnitStock.UnitsOnOder = ShoppingCartVM.ShoppingCart.Count;
                 }
                 else
                 {
-
-                    cartFromDb.Count = cartFromDb.Count + CartObject.Count;
+                    cartFromDb.Count = cartFromDb.Count + ShoppingCartVM.ShoppingCart.Count;
+                    UnitStock.UnitsInStock = checkItem;
+                    UnitStock.UnitsOnOder = UnitStock.UnitsOnOder + ShoppingCartVM.ShoppingCart.Count;
                 }
                 await _db.SaveChangesAsync();
 
-                var count = _db.ShoppingCarts.Where(c => c.ApplicationUserId == CartObject.ApplicationUserId).ToList().Count();
+                var count = _db.ShoppingCarts.Where(c => c.ApplicationUserId == ShoppingCartVM.ShoppingCart.ApplicationUserId).ToList().Count();
                 HttpContext.Session.SetInt32(SD.ssShoppingCartCount, count);
 
                 return RedirectToAction("Index");
+
             }
             else
             {
-                var productFromDB = await _db.Products.Include(p => p.Category).Include(p => p.Supplier).Include(p => p.Tag).Where(p => p.Id == CartObject.ProductId).FirstOrDefaultAsync();
+                var productFromDB = await _db.Products.Include(p => p.Category).Include(p => p.Supplier).Include(p => p.Tag).Where(p => p.Id == ShoppingCartVM.ShoppingCart.ProductId).FirstOrDefaultAsync();
                 ShoppingCart cartObj = new ShoppingCart()
                 {
                     Product = productFromDB,

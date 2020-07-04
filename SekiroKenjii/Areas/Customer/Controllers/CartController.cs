@@ -124,7 +124,7 @@ namespace SekiroKenjii.Areas.Customer.Controllers
             detailsCart.Orders.PaymentStatus = SD.PaymentStatusPending;
             detailsCart.Orders.OrderDate = DateTime.Now;
             detailsCart.Orders.UserId = claim.Value;
-            detailsCart.Orders.Status = SD.PaymentStatusPending;
+            detailsCart.Orders.Status = SD.StatusSubmitted;
 
             List<OrderDetails> lstOrderDetails = new List<OrderDetails>();
 
@@ -213,7 +213,10 @@ namespace SekiroKenjii.Areas.Customer.Controllers
         public async Task<IActionResult> Plus(int cartId)
         {
             var cart = await _db.ShoppingCarts.FirstOrDefaultAsync(c => c.Id == cartId);
+            var pro = await _db.Products.FirstOrDefaultAsync(p => p.Id == cart.ProductId);
             cart.Count += 1;
+            pro.UnitsInStock -= 1;
+            pro.UnitsOnOder += 1;
             await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -221,8 +224,11 @@ namespace SekiroKenjii.Areas.Customer.Controllers
         public async Task<IActionResult> Minus(int cartId)
         {
             var cart = await _db.ShoppingCarts.FirstOrDefaultAsync(c => c.Id == cartId);
+            var pro = await _db.Products.FirstOrDefaultAsync(p => p.Id == cart.ProductId);
             if (cart.Count == 1)
             {
+                pro.UnitsInStock += 1;
+                pro.UnitsOnOder -= 1;
                 _db.ShoppingCarts.Remove(cart);
                 await _db.SaveChangesAsync();
 
@@ -232,6 +238,8 @@ namespace SekiroKenjii.Areas.Customer.Controllers
             else
             {
                 cart.Count -= 1;
+                pro.UnitsInStock += 1;
+                pro.UnitsOnOder -= 1;
                 await _db.SaveChangesAsync();
             }
 
@@ -241,7 +249,10 @@ namespace SekiroKenjii.Areas.Customer.Controllers
         public async Task<IActionResult> Remove(int cartId)
         {
             var cart = await _db.ShoppingCarts.FirstOrDefaultAsync(c => c.Id == cartId);
+            var pro = await _db.Products.FirstOrDefaultAsync(p => p.Id == cart.ProductId);
 
+            pro.UnitsInStock += cart.Count;
+            pro.UnitsOnOder -= cart.Count;
             _db.ShoppingCarts.Remove(cart);
             await _db.SaveChangesAsync();
 

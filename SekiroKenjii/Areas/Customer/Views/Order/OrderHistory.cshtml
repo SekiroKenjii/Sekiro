@@ -150,16 +150,19 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach (var item in Model.FirstOrDefault().OrderDetails)
+                                                    @foreach (var item in order.OrderDetails)
                                                     {
-                                                        <tr>
-                                                            <td class="product-details">
-                                                                @item.Name <strong class="product-qty">× @item.Count</strong>
-                                                            </td>
-                                                            <td class="product-total">
-                                                                <span class="amount">$@(item.Price * item.Count)</span>
-                                                            </td>
-                                                        </tr>
+                                                        @if (item.OrderId == order.Orders.Id)
+                                                        {
+                                                            <tr>
+                                                                <td class="product-details">
+                                                                    @item.Name <strong class="product-qty">× @item.Count</strong>
+                                                                </td>
+                                                                <td class="product-total">
+                                                                    <span class="amount">$@(item.Price * item.Count)</span>
+                                                                </td>
+                                                            </tr>
+                                                        }
                                                     }
                                                 </tbody>
                                                 <tfoot>
@@ -213,7 +216,7 @@
                                     {
                                         <div class="col-xs-12 mb-30">
                                             <label class="text-muted">Cancel This Order</label>
-                                            <button type="submit" class="btn form-control" asp-area="Customer" asp-controller="Order" asp-action="CancelOnWeb" asp-route-OrderId="@order.Orders.Id">Cancel</button>
+                                            <button type="submit" class="btn form-control" asp-action="CancelOnWeb" asp-route-OrderId="@order.Orders.Id">Cancel</button>
                                         </div>
                                     }
                                 </div>

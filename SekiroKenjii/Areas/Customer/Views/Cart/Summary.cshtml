@@ -8,7 +8,7 @@
     Layout = "~/Views/Shared/_CartLayout.cshtml";
 }
 <br />
-<h1 class="text-center" style="font-weight:bold">Check Out</h1>
+<h1 class="text-center" style="font-weight:bold">Thanh Toán</h1>
 <br />
 <hr />
 <br />
@@ -17,10 +17,10 @@
     {
         <div class="checkout-form">
             <div class="col-lg-6 col-md-6 mb-40">
-                <h3>Billing Details</h3>
+                <h3>Chi Tiết Hoá Đơn</h3>
                 <div class="row">
                     <div class="col-xs-12 mb-30">
-                        <label>Full Name <span class="required">*</span></label>
+                        <label>Họ Tên <span class="required">*</span></label>
                         <input asp-for="@Model.Orders.OrderName" id="txtName" type="text" />
                     </div>
                     <div class="col-xs-6 mb-30">
@@ -28,23 +28,23 @@
                         <input asp-for="@Model.Orders.ShipEmail" id="txtEmail" type="text" />
                     </div>
                     <div class="col-xs-6 mb-30">
-                        <label>Phone Number <span class="required">*</span></label>
+                        <label>Số Điện Thoại <span class="required">*</span></label>
                         <input asp-for="@Model.Orders.PhoneNumber" id="txtPhone" type="text" />
                     </div>
                     <div class="col-xs-12 mb-30">
-                        <label>Country <span class="required">*</span></label>
+                        <label>Quốc Gia <span class="required">*</span></label>
                         <input asp-for="@Model.Orders.ShipCountry" id="txtCountry" type="text" />
                     </div>
                     <div class="col-xs-6 mb-30">
-                        <label>Ship Address <span class="required">*</span></label>
+                        <label>Địa Chỉ <span class="required">*</span></label>
                         <input asp-for="@Model.Orders.ShipAddress" id="txtAddress" type="text" />
                     </div>
                     <div class="col-xs-6 mb-30">
-                        <label>City <span class="required">*</span></label>
+                        <label>Thành Phố <span class="required">*</span></label>
                         <input asp-for="@Model.Orders.ShipCity" id="txtCity" type="text" />
                     </div>
                     <div class="col-xs-12 mb-30">
-                        <label>Order Date</label>
+                        <label>Ngày Đặt Hàng</label>
                         <input asp-for="@Model.Orders.OrderDate" id="txtDate" disabled type="text" />
                     </div>
                     <div class="col-xs-12 mb-30">
@@ -55,13 +55,13 @@
             </div>
             <div class="col-lg-6 col-md-6 col-xs-12 mb-40">
                 <div class="order-wrapper">
-                    <h3>Your order</h3>
+                    <h3>Đơn Hàng Của Bạn</h3>
                     <div class="order-table table-responsive mb-30">
                         <table>
                             <thead>
                                 <tr>
-                                    <th class="product-name">Product</th>
-                                    <th class="product-total">Total</th>
+                                    <th class="product-name">Sản Phẩm</th>
+                                    <th class="product-total">Tổng</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -73,7 +73,7 @@
                                             @item.Product.SortName <strong class="product-qty">× @item.Count</strong>
                                         </td>
                                         <td class="product-total">
-                                            <span class="amount">$@(item.Product.Price * item.Count)</span>
+                                            <span class="amount">$@Math.Round(item.Product.Price * item.Count, 2)</span>
                                             @{ total += Math.Round(item.Product.Price * item.Count, 2); }
                                         </td>
                                     </tr>
@@ -84,15 +84,15 @@
                                 {
                                     <tr>
                                         <th>
-                                            Promo Code
+                                            Mã Giảm Giá: 
                                             <br />
                                             <small style="color:deepskyblue">&nbsp;@Model.Orders.CouponCode</small>
                                         </th>
                                         <td>-$@Math.Round(total-Model.Orders.OrderTotal, 2)</td>
                                     </tr>
                                     <tr>
-                                        <th>Order Total</th>
-                                        <td><strong>$@Model.Orders.OrderTotal</strong>
+                                        <th>Thành Tiền</th>
+                                        <td><strong>$@Math.Round(Model.Orders.OrderTotal, 2)</strong>
                                     </tr>
                                 }
                             </tfoot>
@@ -111,14 +111,14 @@
                                     data-description="Team Up - Game On."
                                     data-locale="auto"
                                     data-allow-remember-me="false"
-                                    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                                    data-image="https://i.pinimg.com/originals/dc/b0/62/dcb062042cc14b705f25ae1b260176ed.png"
                                     >
                             </script>
                             <script>
                                 document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
                             </script>
 
-                            <input type="submit" id="btnPlaceOrder" onclick="return validateInput()" value="Place order" />
+                            <input type="submit" id="btnPlaceOrder" onclick="return validateInput()" value="Đặt Hàng" />
                         </div>
                     </div>
                 </div>

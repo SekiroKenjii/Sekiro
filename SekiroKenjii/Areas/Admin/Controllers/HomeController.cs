@@ -37,7 +37,7 @@ namespace SekiroKenjii.Areas.Admin.Controllers
             OrderVM.Users = user;
 
             List<DataPoint> dataPoints = new List<DataPoint>();
-            foreach(var data in OrderList)
+            foreach(var data in OrderList.Where(o => o.Status!=SD.StatusCancelled && o.Status != SD.StatusCancelOnWeb))
             {
                 var orderName = "";
                 var orderTotal = 0.0;

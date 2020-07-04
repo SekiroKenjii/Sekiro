@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-primary">Details Supplier</h1>
+                <h1 class="m-0 text-info">Chi Tiết Nhà Cung Cấp</h1>
             </div>
         </div>
     </div>
@@ -18,58 +18,44 @@
             <div class="row">
                 <div class="col-9">
                     <div class="form-group row">
-                        <div class="col-2">
                             <label asp-for="Suppliers.Name" class="col-form-label"></label>
-                        </div>
-                        <div class="col-10">
+                        <div class="input-group">
                             <input asp-for="Suppliers.Name" readonly class="form-control" />
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-2">
                             <label asp-for="Suppliers.Address" class="col-form-label"></label>
-                        </div>
-                        <div class="col-10">
+                        <div class="input-group">
                             <input asp-for="Suppliers.Address" readonly class="form-control" />
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-2">
                             <label asp-for="Suppliers.City" class="col-form-label"></label>
-                        </div>
-                        <div class="col-10">
+                        <div class="input-group">
                             <input asp-for="Suppliers.City" readonly class="form-control" />
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-2">
                             <label asp-for="Suppliers.Country" class="col-form-label"></label>
-                        </div>
-                        <div class="col-10">
+                        <div class="input-group">
                             <input asp-for="Suppliers.Country" readonly class="form-control" />
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-2">
                             <label asp-for="Suppliers.Region" class="col-form-label"></label>
-                        </div>
-                        <div class="col-10">
+                        <div class="input-group">
                             <input asp-for="Suppliers.Region" readonly class="form-control" />
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-2">
                             <label asp-for="Suppliers.Phone" class="col-form-label"></label>
-                        </div>
-                        <div class="col-10">
+                        <div class="input-group">
                             <input asp-for="Suppliers.Phone" readonly class="form-control" />
                         </div>
                     </div>
                     <div class="form-group row">
-                        <div class="col-2">
                             <label asp-for="Suppliers.HomePage" class="col-form-label"></label>
-                        </div>
-                        <div class="col-10">
+                        <div class="input-group">
                             <input asp-for="Suppliers.HomePage" readonly class="form-control" />
                         </div>
                     </div>
@@ -80,12 +66,12 @@
             </div>
             <br />
             <div class="col-9">
-                <div class="offset-2 form-group row">
+                <div class="form-group row">
                     <div class="col-6">
-                        <a asp-action="Edit" asp-route-id="@Model.Suppliers.Id" class="btn btn-primary form-control">Edit</a>
+                        <a asp-action="Edit" asp-route-id="@Model.Suppliers.Id" class="btn btn-primary form-control">Chỉnh Sửa</a>
                     </div>
                     <div class="col-6">
-                        <a asp-action="Index" class="btn btn-success form-control">Back To List</a>
+                        <a asp-action="Index" class="btn btn-success form-control">Quay Lại Danh Sách</a>
                     </div>
                 </div>
             </div>           
