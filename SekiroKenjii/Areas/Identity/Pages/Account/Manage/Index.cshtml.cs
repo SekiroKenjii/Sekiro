@@ -38,11 +38,20 @@ namespace SekiroKenjii.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "Số Điện Thoại")]
             public string PhoneNumber { get; set; }
 
-            [Display(Name = "Full Name")]
+            [Display(Name = "Tên Đầy Đủ")]
             public string FullName { get; set; }
+
+            [Display(Name = "Địa Chỉ")]
+            public string Address { get; set; }
+
+            [Display(Name = "Thành Phố")]
+            public string City { get; set; }
+
+            [Display(Name = "Quốc Gia")]
+            public string Country { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
@@ -52,7 +61,10 @@ namespace SekiroKenjii.Areas.Identity.Pages.Account.Manage
             Input = new InputModel
             {
                 FullName = user.FullName,
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                Address = user.Address,
+                City = user.City,
+                Country = user.Country
             };
         }
 
@@ -97,6 +109,18 @@ namespace SekiroKenjii.Areas.Identity.Pages.Account.Manage
             if(Input.FullName != user.FullName)
             {
                 user.FullName = Input.FullName;
+            }
+            if (Input.Address != user.Address)
+            {
+                user.Address = Input.Address;
+            }
+            if (Input.City != user.City)
+            {
+                user.City = Input.City;
+            }
+            if (Input.Country != user.Country)
+            {
+                user.Country = Input.Country;
             }
             await _userManager.UpdateAsync(user);
 

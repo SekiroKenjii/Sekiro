@@ -13,11 +13,11 @@ namespace SekiroKenjii.Data
     public class DbInitializer : IDBInitializer
     {
         private readonly ApplicationDbContext _db;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
         public DbInitializer(ApplicationDbContext db, 
-                             UserManager<IdentityUser> userManager,
+                             UserManager<ApplicationUser> userManager,
                              RoleManager<IdentityRole> roleManager)
         {
             _db = db;
@@ -56,7 +56,7 @@ namespace SekiroKenjii.Data
                 PhoneNumber = "0972232372"
             }, "Thuong0165@").GetAwaiter().GetResult();
 
-            IdentityUser user = await _db.Users.FirstOrDefaultAsync(u => u.Email == "admin@gmail.com");
+            ApplicationUser user = await _db.Users.FirstOrDefaultAsync(u => u.Email == "admin@gmail.com");
 
             await _userManager.AddToRoleAsync(user, SD.ManagerUser);
         }

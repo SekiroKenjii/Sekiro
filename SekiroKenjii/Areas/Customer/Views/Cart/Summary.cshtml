@@ -84,11 +84,11 @@
                                 {
                                     <tr>
                                         <th>
-                                            Mã Giảm Giá: 
+                                            Mã Giảm Giá:
                                             <br />
                                             <small style="color:deepskyblue">&nbsp;@Model.Orders.CouponCode</small>
                                         </th>
-                                        <td>-$@Math.Round(total-Model.Orders.OrderTotal, 2)</td>
+                                        <td>-$@Math.Round(total - Model.Orders.OrderTotal, 2)</td>
                                     </tr>
                                     <tr>
                                         <th>Thành Tiền</th>
@@ -111,8 +111,7 @@
                                     data-description="Team Up - Game On."
                                     data-locale="auto"
                                     data-allow-remember-me="false"
-                                    data-image="https://i.pinimg.com/originals/dc/b0/62/dcb062042cc14b705f25ae1b260176ed.png"
-                                    >
+                                    data-image="https://i.pinimg.com/originals/dc/b0/62/dcb062042cc14b705f25ae1b260176ed.png">
                             </script>
                             <script>
                                 document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
@@ -127,56 +126,68 @@
     }
     else
     {
-        <p>Nothing There</p>
+        <div class="col-md-8 col-md-offset-2">
+            <div class="blog-item mb-20">
+                <div class="content fix">
+                    <blockquote>
+                        <p>"Bạn Chưa Thêm Sản Phẩm Nào"</p>
+                        <p>"Bạn Chưa Có Sản Phẩm Nào Trong Giỏ Hàng Để Thanh Toán. Quay lại Cửa Hàng Để Tiếp Tục Mua Sắm."</p>
+                    </blockquote>
+                    <div class="text-center">
+                        <button class="btn" asp-action="Shop" asp-area="Customer" asp-controller="Home">Quay Lại Cửa Hàng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     }
 </form>
-@section Scripts{ 
-<script>
-    function validateInput() {
-        var name = document.getElementById("txtName").value;
-        var email = document.getElementById("txtEmail").value;
-        var phone = document.getElementById("txtPhone").value;
-        var country = document.getElementById("txtCountry").value;
-        var address = document.getElementById("txtAddress").value;
-        var city = document.getElementById("txtCity").value;
+@section Scripts{
+    <script>
+        function validateInput() {
+            var name = document.getElementById("txtName").value;
+            var email = document.getElementById("txtEmail").value;
+            var phone = document.getElementById("txtPhone").value;
+            var country = document.getElementById("txtCountry").value;
+            var address = document.getElementById("txtAddress").value;
+            var city = document.getElementById("txtCity").value;
 
-        if (name.toString() == '') {
-            alert("Please enter your Full Name");
-            return false;
-        }
-        else {
-            if (phone.toString() == '') {
-                alert("Please enter your Phone Number");
+            if (name.toString() == '') {
+                alert("Please enter your Full Name");
                 return false;
             }
             else {
-                if (email.toString() == '') {
-                    alert("Please enter your Email");
+                if (phone.toString() == '') {
+                    alert("Please enter your Phone Number");
                     return false;
                 }
                 else {
-                    if (country.toString() == '') {
-                        alert("Please insert your Country");
+                    if (email.toString() == '') {
+                        alert("Please enter your Email");
                         return false;
                     }
                     else {
-                        if (address.toString() == '') {
-                            alert("Please insert your Address");
+                        if (country.toString() == '') {
+                            alert("Please insert your Country");
                             return false;
                         }
                         else {
-                            if (city.toString() == '') {
-                                alert("Please insert your City");
+                            if (address.toString() == '') {
+                                alert("Please insert your Address");
                                 return false;
                             }
                             else {
-                                return true;
+                                if (city.toString() == '') {
+                                    alert("Please insert your City");
+                                    return false;
+                                }
+                                else {
+                                    return true;
+                                }
                             }
                         }
                     }
                 }
             }
         }
-    }
-</script>
+    </script>
 }

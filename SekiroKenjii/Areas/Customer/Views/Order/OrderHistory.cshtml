@@ -6,7 +6,7 @@
 }
 
 <br />
-<h1 class="text-center" style="font-weight:bold">Order History List</h1>
+<h1 class="text-center" style="font-weight:bold">Lịch Sử Đặt Hàng</h1>
 <br />
 <hr />
 <br />
@@ -22,7 +22,7 @@
                             @Html.DisplayNameFor(m => m.Orders.Id)
                         </th>
                         <th class="pro-stock-stauts">
-                            User Name
+                            Người Đặt Hàng
                         </th>
                         <th class="pro-stock-stauts">
                             @Html.DisplayNameFor(m => m.Orders.ApplicationUser.Email)
@@ -34,7 +34,7 @@
                             @Html.DisplayNameFor(m => m.Orders.OrderTotal)
                         </th>
                         <th class="pro-remove">
-                            Total Items
+                            Số Sản Phẩm
                         </th>
                         <th class="pro-add-to-cart"></th>
                     </tr>
@@ -63,10 +63,10 @@
                             </td>
                             <td class="pro-add-to-cart">
                                 <div class="btn-group">
-                                    <button class="btn" href="#" data-toggle="modal" data-target="#@item.Orders.Id" title="Quick View" style="padding: 10px 20px"><i class="far fa-list-alt"></i>&ensp;Details</button>
+                                    <button class="btn" href="#" data-toggle="modal" data-target="#@item.Orders.Id" title="Quick View" style="padding: 10px 20px"><i class="far fa-list-alt"></i>&ensp;Chi Tiết</button>
                                     @if (item.Orders.Status != SD.StatusCancelOnWeb)
                                     {
-                                        <button class="btn" href="#" data-toggle="modal" data-target="#@item.Orders.Status.Replace(" ",string.Empty)" title="Quick View" style="padding: 10px 20px"><i class="far fa-clock"></i>&ensp;Status</button>
+                                        <button class="btn" href="#" data-toggle="modal" data-target="#@item.Orders.Status.Replace(" ",string.Empty)" title="Quick View" style="padding: 10px 20px"><i class="far fa-clock"></i>&ensp;Trạng Thái</button>
                                     }
                                 </div>
                             </td>
