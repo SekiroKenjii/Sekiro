@@ -58,8 +58,15 @@
                             <td class="pro-price">
                                 @Html.DisplayFor(m => item.Orders.OrderTotal)
                             </td>
+                            @{
+                                int cnt = 0;
+                                foreach (var countPro in item.OrderDetails)
+                                {
+                                    cnt += countPro.Count;
+                                }
+                            }
                             <td class="pro-remove">
-                                @Html.DisplayFor(m => item.OrderDetails.Count)
+                                @cnt
                             </td>
                             <td class="pro-add-to-cart">
                                 <div class="btn-group">
@@ -79,7 +86,19 @@
     }
     else
     {
-        <p>You have no any order. Please place a new order. Thank you!</p>
+        <div class="col-md-8 col-md-offset-2">
+            <div class="blog-item mb-20">
+                <div class="content fix">
+                    <blockquote>
+                        <p>"Bạn Chưa Đặt Bất Kì Đơn Hàng Nào"</p>
+                        <p>"Bạn Chưa Có Đơn Hàng Nào. Hãy Quay Lại Cửa Hàng Để Tiếp Tục Mua Sắm."</p>
+                    </blockquote>
+                    <div class="text-center">
+                        <button class="btn" asp-action="Shop" asp-area="Customer" asp-controller="Home">Quay Lại Cửa Hàng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     }
 </div>
 
@@ -94,11 +113,11 @@
                         <form method="post">
                             <div class="row">
                                 <div class="col-lg-7 col-md-6 mb-40">
-                                    <h3>Billing Details</h3>
+                                    <h3>Chi Tiết Hoá Đơn</h3>
                                     <div class="row">
                                         <input type="hidden" asp-for="@order.Orders.Id" />
                                         <div class="col-xs-12 mb-30">
-                                            <label>Full Name</label>
+                                            <label>Họ Tên</label>
                                             <input asp-for="@order.Orders.OrderName" disabled id="txtName" type="text" />
                                         </div>
                                         <div class="col-xs-6 mb-30">
@@ -106,23 +125,23 @@
                                             <input asp-for="@order.Orders.ShipEmail" disabled id="txtEmail" type="text" />
                                         </div>
                                         <div class="col-xs-6 mb-30">
-                                            <label>Phone Number</label>
+                                            <label>Số Điện Thoại</label>
                                             <input asp-for="@order.Orders.PhoneNumber" disabled id="txtPhone" type="text" />
                                         </div>
                                         <div class="col-xs-12 mb-30">
-                                            <label>Country</label>
+                                            <label>Quốc Gia</label>
                                             <input asp-for="@order.Orders.ShipCountry" disabled id="txtCountry" type="text" />
                                         </div>
                                         <div class="col-xs-6 mb-30">
-                                            <label>Ship Address</label>
+                                            <label>Địa Chỉ</label>
                                             <input asp-for="@order.Orders.ShipAddress" disabled id="txtAddress" type="text" />
                                         </div>
                                         <div class="col-xs-6 mb-30">
-                                            <label>City</label>
+                                            <label>Thành Phố</label>
                                             <input asp-for="@order.Orders.ShipCity" disabled id="txtCity" type="text" />
                                         </div>
                                         <div class="col-xs-12 mb-30">
-                                            <label>Order Date</label>
+                                            <label>Ngày Đặt Hàng</label>
                                             <input asp-for="@order.Orders.OrderDate" id="txtDate" disabled type="text" />
                                         </div>
                                         <div class="col-xs-12 mb-30">
@@ -135,18 +154,18 @@
                                     <div class="order-wrapper">
                                         <div class="row">
                                             <div class="col-md-10 mb-20">
-                                                <h4 class="text-muted">Order ID: </h4>
+                                                <h4 class="text-muted">Mã Đơn Hàng: </h4>
                                             </div>
                                             <div class="col-md-2 mb-20">
                                                 <h4 class="text-muted text-right"><span class="badge badge-secondary badge-pill">@order.Orders.Id</span></h4>
                                             </div>
                                         </div>
                                         <div class="order-table table-responsive mb-20">
-                                            <table>
+                                            <table class="mb-35">
                                                 <thead>
                                                     <tr>
-                                                        <th class="product-name">Product</th>
-                                                        <th class="product-total">Total</th>
+                                                        <th class="product-name">Sản Phẩm</th>
+                                                        <th class="product-total">Giá</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -165,43 +184,55 @@
                                                         }
                                                     }
                                                 </tbody>
-                                                <tfoot>
+                                            </table>
+                                            <table class="mb-35">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="product-name">Mã Giảm Giá</th>
+                                                        <th class="product-total">Tiền Giảm</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
                                                     @if (order.Orders.CouponCode != null)
                                                     {
-                                                        <tr style="color:deepskyblue">
-                                                            <th>
-                                                                Promo Code:
-                                                                <br />
-                                                                <small style="color:deepskyblue">&nbsp;@order.Orders.CouponCode</small>
-                                                            </th>
-                                                            <td style="color:deepskyblue">-$@Math.Round(order.Orders.CouponCodeDiscount, 2)</td>
-                                                        </tr>
                                                         <tr>
-                                                            <th>Order Total</th>
-                                                            <td><strong>$@order.Orders.OrderTotal</strong>
+                                                            <td class="product-details">
+                                                                <strong style="color:deepskyblue">&nbsp;@order.Orders.CouponCode</strong>
+                                                            </td>
+                                                            <td class="product-total">-$@Math.Round(order.Orders.CouponCodeDiscount, 2)</td>
                                                         </tr>
                                                     }
                                                     else
                                                     {
                                                         <tr>
-                                                            <th>Order Total</th>
-                                                            <td><strong>$@order.Orders.OrderTotal</strong>
+                                                            <td class="product-details">
+                                                                <strong style="color:darkred">&nbsp;Không Có</strong>
+                                                            </td>
+                                                            <td class="product-total">-$@Math.Round(order.Orders.CouponCodeDiscount, 2)</td>
                                                         </tr>
                                                     }
-                                                </tfoot>
+                                                </tbody>
+                                            </table>
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th class="product-name">Thành Tiền</th>
+                                                        <th class="product-total"><strong>$@Math.Round(order.Orders.OrderTotal, 2)</strong></th>
+                                                    </tr>
+                                                </thead>
                                             </table>
                                         </div>
                                     </div>
                                     <br />
                                     <div class="col-xs-12 mb-30">
-                                        <label class="text-muted">Order Status</label>
+                                        <label class="text-muted">Trạng thái đơn hàng</label>
                                         @if (order.Orders.Status == SD.StatusCancelled)
                                         {
-                                            <input type="submit" disabled class="btn btn-danger form-control" value="@order.Orders.Status (Delivery Failed)" />
+                                            <input type="submit" disabled class="btn btn-danger form-control" value="Đã huỷ (Giao hàng thất bại)" />
                                         }
                                         else if (order.Orders.Status == SD.StatusCancelOnWeb)
                                         {
-                                            <input type="submit" disabled class="btn btn-danger form-control" value="@order.Orders.Status (By Yourself)" />
+                                            <input type="submit" disabled class="btn btn-danger form-control" value="Bạn đã huỷ đơn hàng này" />
                                         }
                                         else
                                         {
@@ -209,14 +240,14 @@
                                         }
                                     </div>
                                     <div class="col-xs-12 mb-30">
-                                        <label class="text-muted">Payment Status</label>
+                                        <label class="text-muted">Trạng thái thanh toán</label>
                                         <input type="submit" disabled class="btn form-control" value="@order.Orders.PaymentStatus" />
                                     </div>
                                     @if (order.Orders.Status != SD.StatusCancelOnWeb && order.Orders.Status != SD.StatusCancelled && order.Orders.Status != SD.StatusCompleted)
                                     {
                                         <div class="col-xs-12 mb-30">
-                                            <label class="text-muted">Cancel This Order</label>
-                                            <button type="submit" class="btn form-control" asp-action="CancelOnWeb" asp-route-OrderId="@order.Orders.Id">Cancel</button>
+                                            <label class="text-muted">Huỷ đơn hàng này</label>
+                                            <button type="submit" class="btn form-control" asp-action="CancelOnWeb" asp-route-OrderId="@order.Orders.Id">Huỷ</button>
                                         </div>
                                     }
                                 </div>
@@ -238,7 +269,7 @@
                         <button class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
                         <div class="row">
                             <div class="col-lg-12 col-md-6 mb-40">
-                                <h3 class="text-center text-muted">Tracking Your Order</h3>
+                                <h3 class="text-center text-muted">Theo dõi đơn hàng của bạn</h3>
                                 <div style="width:100%">
                                     @if (st.Orders.Status == SD.StatusSubmitted)
                                     {

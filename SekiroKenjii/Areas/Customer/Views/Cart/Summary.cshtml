@@ -55,13 +55,13 @@
             </div>
             <div class="col-lg-6 col-md-6 col-xs-12 mb-40">
                 <div class="order-wrapper">
-                    <h3>Đơn Hàng Của Bạn</h3>
+                    <h3>Đơn Hàng Của Bạn Gồm:</h3>
                     <div class="order-table table-responsive mb-30">
-                        <table>
+                        <table class="mb-35">
                             <thead>
                                 <tr>
                                     <th class="product-name">Sản Phẩm</th>
-                                    <th class="product-total">Tổng</th>
+                                    <th class="product-total">Giá</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -79,23 +79,43 @@
                                     </tr>
                                 }
                             </tbody>
-                            <tfoot>
+                        </table>
+                        <table class="mb-35">
+                            <thead>
+                                <tr>
+                                    <th class="product-name">Mã Giảm Giá</th>
+                                    <th class="product-total">Tiền Giảm</th>
+                                </tr>
+                            </thead>
+                            <tbody>
                                 @if (Model.Orders.CouponCode != null)
                                 {
                                     <tr>
-                                        <th>
-                                            Mã Giảm Giá:
-                                            <br />
-                                            <small style="color:deepskyblue">&nbsp;@Model.Orders.CouponCode</small>
-                                        </th>
-                                        <td>-$@Math.Round(total - Model.Orders.OrderTotal, 2)</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Thành Tiền</th>
-                                        <td><strong>$@Math.Round(Model.Orders.OrderTotal, 2)</strong>
+                                        <td class="product-details">
+                                            <strong style="color:deepskyblue">&nbsp;@Model.Orders.CouponCode</strong>
+                                        </td>
+                                        <td class="product-total">-$@Math.Round(total - Model.Orders.OrderTotal, 2)</td>
                                     </tr>
                                 }
-                            </tfoot>
+                                else
+                                {
+                                    <tr>
+                                        <td class="product-details">
+                                            <strong style="color:darkred">&nbsp;Không Có</strong>
+                                        </td>
+                                        <td class="product-total">-$@Math.Round(total - Model.Orders.OrderTotal, 2)</td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="product-name">Thành Tiền</th>
+                                    <th class="product-total"><strong>$@Math.Round(Model.Orders.OrderTotal, 2)</strong></th>
+                                </tr>
+                            </thead>
                         </table>
                     </div>
                     <div class="payment-method">

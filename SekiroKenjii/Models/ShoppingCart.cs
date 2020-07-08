@@ -26,7 +26,7 @@ namespace SekiroKenjii.Models
         [ForeignKey("ProductId")]
         public virtual Product Product { get; set; }
 
-        [Range(1,int.MaxValue, ErrorMessage = "Please enter a value greater than or equal to {1}")]
+        [Range(1,int.MaxValue, ErrorMessage = "Hãy nhập ít nhất hoặc nhiều hơn {1} sản phẩm")]
         public int Count { get; set; }
     }
 }

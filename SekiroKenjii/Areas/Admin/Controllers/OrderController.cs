@@ -100,6 +100,17 @@ namespace SekiroKenjii.Areas.Admin.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        public async Task<IActionResult> OrderDenied(int OrderId)
+        {
+            Order order = await _db.Orders.FindAsync(OrderId);
+            order.Status = SD.StatusDenied;
+
+            await _db.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
         public async Task<IActionResult> OrderReadyPack(int OrderId)
         {
             Order order = await _db.Orders.FindAsync(OrderId);
@@ -141,6 +152,7 @@ namespace SekiroKenjii.Areas.Admin.Controllers
             Order order = await _db.Orders.FindAsync(OrderId);
 
             order.Status = SD.StatusCompleted;
+
             await _db.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
@@ -150,8 +162,28 @@ namespace SekiroKenjii.Areas.Admin.Controllers
         {
             Order order = await _db.Orders.FindAsync(OrderId);
 
+            List<OrderDetails> orderDetails = await _db.OrderDetails.Where(o => o.OrderId == order.Id).ToListAsync();
+
             order.Status = SD.StatusCancelled;
+            foreach (var pro in orderDetails)
+            {
+                Product product = await _db.Products.Where(p => p.Id == pro.ProductId).FirstOrDefaultAsync();
+                product.UnitsInStock += pro.Count;
+                product.UnitsOnOder -= pro.Count;
+            }            
             order.PaymentStatus = SD.PaymentStatusRejected;
+
+            await _db.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Refund(int OrderId)
+        {
+            Order order = await _db.Orders.FindAsync(OrderId);
+
+            order.PaymentStatus = SD.PaymentStatusReturned;
+
             await _db.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));

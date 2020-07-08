@@ -68,15 +68,18 @@ namespace SekiroKenjii.Areas.Customer.Controllers
         public async Task<IActionResult> CancelOnWeb(int OrderId)
         {            
             Order order = await _db.Orders.FindAsync(OrderId);
+
             List<OrderDetails> orderDetails = await _db.OrderDetails.Where(o => o.OrderId == OrderId).ToListAsync();
+
             order.Status = SD.StatusCancelOnWeb;
-            order.PaymentStatus = SD.PaymentStatusRejected;
             foreach(var pro in orderDetails)
             {
                 var product = _db.Products.Where(p => p.Id == pro.ProductId).FirstOrDefault();
                 product.UnitsInStock += pro.Count;
                 product.UnitsOnOder -= pro.Count;
             }
+            order.PaymentStatus = SD.PaymentStatusRejected;
+
             await _db.SaveChangesAsync();
 
             return RedirectToAction(nameof(OrderHistory));

@@ -38,7 +38,7 @@
                                                 Liên Hệ
                                             </th>
                                             <th>
-                                                Tổng Tiền Đơn Hàng (VND)
+                                                Tổng Tiền Đơn Hàng (USD)
                                             </th>
                                             @if (User.IsInRole(SD.CustomerOfficer) || User.IsInRole(SD.ManagerUser))
                                             {
@@ -73,7 +73,7 @@
                                                         </li>
                                                     }
                                                     <li>
-                                                        Discount: <strong>@Math.Round(item.Orders.CouponCodeDiscount, 2)</strong>
+                                                        Giảm: <strong>@Math.Round(item.Orders.CouponCodeDiscount, 2)</strong>
                                                     </li>
                                                 </ul>
                                             </td>
@@ -112,9 +112,14 @@
                                                 @if (item.Orders.Status.Equals(SD.StatusSubmitted))
                                                 {
                                                     <strong class="text-warning">Đang chờ xác nhận...</strong>
-                                                    <button type="submit" asp-action="OrderApproved" asp-route-OrderId="@item.Orders.Id" class="btn btn-info form-control">
-                                                        <i class="fas fa-check"></i>&ensp;Xác nhận
-                                                    </button>
+                                                    <div class="btn-group">
+                                                        <button type="submit" asp-action="OrderApproved" asp-route-OrderId="@item.Orders.Id" class="btn btn-success">
+                                                            <i class="fas fa-check"></i>&ensp;Xác nhận
+                                                        </button>
+                                                        <button type="submit" asp-action="OrderDenied" asp-route-OrderId="@item.Orders.Id" class="btn btn-danger">
+                                                            <i class="fas fa-times"></i>&ensp;Từ chối
+                                                        </button>
+                                                    </div>
                                                 }
                                                 @if (item.Orders.Status.Equals(SD.StatusApproved))
                                                 {
@@ -162,11 +167,35 @@
                                                 }
                                                 @if (item.Orders.Status.Equals(SD.StatusCancelled))
                                                 {
-                                                    <strong class="text-danger">Giao hàng thất bại</strong>
+                                                    <strong class="text-danger">
+                                                        Giao hàng thất bại
+                                                        @if (item.Orders.PaymentStatus.Equals(SD.PaymentStatusReturned))
+                                                        {
+                                                            <span>(Đã hoàn tiền)</span>
+                                                        }
+                                                    </strong>
+                                                    @if (item.Orders.PaymentStatus.Equals(SD.PaymentStatusRejected))
+                                                    {
+                                                        <button type="submit" asp-action="Refund" asp-route-OrderId="@item.Orders.Id" class="btn btn-info form-control">
+                                                            <i class="fas fa-money-bill-wave"></i>&ensp;Hoàn tiền
+                                                        </button>
+                                                    }
                                                 }
                                                 @if (item.Orders.Status.Equals(SD.StatusCancelOnWeb))
                                                 {
-                                                    <strong class="text-danger">Đã huỷ bởi người đặt hàng</strong>
+                                                    <strong class="text-danger">
+                                                        Đã huỷ bởi người đặt hàng
+                                                        @if (item.Orders.PaymentStatus.Equals(SD.PaymentStatusReturned))
+                                                        {
+                                                            <span>(Đã hoàn tiền)</span>
+                                                        }
+                                                    </strong>
+                                                    if (item.Orders.PaymentStatus.Equals(SD.PaymentStatusRejected))
+                                                    {
+                                                        <button type="submit" asp-action="Refund" asp-route-OrderId="@item.Orders.Id" class="btn btn-info form-control">
+                                                            <i class="fas fa-money-bill-wave"></i>&ensp;Hoàn tiền
+                                                        </button>
+                                                    }
                                                 }
                                             </td>
                                         </tr>

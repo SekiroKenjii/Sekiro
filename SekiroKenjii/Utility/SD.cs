@@ -28,19 +28,21 @@ namespace SekiroKenjii.Utility
         public const string ssShoppingCartCount = "ssCartCount";
         public const string ssCouponCode = "ssCouponCode";
 
-        public const string StatusSubmitted = "Submitted";
-        public const string StatusApproved = "Approved";
-        public const string StatusShipping = "Shipping";
-        public const string StatusReadyPack = "Ready to Pack";
-        public const string StatusInPackingProcess = "Being Packed";
-        public const string StatusReadyShip = "Ready to Ship";
-        public const string StatusCompleted = "Completed";
-        public const string StatusCancelled = "Cancelled";
-        public const string StatusCancelOnWeb = "Cancel On Web";
+        public const string StatusSubmitted = "Chờ xác nhận";
+        public const string StatusApproved = "Đã xác nhận";
+        public const string StatusDenied = "Đã từ chối";
+        public const string StatusShipping = "Đang giao hàng";
+        public const string StatusReadyPack = "Sẵn sàng đóng gói";
+        public const string StatusInPackingProcess = "Đang đóng gói";
+        public const string StatusReadyShip = "Sẵn sàng vận chuyển";
+        public const string StatusCompleted = "Hoàn thành";
+        public const string StatusCancelled = "Đã huỷ";
+        public const string StatusCancelOnWeb = "Đả huỷ bởi khách hàng";
 
-        public const string PaymentStatusPending = "Pending";
-        public const string PaymentStatusApproved = "Approved";
-        public const string PaymentStatusRejected = "Rejected";
+        public const string PaymentStatusPending = "Đang chờ";
+        public const string PaymentStatusApproved = "Đã phê duyệt";
+        public const string PaymentStatusRejected = "Đã từ chối (Chờ hoàn tiền)";
+        public const string PaymentStatusReturned = "Đã hoàn tiền";
 
         public static double DiscountedPrice(Coupon couponFromDb, double OriginalOrderTotal)
         {

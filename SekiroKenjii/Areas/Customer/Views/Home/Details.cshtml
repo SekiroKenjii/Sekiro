@@ -5,7 +5,7 @@
 }
 <br />
 <br />
-<h1 class="text-center" style="font-weight:bold">Product Details</h1>
+<h1 class="text-center" style="font-weight:bold">Chi Tiết Sản Phẩm</h1>
 <br />
 <hr />
 <br />
@@ -30,19 +30,19 @@
                 </div>
                 <!-- Short Description -->
                 <div class="short-desc section">
-                    <h5 class="pd-sub-title">Overview</h5>
+                    <h5 class="pd-sub-title">Đôi nét về sản phẩm</h5>
                     <p>@Html.Raw(Model.Products.Description)</p>
                 </div>
                 <!-- Quantity Cart -->
                 <div class="price-ratting section">
-                    <span class="price float-left"><span class="new">Remaining Products: @Model.Products.UnitsInStock</span></span>
+                    <span class="price float-left"><span class="new">Sản Phẩm Còn Lại: @Model.Products.UnitsInStock</span></span>
                 </div>
                 <div class="quantity-cart section">
                     <div class="product-quantity">
-                        <input asp-for="@Model.ShoppingCart.Count" id="@Model.Products.UnitsInStock" value="1" max="@Model.Products.UnitsInStock">
+                        <input asp-for="@Model.ShoppingCart.Count" id="@Model.Products.UnitsInStock" value="1" min="1" max="@Model.Products.UnitsInStock">
                         <span asp-validation-for="@Model.ShoppingCart.Count" class="text-danger"></span>
                     </div>
-                    <button type="submit" class="add-to-cart">add to cart</button>
+                    <button type="submit" class="add-to-cart">Thêm vào giỏ hàng</button>
                 </div>
             </div>
         </div>
@@ -50,8 +50,8 @@
     <div class="row">
         <div class="col-xs-12">
             <ul class="pro-info-tab-list section">
-                <li class="active"><a href="#more-info" data-toggle="tab">More info</a></li>
-                <li><a href="#data-sheet" data-toggle="tab">Data sheet</a></li>
+                <li class="active"><a href="#more-info" data-toggle="tab">Thêm thông tin</a></li>
+                <li><a href="#data-sheet" data-toggle="tab">Mô Tả</a></li>
             </ul>
         </div>
         <div class="tab-content col-xs-12">
@@ -62,15 +62,15 @@
                 <table class="table-data-sheet">
                     <tbody>
                         <tr class="odd">
-                            <td>Product Brand</td>
+                            <td>Thương Hiệu</td>
                             <td>@Model.Products.Supplier.Name</td>
                         </tr>
                         <tr class="even">
-                            <td>Product Category</td>
+                            <td>Loại Sản Phẩm</td>
                             <td>@Model.Products.Category.Name</td>
                         </tr>
                         <tr class="odd">
-                            <td>Product Status</td>
+                            <td>Nhãn Sản Phẩm</td>
                             <td>@Model.Products.Tag.Name</td>
                         </tr>
                     </tbody>

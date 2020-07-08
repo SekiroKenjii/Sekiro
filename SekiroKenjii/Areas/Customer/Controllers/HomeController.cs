@@ -22,6 +22,7 @@ namespace SekiroKenjii.Controllers
     public class HomeController : Controller
     {
         private readonly ApplicationDbContext _db;
+
         [BindProperty]
         public ShoppingCartViewModel ShoppingCartVM { get; set; }
 
@@ -46,7 +47,12 @@ namespace SekiroKenjii.Controllers
 
             if (claim != null)
             {
-                var cnt = _db.ShoppingCarts.Where(u => u.ApplicationUserId == claim.Value).ToList().Count();
+                var cnt = 0;
+                var lstCnt = _db.ShoppingCarts.Where(u => u.ApplicationUserId == claim.Value).ToList();
+                foreach(var c in lstCnt)
+                {
+                    cnt += c.Count;
+                }
                 HttpContext.Session.SetInt32(SD.ssShoppingCartCount, cnt);
             }
 
@@ -85,6 +91,7 @@ namespace SekiroKenjii.Controllers
             {
                 var claimsIdentity = (ClaimsIdentity)this.User.Identity;
                 var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
                 ShoppingCartVM.ShoppingCart.ApplicationUserId = claim.Value;
 
                 var UnitStock = await _db.Products.Where(p => p.Id == ShoppingCartVM.ShoppingCart.ProductId).FirstOrDefaultAsync();
@@ -92,25 +99,28 @@ namespace SekiroKenjii.Controllers
                 ShoppingCart cartFromDb = await _db.ShoppingCarts.Where(c => c.ApplicationUserId == ShoppingCartVM.ShoppingCart.ApplicationUserId && 
                                                                         c.ProductId == ShoppingCartVM.ShoppingCart.ProductId).FirstOrDefaultAsync();
 
-                int checkItem = UnitStock.UnitsInStock - ShoppingCartVM.ShoppingCart.Count;
                 if (cartFromDb == null)
                 {
                     await _db.ShoppingCarts.AddAsync(ShoppingCartVM.ShoppingCart);
-                    UnitStock.UnitsInStock = checkItem;
-                    UnitStock.UnitsOnOder = ShoppingCartVM.ShoppingCart.Count;
                 }
                 else
                 {
-                    cartFromDb.Count = cartFromDb.Count + ShoppingCartVM.ShoppingCart.Count;
-                    UnitStock.UnitsInStock = checkItem;
-                    UnitStock.UnitsOnOder = UnitStock.UnitsOnOder + ShoppingCartVM.ShoppingCart.Count;
+                    cartFromDb.Count += ShoppingCartVM.ShoppingCart.Count;
                 }
+
+                UnitStock.UnitsInStock -= ShoppingCartVM.ShoppingCart.Count; 
+
                 await _db.SaveChangesAsync();
 
-                var count = _db.ShoppingCarts.Where(c => c.ApplicationUserId == ShoppingCartVM.ShoppingCart.ApplicationUserId).ToList().Count();
+                var count = 0;
+                var lstCount = _db.ShoppingCarts.Where(c => c.ApplicationUserId == ShoppingCartVM.ShoppingCart.ApplicationUserId).ToList();
+                foreach(var c in lstCount)
+                {
+                    count += c.Count;
+                }
                 HttpContext.Session.SetInt32(SD.ssShoppingCartCount, count);
-
-                return RedirectToAction("Index");
+                
+                return Redirect(Request.Headers["Referer"].ToString());
 
             }
             else
@@ -142,7 +152,12 @@ namespace SekiroKenjii.Controllers
 
             if (claim != null)
             {
-                var cnt = _db.ShoppingCarts.Where(u => u.ApplicationUserId == claim.Value).ToList().Count();
+                var cnt = 0;
+                var lstCnt = _db.ShoppingCarts.Where(u => u.ApplicationUserId == claim.Value).ToList();
+                foreach(var c in lstCnt)
+                {
+                    cnt += c.Count;
+                }
                 HttpContext.Session.SetInt32(SD.ssShoppingCartCount, cnt);
             }
 
@@ -158,18 +173,23 @@ namespace SekiroKenjii.Controllers
             {
                 foreach (var item in IndexVM.Products)
                 {
-                    if (item.SortName.ToLower().Contains(SearchString.ToLower()))
+                    string stringName = item.Category.Name.ToLower() + " " + item.SortName.ToLower();
+                    if(stringName.Contains(SearchString.ToLower()))
                     {
-                        IndexVM.Products = IndexVM.Products.Where(p => p.Name.ToLower().Contains(SearchString.ToLower())).ToList();
+                        IndexVM.Products = IndexVM.Products.Where(p => (p.Category.Name.ToLower() + " " + p.SortName.ToLower()).Contains(SearchString.ToLower())).ToList();
                     }
-                    if (item.Category.Name.ToLower().Contains(SearchString.ToLower()))
-                    {
-                        IndexVM.Products = IndexVM.Products.Where(p => p.Category.Name.ToLower().Contains(SearchString.ToLower())).ToList();
-                    }
-                    if (item.Supplier.Name.ToLower().Contains(SearchString.ToLower()))
-                    {
-                        IndexVM.Products = IndexVM.Products.Where(p => p.Supplier.Name.ToLower().Contains(SearchString.ToLower())).ToList();
-                    }
+                    //if (SearchString.Replace(" ", string.Empty).ToLower().Contains(item.SortName.Replace(" ", string.Empty).ToLower()))
+                    //{
+                    //    IndexVM.Products = IndexVM.Products.Where(p => p.SortName.Replace(" ", string.Empty).ToLower().Contains(SearchString.Replace(" ", string.Empty).ToLower())).ToList();
+                    //}
+                    //if (item.Category.Name.Replace(" ", string.Empty).ToLower().Contains(SearchString.Replace(" ", string.Empty).ToLower()))
+                    //{
+                    //    IndexVM.Products = IndexVM.Products.Where(p => p.Category.Name.Replace(" ", string.Empty).ToLower().Contains(SearchString.Replace(" ", string.Empty).ToLower())).ToList();
+                    //}
+                    //if (item.Supplier.Name.Replace(" ", string.Empty).ToLower().Contains(SearchString.Replace(" ", string.Empty).ToLower()))
+                    //{
+                    //    IndexVM.Products = IndexVM.Products.Where(p => p.Supplier.Name.Replace(" ", string.Empty).ToLower().Contains(SearchString.Replace(" ", string.Empty).ToLower())).ToList();
+                    //}
                 }
             }
 

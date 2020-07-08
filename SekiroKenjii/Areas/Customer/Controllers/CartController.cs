@@ -78,8 +78,11 @@ namespace SekiroKenjii.Areas.Customer.Controllers
 
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
             ApplicationUser applicationUser = await _db.ApplicationUsers.Where(c => c.Id == claim.Value).FirstOrDefaultAsync();
+
             var cart = _db.ShoppingCarts.Where(c => c.ApplicationUserId == claim.Value);
+
             if (cart != null)
             {
                 detailsCart.lstCarts = cart.ToList();
@@ -144,6 +147,10 @@ namespace SekiroKenjii.Areas.Customer.Controllers
                     Price = item.Product.Price,
                     Count = item.Count
                 };
+
+                var product = await _db.Products.Where(p => p.Id == item.ProductId).FirstOrDefaultAsync();
+                product.UnitsOnOder += item.Count;
+
                 detailsCart.Orders.OrderTotalOriginal += orderDetails.Count * orderDetails.Price;
                 _db.OrderDetails.Add(orderDetails);
             }
@@ -158,10 +165,11 @@ namespace SekiroKenjii.Areas.Customer.Controllers
             {
                 detailsCart.Orders.OrderTotal = detailsCart.Orders.OrderTotalOriginal;
             }
-            detailsCart.Orders.CouponCodeDiscount = detailsCart.Orders.OrderTotalOriginal - detailsCart.Orders.OrderTotal;
+            detailsCart.Orders.CouponCodeDiscount = Math.Round(detailsCart.Orders.OrderTotalOriginal - detailsCart.Orders.OrderTotal, 2);
 
             _db.ShoppingCarts.RemoveRange(detailsCart.lstCarts);
             HttpContext.Session.SetInt32(SD.ssShoppingCartCount, 0);
+
             await _db.SaveChangesAsync();
 
             var options = new ChargeCreateOptions
@@ -216,8 +224,17 @@ namespace SekiroKenjii.Areas.Customer.Controllers
             var pro = await _db.Products.FirstOrDefaultAsync(p => p.Id == cart.ProductId);
             cart.Count += 1;
             pro.UnitsInStock -= 1;
-            pro.UnitsOnOder += 1;
+            //pro.UnitsOnOder += 1;
             await _db.SaveChangesAsync();
+
+            var cnt = 0;
+            var lstCnt = _db.ShoppingCarts.Where(u => u.ApplicationUserId == cart.ApplicationUserId).ToList();
+            foreach (var c in lstCnt)
+            {
+                cnt += c.Count;
+            }
+            HttpContext.Session.SetInt32(SD.ssShoppingCartCount, cnt);
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -228,19 +245,32 @@ namespace SekiroKenjii.Areas.Customer.Controllers
             if (cart.Count == 1)
             {
                 pro.UnitsInStock += 1;
-                pro.UnitsOnOder -= 1;
+                //pro.UnitsOnOder -= 1;
                 _db.ShoppingCarts.Remove(cart);
                 await _db.SaveChangesAsync();
 
-                var cnt = _db.ShoppingCarts.Where(u => u.ApplicationUserId == cart.ApplicationUserId).ToList().Count;
+                var cnt = 0;
+                var lstCnt = _db.ShoppingCarts.Where(u => u.ApplicationUserId == cart.ApplicationUserId).ToList();
+                foreach (var c in lstCnt)
+                {
+                    cnt += c.Count;
+                }
                 HttpContext.Session.SetInt32(SD.ssShoppingCartCount, cnt);
             }
             else
             {
                 cart.Count -= 1;
                 pro.UnitsInStock += 1;
-                pro.UnitsOnOder -= 1;
+                //pro.UnitsOnOder -= 1;
                 await _db.SaveChangesAsync();
+
+                var cnt = 0;
+                var lstCnt = _db.ShoppingCarts.Where(u => u.ApplicationUserId == cart.ApplicationUserId).ToList();
+                foreach (var c in lstCnt)
+                {
+                    cnt += c.Count;
+                }
+                HttpContext.Session.SetInt32(SD.ssShoppingCartCount, cnt);
             }
 
             return RedirectToAction(nameof(Index));
@@ -252,11 +282,16 @@ namespace SekiroKenjii.Areas.Customer.Controllers
             var pro = await _db.Products.FirstOrDefaultAsync(p => p.Id == cart.ProductId);
 
             pro.UnitsInStock += cart.Count;
-            pro.UnitsOnOder -= cart.Count;
+            //pro.UnitsOnOder -= cart.Count;
             _db.ShoppingCarts.Remove(cart);
             await _db.SaveChangesAsync();
 
-            var cnt = _db.ShoppingCarts.Where(u => u.ApplicationUserId == cart.ApplicationUserId).ToList().Count;
+            var cnt = 0;
+            var lstCnt = _db.ShoppingCarts.Where(u => u.ApplicationUserId == cart.ApplicationUserId).ToList();
+            foreach(var c in lstCnt)
+            {
+                cnt += c.Count;
+            }
             HttpContext.Session.SetInt32(SD.ssShoppingCartCount, cnt);
 
 
