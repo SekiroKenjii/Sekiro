@@ -173,23 +173,11 @@ namespace SekiroKenjii.Controllers
             {
                 foreach (var item in IndexVM.Products)
                 {
-                    string stringName = item.Category.Name.ToLower() + " " + item.SortName.ToLower();
+                    string stringName = item.Category.Name.ToLower() + " " + item.Name.ToLower();
                     if(stringName.Contains(SearchString.ToLower()))
                     {
-                        IndexVM.Products = IndexVM.Products.Where(p => (p.Category.Name.ToLower() + " " + p.SortName.ToLower()).Contains(SearchString.ToLower())).ToList();
+                        IndexVM.Products = IndexVM.Products.Where(p => (p.Category.Name.ToLower() + " " + p.Name.ToLower()).Contains(SearchString.ToLower())).ToList();
                     }
-                    //if (SearchString.Replace(" ", string.Empty).ToLower().Contains(item.SortName.Replace(" ", string.Empty).ToLower()))
-                    //{
-                    //    IndexVM.Products = IndexVM.Products.Where(p => p.SortName.Replace(" ", string.Empty).ToLower().Contains(SearchString.Replace(" ", string.Empty).ToLower())).ToList();
-                    //}
-                    //if (item.Category.Name.Replace(" ", string.Empty).ToLower().Contains(SearchString.Replace(" ", string.Empty).ToLower()))
-                    //{
-                    //    IndexVM.Products = IndexVM.Products.Where(p => p.Category.Name.Replace(" ", string.Empty).ToLower().Contains(SearchString.Replace(" ", string.Empty).ToLower())).ToList();
-                    //}
-                    //if (item.Supplier.Name.Replace(" ", string.Empty).ToLower().Contains(SearchString.Replace(" ", string.Empty).ToLower()))
-                    //{
-                    //    IndexVM.Products = IndexVM.Products.Where(p => p.Supplier.Name.Replace(" ", string.Empty).ToLower().Contains(SearchString.Replace(" ", string.Empty).ToLower())).ToList();
-                    //}
                 }
             }
 
