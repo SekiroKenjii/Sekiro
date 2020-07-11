@@ -4,4 +4,28 @@
     ViewData["Title"] = "Confirm email";
 }
 
-<h1>@ViewData["Title"]</h1>
+@section Top{
+    <div class="page-banner-section section">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="page-banner-content">
+                        <h1>Xác Nhận Email</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<blockquote>
+    <p>"Tài khoản đã được xác nhận"</p>
+    <p>"Tài khoản của bạn đã được xác nhận. Bạn có thể đăng nhập và trải nghiệm mua sắm ngay bây giờ."</p>
+</blockquote>
+<div class="text-center">
+    <a class="btn" asp-area="Identity" asp-page="/Account/Login">Quay Lại Trang Đăng Nhập</a>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

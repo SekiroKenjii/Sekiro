@@ -75,6 +75,7 @@ namespace SekiroKenjii.Controllers
                 ShoppingCart = new Models.ShoppingCart(),
                 Products = new Models.Product()
             };
+
             ShoppingCartVM.ShoppingCart = cartObj;
             ShoppingCartVM.Products = productFromDB;
 

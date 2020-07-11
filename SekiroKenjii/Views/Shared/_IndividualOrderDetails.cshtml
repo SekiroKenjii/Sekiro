@@ -50,11 +50,11 @@
                     </div>
                 </div>
                 <div class="order-table table-responsive mb-20">
-                    <table>
+                    <table class="mb-35">
                         <thead>
                             <tr>
                                 <th class="product-name">Sản Phẩm</th>
-                                <th class="product-total">Tổng</th>
+                                <th class="product-total">Giá</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -66,41 +66,60 @@
                                         @item.Name <strong class="product-qty">× @item.Count</strong>
                                     </td>
                                     <td class="product-total">
-                                        <span class="amount">$@Math.Round(item.Price * item.Count, 2)</span>
+                                        <span class="amount">@Math.Round(item.Price * item.Count, 2).ToString("#,##0") VND</span>
                                         @{ total += Math.Round(item.Price * item.Count, 2); }
                                     </td>
                                 </tr>
                             }
                         </tbody>
-                        <tfoot>
+                    </table>
+                    <table class="mb-35">
+                        <thead>
+                            <tr>
+                                <th class="product-name">Mã Giảm Giá</th>
+                                <th class="product-total">Tiền Giảm</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             @if (Model.Orders.CouponCode != null)
                             {
-                                <tr style="color:deepskyblue">
-                                    <th>
-                                        Mã Giảm Giá:
-                                        <br />
-                                        <small style="color:deepskyblue">&nbsp;@Model.Orders.CouponCode</small>
-                                    </th>
-                                    <td style="color:deepskyblue">-$@Math.Round(total-Model.Orders.OrderTotal, 2)</td>
-                                </tr>
                                 <tr>
-                                    <th>Thành Tiền</th>
-                                    <td><strong>$@Model.Orders.OrderTotal</strong>
+                                    <td class="product-details">
+                                        <strong style="color:deepskyblue">&nbsp;@Model.Orders.CouponCode</strong>
+                                    </td>
+                                    <td class="product-total">-@Math.Round(Model.Orders.CouponCodeDiscount, 2).ToString("#,##0") VND</td>
                                 </tr>
                             }
                             else
                             {
                                 <tr>
-                                    <th>Thành Tiền</th>
-                                    <td><strong>$@Model.Orders.OrderTotal</strong>
+                                    <td class="product-details">
+                                        <strong style="color:darkred">&nbsp;Không Có</strong>
+                                    </td>
+                                    <td class="product-total">-@Math.Round(Model.Orders.CouponCodeDiscount, 2) VND</td>
                                 </tr>
                             }
-                        </tfoot>
+                        </tbody>
+                    </table>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="product-name">Thành Tiền</th>
+                                <th class="product-total"><strong>@Math.Round(Model.Orders.OrderTotal, 2).ToString("#,##0") VND</strong></th>
+                            </tr>
+                        </thead>
                     </table>
                 </div>
             </div>
             <br />
-            <input type="submit" disabled class="btn btn-success form-control" value="@Model.Orders.Status" />
+            <div class="col-xs-12 mb-30">
+                <label class="text-muted">Trạng thái đơn hàng</label>
+                <input type="submit" disabled class="btn btn-success form-control" value="@Model.Orders.Status" />
+            </div>
+            <div class="col-xs-12 mb-30">
+                <label class="text-muted">Trạng thái thanh toán</label>
+                <input type="submit" disabled class="btn form-control" value="@Model.Orders.PaymentStatus" />
+            </div>
         </div>
     </div>
 </form>

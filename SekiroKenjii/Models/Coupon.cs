@@ -19,7 +19,7 @@ namespace SekiroKenjii.Models
         [Display(Name = "Kiểu")]
         public string CouponType { get; set; }
 
-        public enum ECouponType { Percent=0, Dollar=1}
+        public enum ECouponType { Percent=0, VND=1}
 
         [Required]
         [Display(Name = "Số Tiền")]

@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="page-banner-content">
-                        <h1>Login page</h1>
+                        <h1>Trang Đăng Nhập</h1>
                     </div>
                 </div>
             </div>
@@ -28,23 +28,23 @@
             <span asp-validation-for="Input.Email" class="text-danger"></span>
         </div>
         <div class="col-xs-12 mb-20">
-            <label asp-for="Input.Password">Password <span class="required">*</span></label>
+            <label asp-for="Input.Password">Mật khẩu <span class="required">*</span></label>
             <input asp-for="Input.Password" type="password" />
             <span asp-validation-for="Input.Password" class="text-danger"></span>
         </div>
         
         <div class="col-xs-12 mb-20">
-            <input value="Login" name="login" class="inline" type="submit"/>
+            <input value="Đăng Nhập" name="Đăng Nhập" class="inline" type="submit"/>
             <label class="inline" asp-for="Input.RememberMe">
-                <input id="rememberme" asp-for="Input.RememberMe" type="checkbox"/> Remember me
+                <input id="rememberme" asp-for="Input.RememberMe" type="checkbox"/> Duy trì đăng nhập
             </label>
         </div>
         <div class="col-xs-12">
             <p>
-                <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                <a id="forgot-password" asp-page="./ForgotPassword">Quên mật khẩu?</a>
             </p>
             <p>
-                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Đăng kí một tài khoản mới</a>
             </p>
         </div>
     </div>

@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="page-banner-content">
-                        <h1>Register New Account</h1>
+                        <h1>Đăng Kí Tài Khoản Mới</h1>
                     </div>
                 </div>
             </div>
@@ -24,7 +24,7 @@
     @*<div asp-validation-summary="All" class="text-danger"></div>*@
     <div class="row">
         <div class="col-xs-12 mb-20">
-            <label asp-for="Input.FullName">Full Name</label>
+            <label asp-for="Input.FullName">Tên đầy đủ</label>
             <input asp-for="Input.FullName" type="text" />
             <span asp-validation-for="Input.FullName" class="text-danger"></span>
         </div>
@@ -34,32 +34,32 @@
             <span asp-validation-for="Input.Email" class="text-danger"></span>
         </div>
         <div class="col-sm-6 col-xs-12 mb-20">
-            <label asp-for="Input.PhoneNumber">Phone Number</label>
+            <label asp-for="Input.PhoneNumber">Số điện thoại</label>
             <input asp-for="Input.PhoneNumber" type="text" />
             <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
         </div>
         <div class="col-xs-12 mb-20">
-            <label asp-for="Input.Country">Country <span class="required">*</span></label>
+            <label asp-for="Input.Country">Quốc gia <span class="required">*</span></label>
             <input asp-for="Input.Country" type="text" />
             <span asp-validation-for="Input.Country" class="text-danger"></span>
         </div>
         <div class="col-sm-6 col-xs-12 mb-20">
-            <label asp-for="Input.Address">Address <span class="required">*</span></label>
+            <label asp-for="Input.Address">Địa chỉ <span class="required">*</span></label>
             <input asp-for="Input.Address" type="text" />
             <span asp-validation-for="Input.Address" class="text-danger"></span>
         </div>
         <div class="col-sm-6 col-xs-12 mb-20">
-            <label asp-for="Input.City">City <span class="required">*</span></label>
+            <label asp-for="Input.City">Thành phố <span class="required">*</span></label>
             <input asp-for="Input.City" type="text" />
             <span asp-validation-for="Input.City" class="text-danger"></span>
         </div>
         <div class="col-xs-12 mb-20">
-            <label asp-for="Input.Password">Password <span class="required">*</span></label>
+            <label asp-for="Input.Password">Mật khẩu <span class="required">*</span></label>
             <input asp-for="Input.Password" type="password" />
             <span asp-validation-for="Input.Password" class="text-danger"></span>
         </div>
         <div class="col-xs-12 mb-20">
-            <label asp-for="Input.ConfirmPassword">Confirm Password <span class="required">*</span></label>
+            <label asp-for="Input.ConfirmPassword">Nhập lại mật khẩu <span class="required">*</span></label>
             <input asp-for="Input.ConfirmPassword" type="password" />
             <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
         </div>
@@ -80,7 +80,7 @@
             </div>
         }
         <div class="col-xs-12">
-            <input value="register" type="submit">
+            <input value="Đăng Kí" type="submit">
         </div>
     </div>
 </form>

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using SekiroKenjii.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Identity.UI.Services;
+//using Microsoft.AspNetCore.Identity.UI.Services;
 using SekiroKenjii.Services;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
@@ -42,9 +42,9 @@ namespace SekiroKenjii
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>(options => 
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
-                options.SignIn.RequireConfirmedAccount = false;
+                options.SignIn.RequireConfirmedAccount = true;
                 options.Lockout.AllowedForNewUsers = true;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(30);
                 options.Lockout.MaxFailedAccessAttempts = 5;
@@ -54,10 +54,12 @@ namespace SekiroKenjii
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
-            //services.AddScoped<IDBInitializer, DbInitializer>();
-            //services.AddSingleton<IEmailSender, EmailSender>();
-            services.AddTransient<IEmailSender, EmailSender>();
-            services.Configure<EmailOptions>(Configuration);
+
+            var emailConfig = Configuration
+                .GetSection("EmailConfiguration")
+                .Get<EmailConfiguration>();
+            services.AddSingleton(emailConfig);
+            services.AddScoped<IEmailSender, EmailSender>();
 
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
@@ -92,6 +94,7 @@ namespace SekiroKenjii
             app.UseRouting();
 
             StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["SecretKey"];
+
             app.UseSession();
             app.UseAuthentication();
             app.UseAuthorization();

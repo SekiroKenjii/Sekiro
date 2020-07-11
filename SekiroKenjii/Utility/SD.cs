@@ -58,7 +58,7 @@ namespace SekiroKenjii.Utility
                 }
                 else
                 {
-                    if (Convert.ToInt32(couponFromDb.CouponType) == (int)Coupon.ECouponType.Dollar)
+                    if (Convert.ToInt32(couponFromDb.CouponType) == (int)Coupon.ECouponType.VND)
                     {
                         return Math.Round(OriginalOrderTotal - couponFromDb.Discount, 2);
                     }

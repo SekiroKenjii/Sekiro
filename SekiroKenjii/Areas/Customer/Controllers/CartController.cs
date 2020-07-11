@@ -57,6 +57,17 @@ namespace SekiroKenjii.Areas.Customer.Controllers
 
             detailsCart.Orders.OrderTotalOriginal = detailsCart.Orders.OrderTotal;
 
+            if (claim != null)
+            {
+                var cnt = 0;
+                var lstCnt = _db.ShoppingCarts.Where(u => u.ApplicationUserId == claim.Value).ToList();
+                foreach (var c in lstCnt)
+                {
+                    cnt += c.Count;
+                }
+                HttpContext.Session.SetInt32(SD.ssShoppingCartCount, cnt);
+            }
+
             if (HttpContext.Session.GetString(SD.ssCouponCode) != null)
             {
                 detailsCart.Orders.CouponCode = HttpContext.Session.GetString(SD.ssCouponCode);
@@ -103,6 +114,17 @@ namespace SekiroKenjii.Areas.Customer.Controllers
             detailsCart.Orders.ShipCity = applicationUser.City;
             detailsCart.Orders.ShipCountry = applicationUser.Country;
             detailsCart.Orders.ShipEmail = applicationUser.Email;
+
+            if (claim != null)
+            {
+                var cnt = 0;
+                var lstCnt = _db.ShoppingCarts.Where(u => u.ApplicationUserId == claim.Value).ToList();
+                foreach (var c in lstCnt)
+                {
+                    cnt += c.Count;
+                }
+                HttpContext.Session.SetInt32(SD.ssShoppingCartCount, cnt);
+            }
 
             if (HttpContext.Session.GetString(SD.ssCouponCode) != null)
             {
@@ -174,8 +196,8 @@ namespace SekiroKenjii.Areas.Customer.Controllers
 
             var options = new ChargeCreateOptions
             {
-                Amount = Convert.ToInt32(detailsCart.Orders.OrderTotal * 100),
-                Currency = "usd",
+                Amount = Convert.ToInt32(detailsCart.Orders.OrderTotal / 23172 * 100),
+                Currency = "USD",
                 Description = "Order ID : " + detailsCart.Orders.Id,
                 Source = stripeToken
 

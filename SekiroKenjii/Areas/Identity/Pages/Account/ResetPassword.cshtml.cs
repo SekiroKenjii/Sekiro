@@ -42,12 +42,12 @@ namespace SekiroKenjii.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            public string Code { get; set; }
+            public string Token { get; set; }
         }
 
-        public IActionResult OnGet(string code = null)
+        public IActionResult OnGet(string token, string email)
         {
-            if (code == null)
+            if (token == null)
             {
                 return BadRequest("A code must be supplied for password reset.");
             }
@@ -55,7 +55,8 @@ namespace SekiroKenjii.Areas.Identity.Pages.Account
             {
                 Input = new InputModel
                 {
-                    Code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code))
+                    Token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(token)),
+                    Email = email
                 };
                 return Page();
             }
@@ -75,7 +76,7 @@ namespace SekiroKenjii.Areas.Identity.Pages.Account
                 return RedirectToPage("./ResetPasswordConfirmation");
             }
 
-            var result = await _userManager.ResetPasswordAsync(user, Input.Code, Input.Password);
+            var result = await _userManager.ResetPasswordAsync(user, Input.Token, Input.Password);
             if (result.Succeeded)
             {
                 return RedirectToPage("./ResetPasswordConfirmation");

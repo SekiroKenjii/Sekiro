@@ -56,7 +56,7 @@
                                 @Html.DisplayFor(m => item.Orders.OrderDate)
                             </td>
                             <td class="pro-price">
-                                @Html.DisplayFor(m => item.Orders.OrderTotal)
+                                @item.Orders.OrderTotal.ToString("#,##0") VND
                             </td>
                             @{
                                 int cnt = 0;
@@ -178,7 +178,7 @@
                                                                     @item.Name <strong class="product-qty">× @item.Count</strong>
                                                                 </td>
                                                                 <td class="product-total">
-                                                                    <span class="amount">$@(item.Price * item.Count)</span>
+                                                                    <span class="amount">@((item.Price * item.Count).ToString("#,##0")) VND</span>
                                                                 </td>
                                                             </tr>
                                                         }
@@ -199,7 +199,7 @@
                                                             <td class="product-details">
                                                                 <strong style="color:deepskyblue">&nbsp;@order.Orders.CouponCode</strong>
                                                             </td>
-                                                            <td class="product-total">-$@Math.Round(order.Orders.CouponCodeDiscount, 2)</td>
+                                                            <td class="product-total">-@Math.Round(order.Orders.CouponCodeDiscount, 2).ToString("#,##0") VND</td>
                                                         </tr>
                                                     }
                                                     else
@@ -208,7 +208,7 @@
                                                             <td class="product-details">
                                                                 <strong style="color:darkred">&nbsp;Không Có</strong>
                                                             </td>
-                                                            <td class="product-total">-$@Math.Round(order.Orders.CouponCodeDiscount, 2)</td>
+                                                            <td class="product-total">-@Math.Round(order.Orders.CouponCodeDiscount, 2) VND</td>
                                                         </tr>
                                                     }
                                                 </tbody>
@@ -217,7 +217,7 @@
                                                 <thead>
                                                     <tr>
                                                         <th class="product-name">Thành Tiền</th>
-                                                        <th class="product-total"><strong>$@Math.Round(order.Orders.OrderTotal, 2)</strong></th>
+                                                        <th class="product-total"><strong>@Math.Round(order.Orders.OrderTotal, 2).ToString("#,##0") VND</strong></th>
                                                     </tr>
                                                 </thead>
                                             </table>

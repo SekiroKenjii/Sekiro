@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SekiroKenjii.Data;
@@ -60,6 +61,17 @@ namespace SekiroKenjii.Areas.Customer.Controllers
                     OrderDetails = await _db.OrderDetails.Where(o => o.OrderId == item.Id).ToListAsync()
                 };
                 orderList.Add(oDVM);
+            }
+
+            if (claim != null)
+            {
+                var cnt = 0;
+                var lstCnt = _db.ShoppingCarts.Where(u => u.ApplicationUserId == claim.Value).ToList();
+                foreach (var c in lstCnt)
+                {
+                    cnt += c.Count;
+                }
+                HttpContext.Session.SetInt32(SD.ssShoppingCartCount, cnt);
             }
 
             return View(orderList);

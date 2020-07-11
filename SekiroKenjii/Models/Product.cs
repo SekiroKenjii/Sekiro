@@ -42,7 +42,7 @@ namespace SekiroKenjii.Models
         public virtual Tag Tag { get; set; }
 
         [Display(Name = "Giá")]
-        [Range(1,int.MaxValue, ErrorMessage = "Price should be greater than ${1}")]
+        [Range(1,int.MaxValue, ErrorMessage = "Price should be greater than {1}")]
         public double Price { get; set; }
 
         [Display(Name ="Số Lượng Trong Kho")]

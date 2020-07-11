@@ -38,7 +38,7 @@
                                                 Liên Hệ
                                             </th>
                                             <th>
-                                                Tổng Tiền Đơn Hàng (USD)
+                                                Tổng Tiền Đơn Hàng (VND)
                                             </th>
                                             @if (User.IsInRole(SD.CustomerOfficer) || User.IsInRole(SD.ManagerUser))
                                             {
@@ -73,7 +73,7 @@
                                                         </li>
                                                     }
                                                     <li>
-                                                        Giảm: <strong>@Math.Round(item.Orders.CouponCodeDiscount, 2)</strong>
+                                                        Giảm: <strong>@Math.Round(item.Orders.CouponCodeDiscount, 2).ToString("#,##0")</strong>
                                                     </li>
                                                 </ul>
                                             </td>
@@ -84,7 +84,7 @@
                                                     @Html.DisplayFor(m => item.Orders.PhoneNumber)
                                                 </td>
                                                 <td>
-                                                    @Html.DisplayFor(m => item.Orders.OrderTotal)
+                                                    @item.Orders.OrderTotal.ToString("#,##0")
                                                 </td>
                                                 @if (User.IsInRole(SD.CustomerOfficer) || User.IsInRole(SD.ManagerUser))
                                                 {

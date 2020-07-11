@@ -1,25 +1,26 @@
 ﻿@page
 @model ResendEmailConfirmationModel
 @{
-    ViewData["Title"] = "Resend email confirmation";
+    ViewData["Title"] = "Confirmation";
+}
+@section Top{
+    <div class="page-banner-section section">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="page-banner-content">
+                        <h1>Xác Nhận Email</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 
-<h1>@ViewData["Title"]</h1>
-<h4>Enter your email.</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" class="form-control" />
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-primary">Resend</button>
-        </form>
-    </div>
-</div>
+<blockquote>
+    <p>"Email xác nhận đã được gửi"</p>
+    <p>"Đường link xác nhận đã được gửi trong email của bạn. Vui lòng kiểm tra email để hoàn tất xác nhận tài khoản."</p>
+</blockquote>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

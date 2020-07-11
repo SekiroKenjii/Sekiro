@@ -73,7 +73,7 @@
                                             @item.Product.SortName <strong class="product-qty">× @item.Count</strong>
                                         </td>
                                         <td class="product-total">
-                                            <span class="amount">$@Math.Round(item.Product.Price * item.Count, 2)</span>
+                                            <span class="amount">@Math.Round(item.Product.Price * item.Count, 2).ToString("#,##0") VND</span>
                                             @{ total += Math.Round(item.Product.Price * item.Count, 2); }
                                         </td>
                                     </tr>
@@ -94,7 +94,7 @@
                                         <td class="product-details">
                                             <strong style="color:deepskyblue">&nbsp;@Model.Orders.CouponCode</strong>
                                         </td>
-                                        <td class="product-total">-$@Math.Round(total - Model.Orders.OrderTotal, 2)</td>
+                                        <td class="product-total">-@Math.Round(total - Model.Orders.OrderTotal, 2).ToString("#,##0") VND</td>
                                     </tr>
                                 }
                                 else
@@ -103,7 +103,7 @@
                                         <td class="product-details">
                                             <strong style="color:darkred">&nbsp;Không Có</strong>
                                         </td>
-                                        <td class="product-total">-$@Math.Round(total - Model.Orders.OrderTotal, 2)</td>
+                                        <td class="product-total">-@Math.Round(total - Model.Orders.OrderTotal, 2) VND</td>
                                     </tr>
                                 }
 
@@ -113,7 +113,7 @@
                             <thead>
                                 <tr>
                                     <th class="product-name">Thành Tiền</th>
-                                    <th class="product-total"><strong>$@Math.Round(Model.Orders.OrderTotal, 2)</strong></th>
+                                    <th class="product-total"><strong>@Math.Round(Model.Orders.OrderTotal, 2).ToString("#,##0") VND</strong></th>
                                 </tr>
                             </thead>
                         </table>
@@ -121,7 +121,7 @@
                     <div class="payment-method">
                         <div class="order-button">
                             @{
-                                var OrderTotalForStripe = Model.Orders.OrderTotal * 100;
+                                var OrderTotalForStripe = Model.Orders.OrderTotal / 23172 * 100;
                             }
                             <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                     data-key="@Stripe.Value.PublishableKey"
